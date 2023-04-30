@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.zordo.game.GifDecoder;
+import com.zordo.utils.GifDecoder;
 import com.zordo.game.LegendOfZordo;
 
 public class TitleScreen implements Screen {

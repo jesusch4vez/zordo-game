@@ -1,4 +1,4 @@
-package com.zordo.character.stats;
+package com.zordo.characters.linko.stats;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
