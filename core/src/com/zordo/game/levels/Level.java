@@ -72,8 +72,8 @@ public class Level implements Screen {
         }
 
         if (!this.paused) {
-            linko.move(batch, camera);
-            cameraController.handleInput(camera);
+            linko.move(batch);
+            cameraController.handleInput(linko, camera);
 
             linko.collisionWithPlatform();
             if (linko.getLinkoCollider().overlaps(this.slat)) {

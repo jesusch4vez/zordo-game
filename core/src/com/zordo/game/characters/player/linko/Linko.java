@@ -8,11 +8,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 
 public class Linko {
 	Rectangle linkoCollider;
+	Vector3 position;
 	Boolean flippedRight;
 	Boolean jumping;
 	Boolean playerControlled;
@@ -49,11 +51,14 @@ public class Linko {
 		
 	public Linko(Boolean playerControlled) {
 		this.playerControlled = playerControlled;
+		position = new Vector3();
 		linkoCollider = new Rectangle();
 		linkoCollider.x = 10;
 		linkoCollider.y = 10;
 		linkoCollider.height = 53;
 		linkoCollider.width = 23;
+		position.x = linkoCollider.x;
+		position.y = linkoCollider.y;
 
 		health = 8;
 		
@@ -104,12 +109,14 @@ public class Linko {
 		animation = walkingRightAnimation;
 	}
 	
-	public void move(SpriteBatch batch, OrthographicCamera camera) {
+	public void move(SpriteBatch batch) {
 		elapsed += Gdx.graphics.getDeltaTime();
 		stepping = true;
+		position.x = this.getLinkoCollider().x;
+		position.y = this.getLinkoCollider().y;
 
 		if(playerControlled) {
-			healthRender(batch,camera);
+			healthRender(batch);
 			if(!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 				stepping = false;
 				if(this.getFlippedRight() && !this.getJumping()) {
@@ -231,9 +238,9 @@ public class Linko {
 		}
 	}
 
-	private void healthRender(SpriteBatch batch, OrthographicCamera camera) {
+	private void healthRender(SpriteBatch batch) {
 		for( int i = 0; i < this.hearts.size(); i++) {
-			batch.draw(this.hearts.get(i).getHeartState(), (camera.viewportWidth / 2) + i * 10, (camera.viewportHeight / 2 ) - 10);
+			batch.draw(this.hearts.get(i).getHeartState(), 200 + i*10, 200);
 		}
 	}
 	
@@ -368,4 +375,11 @@ public class Linko {
 		return this.jumpLeft;
 	}
 
+	public Vector3 getPosition() {
+		return this.position;
+	}
+
+	public void setPosition(Vector3 position) {
+		this.position = position;
+	}
 }
