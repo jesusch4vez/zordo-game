@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.zordo.game.LegendOfZordo;
-import com.zordo.game.PlayScreen;
+import com.zordo.game.menus.LevelSelect;
 import com.zordo.screen.utils.GifDecoder;
 
 public class Screen implements com.badlogic.gdx.Screen {
@@ -53,7 +53,7 @@ public class Screen implements com.badlogic.gdx.Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
         	ScreenUtils.clear(0, 0, 0.2f, 1);
         	//this.dispose();
-        	this.game.setScreen(new PlayScreen(game));
+        	this.game.setScreen(new LevelSelect(game));
         }
         // camera.update();
 	}

@@ -1,15 +1,14 @@
-package com.zordo.game;
+package com.zordo.game.levels.B_Second;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.zordo.game.characters.player.linko.Linko;
+import com.zordo.game.LegendOfZordo;
 import com.zordo.game.platforms.Platform;
 
 public class PlayScreen implements Screen{
@@ -20,7 +19,6 @@ public class PlayScreen implements Screen{
 	OrthographicCamera camera;
 	
 	final LegendOfZordo game;
-	Linko linko;
 
 	private final Platform slat;
 	
@@ -39,8 +37,6 @@ public class PlayScreen implements Screen{
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800,400);
-		
-		linko = new Linko(true);
 	}
 	
 	@Override
@@ -61,18 +57,6 @@ public class PlayScreen implements Screen{
 		batch.draw(backgroundTexture,0,0,1920,1080);
 
 		this.slat.render(batch);
-
-		linko.move(batch,camera);
-
-		linko.collisionWithPlatform();
-		if(linko.getLinkoCollider().overlaps(this.slat)) {
-			linko.setLinkoCollider(this.linko.getLinkoCollider().getX(), this.slat.getY() + slat.getHeight());
-		}
-
-		if(linko.health <= 0) {
-			BitmapFont font = new BitmapFont();
-			font.draw(batch, "GAME OVER", 400, 200);
-		}
 
 		batch.end();
 		camera.update();		
