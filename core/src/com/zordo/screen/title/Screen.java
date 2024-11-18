@@ -1,18 +1,18 @@
-package com.zordo.screens;
+package com.zordo.screen.title;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.zordo.game.GifDecoder;
 import com.zordo.game.LegendOfZordo;
+import com.zordo.game.PlayScreen;
+import com.zordo.screen.utils.GifDecoder;
 
-public class TitleScreen implements Screen {
+public class Screen implements com.badlogic.gdx.Screen {
 
 	final LegendOfZordo game;
     public SpriteBatch batch;
@@ -21,7 +21,7 @@ public class TitleScreen implements Screen {
     
     OrthographicCamera camera;
     
-    public TitleScreen(final LegendOfZordo game) {
+    public Screen(final LegendOfZordo game) {
     	this.game = game;
     	
     	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("lozTitle.gif").read());	
