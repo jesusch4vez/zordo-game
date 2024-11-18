@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.zordo.camera.CamController;
 import com.zordo.game.LegendOfZordo;
 import com.zordo.game.characters.player.linko.Linko;
 import com.zordo.game.platforms.Platform;
@@ -17,7 +18,7 @@ import com.zordo.game.platforms.Platform;
 public class Level implements Screen {
     private SpriteBatch batch;
     private final Texture backgroundTexture;
-
+    private final CamController cameraController;
     OrthographicCamera camera;
 
     final LegendOfZordo game;
@@ -29,6 +30,7 @@ public class Level implements Screen {
     public Level(final LegendOfZordo game) {
         this.game = game;
         this.paused = false;
+        cameraController = new CamController();
 
         this.slat = new Platform();
         this.slat.setCoordinates(50, 50);
@@ -70,7 +72,8 @@ public class Level implements Screen {
         }
 
         if (!this.paused) {
-            linko.move(batch, camera);
+            linko.move(batch);
+            cameraController.handleInput(linko, camera);
 
             linko.collisionWithPlatform();
             if (linko.getLinkoCollider().overlaps(this.slat)) {
