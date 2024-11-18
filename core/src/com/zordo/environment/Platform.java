@@ -4,12 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-import java.io.Serial;
-
 public class Platform extends Rectangle {
-
-	@Serial
-	private static final long serialVersionUID = 1L;
 	
 	private final Texture platformTexture;
 
