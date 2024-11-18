@@ -1,6 +1,4 @@
-package com.zordo.characters.linko;
-
-import java.util.ArrayList;
+package com.zordo.game.characters.player.linko;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -10,7 +8,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.zordo.characters.linko.stats.Heart;
+
+import java.util.ArrayList;
 
 public class Linko {
 	Rectangle linkoCollider;
