@@ -1,15 +1,30 @@
 package com.zordo.game.menus.Objects;
 
+import com.badlogic.gdx.Screen;
+
 public class LevelItem implements MenuItem {
 
-    private int level;
+    private Screen level;
     private String itemName;
     private boolean enabled;
+    private boolean defaultSelection;
+    private boolean selected;
 
-    public LevelItem() {
-        this.level = 0;
+    public LevelItem(Screen level) {
+        this.level = level;
         this.itemName = "";
         this.enabled = false;
+        this.defaultSelection = false;
+    }
+
+    public LevelItem(Screen level, boolean isDefault) {
+        this.level = level;
+        this.itemName = "";
+        this.enabled = false;
+        this.defaultSelection = isDefault;
+        if(isDefault) {
+            this.selected = true;
+        }
     }
 
     @Override
@@ -32,11 +47,27 @@ public class LevelItem implements MenuItem {
         this.enabled = enabled;
     }
 
-    public int getLevel() {
+    public Screen getLevel() {
         return this.level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Screen level) {
         this.level = level;
+    }
+
+    public boolean isDefaultSelection() {
+        return defaultSelection;
+    }
+
+    public void setDefaultSelection(boolean defaultSelection) {
+        this.defaultSelection = defaultSelection;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
