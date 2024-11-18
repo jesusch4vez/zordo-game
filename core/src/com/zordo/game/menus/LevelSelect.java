@@ -1,6 +1,7 @@
 package com.zordo.game.menus;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +18,7 @@ import com.zordo.game.levels.intro.LevelIntro;
 import com.zordo.game.menus.Objects.LevelItem;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class LevelSelect implements Screen {
     private SpriteBatch batch;
@@ -30,6 +32,7 @@ public class LevelSelect implements Screen {
     LevelItem levelTwo;
     LevelItem levelThree;
     ArrayList<LevelItem> levels = new ArrayList<>();
+    int selectedLevel = 0;
 
     public LevelSelect(final LegendOfZordo game) {
         this.game = game;
@@ -87,14 +90,48 @@ public class LevelSelect implements Screen {
         batch.begin();
         batch.draw(backgroundTexture,0,0,1920,1080);
 
+        try {
+            if( selectedLevel >= 0 && selectedLevel <= 3) {
+                if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && selectedLevel < 3) {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                    levels.get(selectedLevel).setSelected(false);
+                    selectedLevel += 1;
+                    levels.get(selectedLevel).setSelected(true);
+                } else if (Gdx.input.isKeyPressed(Input.Keys.UP) && selectedLevel > 0) {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                    levels.get(selectedLevel).setSelected(false);
+                    selectedLevel -= 1;
+                    levels.get(selectedLevel).setSelected(true);
+                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)  && selectedLevel < 3) {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                    levels.get(selectedLevel).setSelected(false);
+                    selectedLevel += 1;
+                    levels.get(selectedLevel).setSelected(true);
+                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)  && selectedLevel > 0) {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                    levels.get(selectedLevel).setSelected(false);
+                    selectedLevel -= 1;
+                    levels.get(selectedLevel).setSelected(true);
+                }
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         int listX = 100;
         int listY = 350;
-        for(LevelItem level: levels) {
-            font.draw(batch, level.getText(), listX, listY);
+        for (LevelItem levelItem : levels) {
+            if (levelItem.isSelected()) {
+                font.draw(batch, " > " + levelItem.getText(), listX, listY);
+            } else {
+                font.draw(batch, levelItem.getText(), listX, listY);
+            }
             listY -= 20;
         }
 
-        font.draw(batch, "Test 123", 400, 400);
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            this.game.setScreen(levels.get(selectedLevel).getLevel());
+        }
 
         batch.end();
         camera.update();
