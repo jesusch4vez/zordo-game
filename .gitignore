@@ -98,6 +98,8 @@ nb-configuration.xml
 
 ## Gradle
 
+.gradle/
+
 /local.properties
 /build/
 /android/build/
