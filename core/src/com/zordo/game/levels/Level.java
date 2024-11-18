@@ -1,6 +1,7 @@
 package com.zordo.game.levels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +14,8 @@ import com.zordo.game.LegendOfZordo;
 import com.zordo.game.characters.player.linko.Linko;
 import com.zordo.game.platforms.Platform;
 
+import java.util.concurrent.TimeUnit;
+
 public class Level implements Screen {
     private SpriteBatch batch;
     private final Texture backgroundTexture;
@@ -23,10 +26,11 @@ public class Level implements Screen {
     Linko linko;
 
     private final Platform slat;
-
+    boolean paused;
 
     public Level(final LegendOfZordo game) {
         this.game = game;
+        this.paused = false;
 
         this.slat = new Platform();
         this.slat.setCoordinates(50, 50);
@@ -58,22 +62,27 @@ public class Level implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(backgroundTexture,0,0,1920,1080);
+        batch.draw(backgroundTexture, 0, 0, 1920, 1080);
 
         this.slat.render(batch);
 
-        linko.move(batch,camera);
-
-        linko.collisionWithPlatform();
-        if(linko.getLinkoCollider().overlaps(this.slat)) {
-            linko.setLinkoCollider(this.linko.getLinkoCollider().getX(), this.slat.getY() + slat.getHeight());
+        if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            this.paused = true;
+            this.pause();
         }
 
-        if(linko.health <= 0) {
-            BitmapFont font = new BitmapFont();
-            font.draw(batch, "GAME OVER", 400, 200);
-        }
+        if (!this.paused) {
+            linko.move(batch, camera);
 
+            linko.collisionWithPlatform();
+            if (linko.getLinkoCollider().overlaps(this.slat)) {
+                linko.setLinkoCollider(this.linko.getLinkoCollider().getX(), this.slat.getY() + slat.getHeight());
+            }
+            if (linko.health <= 0) {
+                BitmapFont font = new BitmapFont();
+                font.draw(batch, "GAME OVER", 400, 200);
+            }
+        }
         batch.end();
         camera.update();
     }
@@ -86,8 +95,11 @@ public class Level implements Screen {
 
     @Override
     public void pause() {
-        // TODO Auto-generated method stub
-
+        BitmapFont font = new BitmapFont();
+        font.draw(batch, ">>>PAUSED<<<", 200, 200);
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            this.paused = false;
+        }
     }
 
     @Override
