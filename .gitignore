@@ -99,6 +99,7 @@ nb-configuration.xml
 ## Gradle
 
 .gradle/
+.gradle/*
 
 /local.properties
 /build/
