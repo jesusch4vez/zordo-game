@@ -102,15 +102,15 @@ public class LevelSelect implements Screen {
                     levels.get(selectedLevel).setSelected(false);
                     selectedLevel -= 1;
                     levels.get(selectedLevel).setSelected(true);
-                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)  && selectedLevel < 3) {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get(selectedLevel).setSelected(false);
-                    selectedLevel += 1;
-                    levels.get(selectedLevel).setSelected(true);
-                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)  && selectedLevel > 0) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)  && selectedLevel > 0) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     levels.get(selectedLevel).setSelected(false);
                     selectedLevel -= 1;
+                    levels.get(selectedLevel).setSelected(true);
+                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)  && selectedLevel < 3) {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                    levels.get(selectedLevel).setSelected(false);
+                    selectedLevel += 1;
                     levels.get(selectedLevel).setSelected(true);
                 }
             }

@@ -14,8 +14,6 @@ import com.zordo.game.LegendOfZordo;
 import com.zordo.game.characters.player.linko.Linko;
 import com.zordo.game.platforms.Platform;
 
-import java.util.concurrent.TimeUnit;
-
 public class Level implements Screen {
     private SpriteBatch batch;
     private final Texture backgroundTexture;
