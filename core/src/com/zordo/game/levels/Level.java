@@ -76,9 +76,6 @@ public class Level implements Screen {
             cameraController.handleInput(linko, camera);
 
             linko.collisionWithPlatform();
-            if (linko.getLinkoCollider().overlaps(this.slat)) {
-                linko.setLinkoCollider(this.linko.getLinkoCollider().getX(), this.slat.getY() + slat.getHeight());
-            }
             if (linko.health <= 0) {
                 BitmapFont font = new BitmapFont();
                 font.draw(batch, "GAME OVER", 400, 200);
