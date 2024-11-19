@@ -2,6 +2,7 @@ package com.zordo;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.zordo.model.level.LevelSize;
 import com.zordo.view.title.Screen;
 
 import java.io.File;
@@ -51,30 +52,5 @@ public class LegendOfZordo extends Game {
 		super.dispose();
 	}
 
-
-	public static class LevelSize {
-		private float width;
-		private float height;
-
-		LevelSize(float width, float height) {
-			this.width = width;
-			this.height = height;
-		}
-
-		public float getWidth() {
-			return width;
-		}
-		public float getHeight() {
-			return height;
-		}
-
-		public void setHeight(int height) {
-			this.height = height;
-		}
-
-		public void setWidth(int width) {
-			this.width = width;
-		}
-	}
 }
 
