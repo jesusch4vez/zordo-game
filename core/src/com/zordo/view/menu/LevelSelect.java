@@ -49,16 +49,9 @@ public class LevelSelect implements Screen {
         levelThree = new LevelItem(LevelThree);
 
         intro.setText("Intro");
-        intro.setEnabled(true);
-
         levelOne.setText("Level One");
-        levelOne.setEnabled(true);
-
         levelTwo.setText("Level Two");
-        levelTwo.setEnabled(true);
-
         levelThree.setText("Level Three");
-        levelThree.setEnabled(false);
 
         levels.add(intro);
         levels.add(levelOne);
