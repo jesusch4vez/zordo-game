@@ -24,7 +24,7 @@ public class Level implements Screen {
     final LegendOfZordo game;
     Linko linko;
 
-    private final Platform slat;
+    protected Platform slat;
     boolean paused;
 
     public Level(final LegendOfZordo game) {
@@ -33,7 +33,8 @@ public class Level implements Screen {
         cameraController = new CamController();
 
         this.slat = new Platform();
-        this.slat.setCoordinates(50, 50);
+        this.slat.setWidth(game.small.getWidth());
+        this.slat.setCoordinates(0, 0);
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
@@ -62,7 +63,7 @@ public class Level implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(backgroundTexture, 0, 0, 1920, 1080);
+        batch.draw(backgroundTexture, 0, 0, this.slat.getWidth(), game.small.getHeight());
 
         this.slat.render(batch);
 
