@@ -6,7 +6,7 @@ Practice platformer game inspired by The Legend of Zelda and Super Mario World. 
 
 Written in 
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+[![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.java.com/en/)
 
 Built on
 
