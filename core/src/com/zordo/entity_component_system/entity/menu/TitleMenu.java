@@ -1,10 +1,13 @@
 package com.zordo.entity_component_system.entity.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Screen;
 import com.zordo.LegendOfZordo;
 import com.zordo.entity_component_system.component.camera.Camera;
 import com.zordo.entity_component_system.component.Component;
@@ -12,7 +15,7 @@ import com.zordo.utilities.GifDecoder;
 
 import java.util.HashMap;
 
-public class Title implements com.badlogic.gdx.Screen {
+public class TitleMenu implements Screen {
 
 	final LegendOfZordo game;
     public SpriteBatch batch;
@@ -21,7 +24,7 @@ public class Title implements com.badlogic.gdx.Screen {
 
 	HashMap<String, Component> components;
     
-    public Title(final LegendOfZordo game) {
+    public TitleMenu(final LegendOfZordo game) {
     	this.game = game;
     	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle.gif").read());
 
@@ -51,12 +54,10 @@ public class Title implements com.badlogic.gdx.Screen {
         batch.draw(animation.getKeyFrame(elapsed), 0, 0);
         batch.end();
         
-//        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-//        	ScreenUtils.clear(0, 0, 0.2f, 1);
-//        	this.dispose();
-//        	this.game.setScreen(new select(game));
-//        }
-        // camera.update();
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        	ScreenUtils.clear(0, 0, 0.2f, 1);
+        	this.game.setScreen(new LevelSelectMenu(game));
+        }
 	}
 
 	@Override
