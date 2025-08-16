@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.title = "The Legend of Zordo";
 		config.height = 400;
 		config.width = 800;
-		config.addIcon("triforce.png", Files.FileType.Internal);
+		config.addIcon("environment/triforce.png", Files.FileType.Internal);
 		new LwjglApplication(new LegendOfZordo(), config);
 	}
 }

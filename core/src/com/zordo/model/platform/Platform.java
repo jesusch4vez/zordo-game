@@ -12,7 +12,7 @@ public class Platform extends Rectangle {
 		super();
 		super.setWidth(100);
 		super.setHeight(10);
-		platformTexture = new Texture("environment-textures/platform-square.png");
+		platformTexture = new Texture("environment/platform-square.png");
 	}
 	
 	public void setCoordinates(int x, int y) {

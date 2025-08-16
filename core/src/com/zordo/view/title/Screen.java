@@ -24,7 +24,7 @@ public class Screen implements com.badlogic.gdx.Screen {
     public Screen(final LegendOfZordo game) {
     	this.game = game;
     	
-    	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("lozTitle.gif").read());	
+    	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle.gif").read());
     	camera = new OrthographicCamera();
     	camera.setToOrtho(false, 1920,1080);
     }

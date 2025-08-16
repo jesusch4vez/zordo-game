@@ -1,11 +1,11 @@
-package com.zordo.controller.player.attributes;
+package com.zordo.controller.character.player.attributes;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Disposable;
 
 public class Heart implements Disposable {
-	String heartsuri = "hearts/";
+	String heartsuri = "character/player/hearts/";
 	
 	private Sprite heartState;
 	private final Sprite[] heartSegments;

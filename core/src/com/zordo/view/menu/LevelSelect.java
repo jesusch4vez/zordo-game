@@ -61,7 +61,7 @@ public class LevelSelect implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         TextureRegion background = new TextureRegion();
-        backgroundTexture = new Texture("background_32.png");
+        backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
         camera = new OrthographicCamera();

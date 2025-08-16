@@ -1,4 +1,4 @@
-package com.zordo.controller.player;
+package com.zordo.controller.character.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.zordo.controller.player.attributes.Heart;
+import com.zordo.controller.character.player.attributes.Heart;
 
 import java.util.ArrayList;
 
@@ -44,9 +44,9 @@ public class Linko {
 	float elapsed;
 
 	// accessing sprite assets from the directory files
-	String standuri = "link-standing-sprites/";
-	String runuri = "link-running-sprites/";
-	String jumpuri = "link-jumping-sprites/";
+	String standuri = "character/player/link-standing-sprites/";
+	String runuri = "character/player/link-running-sprites/";
+	String jumpuri = "character/player/link-jumping-sprites/";
 
 		
 	public Linko(Boolean playerControlled) {

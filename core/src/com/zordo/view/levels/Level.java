@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.zordo.controller.services.camera.CamController;
 import com.zordo.LegendOfZordo;
-import com.zordo.controller.player.Linko;
+import com.zordo.controller.character.player.Linko;
 import com.zordo.model.platform.Platform;
 
 public class Level implements Screen {
@@ -39,7 +39,7 @@ public class Level implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         TextureRegion background = new TextureRegion();
-        backgroundTexture = new Texture("background_32.png");
+        backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
         camera = new OrthographicCamera();
