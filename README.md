@@ -16,3 +16,14 @@ Managed with
 
 [![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)](https://gradle.org/)
 
+
+# Install and Run
+
+Once you clone the repository...
+
+`gradle build`
+
+`gradle run`
+
+This should start the program in full screen. If you have any issues please open an issue so we may address any gaps in the documentation.
+
