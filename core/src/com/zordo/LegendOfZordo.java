@@ -2,8 +2,8 @@ package com.zordo;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.zordo.entity.level.LevelSize;
-import com.zordo.system.title.Screen;
+import com.zordo.system.level.LevelSize;
+import com.zordo.component.title.Screen;
 
 import java.io.File;
 import java.io.FileInputStream;
