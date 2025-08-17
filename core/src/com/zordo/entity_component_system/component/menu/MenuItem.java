@@ -2,18 +2,23 @@ package com.zordo.entity_component_system.component.menu;
 
 import com.zordo.entity_component_system.component.Component;
 
-public class Item extends Component {
+public class MenuItem extends Component {
     boolean isSelectable;
+    boolean isSelected;
     String name;
 
-    public Item() {
+    public MenuItem() {
         this.isSelectable = false;
+        this.isSelected = false;
         this.name = "";
     }
 
-    public Item(String name) {
-        this.isSelectable = false;
-        this.name = name;
+    public void setIsSelected(boolean selected) {
+        this.isSelected = selected;
+    }
+
+    public boolean getIsSelected() {
+        return this.isSelected;
     }
 
     public void setIsSelectable(boolean isSelectable) {

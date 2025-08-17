@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.zordo.entity_component_system.component.Component;
 
 public class Camera extends Component {
-    private final OrthographicCamera camera;
+    private OrthographicCamera camera;
     public Camera() {
         super();
         this.camera = new OrthographicCamera();
@@ -13,5 +13,9 @@ public class Camera extends Component {
 
     public OrthographicCamera getCamera() {
         return this.camera;
+    }
+
+    public void setCamera(OrthographicCamera camera) {
+        this.camera = camera;
     }
 }
