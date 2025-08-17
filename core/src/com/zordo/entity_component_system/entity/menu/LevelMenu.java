@@ -16,35 +16,38 @@ import java.util.concurrent.TimeUnit;
 
 import com.zordo.entity_component_system.component.Component;
 import com.zordo.entity_component_system.component.camera.Camera;
-import com.zordo.entity_component_system.component.menu.MenuItem;
+import com.zordo.entity_component_system.component.menu.LevelItem;
+import com.zordo.entity_component_system.system.menu.MenuSystem;
 
 import java.util.HashMap;
 
-public class LevelSelectMenu implements Screen {
+public class LevelMenu implements Screen {
+    final LegendOfZordo game;
     private SpriteBatch batch;
     private final Texture backgroundTexture;
     OrthographicCamera camera;
 
     HashMap<String, Component> components;
-    HashMap<String, MenuItem> levels;
+    HashMap<String, LevelItem> levels;
     int selectedLevel = 1;
     int maxSelectable = 4;
 
-    public LevelSelectMenu(final LegendOfZordo game) {
+    public LevelMenu(final LegendOfZordo game) {
+        this.game = game;
         int levelCount = 10;
         components = new HashMap<>();
         components.put("Camera", new Camera());
 
         levels = new HashMap<>();
         for(int i = 1; i <= levelCount; i++) {
-            MenuItem level = new MenuItem();
-            level.setName("Level " + i);
+            LevelItem level = new LevelItem();
+            level.setName("Level_" + i);
             levels.put(level.getName(), level);
             if(i < maxSelectable) {
-                levels.get("Level " + i).setIsSelectable(true);
+                levels.get("Level_" + i).setIsSelectable(true);
             }
         }
-        levels.get("Level " + selectedLevel).setIsSelected(true);
+        levels.get("Level_" + selectedLevel).setIsSelected(true);
         components.putAll(levels);
 
 
@@ -79,23 +82,23 @@ public class LevelSelectMenu implements Screen {
             if( selectedLevel >= 1 && selectedLevel < levels.size() ) {
                 if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && selectedLevel < levels.size() - 1) {
                     TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get("Level " + selectedLevel).setIsSelected(false);
+                    levels.get("Level_" + selectedLevel).setIsSelected(false);
                     selectedLevel += 1;
-                    levels.get("Level " + selectedLevel).setIsSelected(true);
+                    levels.get("Level_" + selectedLevel).setIsSelected(true);
                 }
                 else if ( ( Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) && selectedLevel > 0) {
                     TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get("Level " + selectedLevel).setIsSelected(false);
+                    levels.get("Level_" + selectedLevel).setIsSelected(false);
                     selectedLevel -= 1;
                     if(selectedLevel <= 1) {
                         selectedLevel = 1;
                     }
-                    levels.get("Level " + selectedLevel).setIsSelected(true);
+                    levels.get("Level_" + selectedLevel).setIsSelected(true);
                 } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)  && selectedLevel < levels.size() - 1) {
                     TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get("Level " + selectedLevel).setIsSelected(false);
+                    levels.get("Level_" + selectedLevel).setIsSelected(false);
                     selectedLevel += 1;
-                    levels.get("Level " + selectedLevel).setIsSelected(true);
+                    levels.get("Level_" + selectedLevel).setIsSelected(true);
                 }
             }
         } catch (InterruptedException e) {
@@ -105,7 +108,7 @@ public class LevelSelectMenu implements Screen {
         int listX = 100;
         int listY = 350;
         for (int i = 1; i < levels.size(); i ++) {
-            MenuItem levelItem = levels.get("Level " + i);
+            LevelItem levelItem = levels.get("Level_" + i);
             if (levelItem.getIsSelected()) {
                 font.draw(batch, " > " + levelItem.getName(), listX, listY);
             } else {
@@ -114,9 +117,9 @@ public class LevelSelectMenu implements Screen {
             listY -= 20;
         }
 
-//        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-//            this.game.setScreen(levels.get(selectedLevel).getLevel());
-//        }
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            MenuSystem.activateLevel(this.game, levels.get("Level_" + selectedLevel));
+        }
 
         batch.end();
         camera.update();

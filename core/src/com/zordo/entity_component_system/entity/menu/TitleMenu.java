@@ -56,7 +56,7 @@ public class TitleMenu implements Screen {
         
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
         	ScreenUtils.clear(0, 0, 0.2f, 1);
-        	this.game.setScreen(new LevelSelectMenu(game));
+        	this.game.setScreen(new LevelMenu(game));
         }
 	}
 
