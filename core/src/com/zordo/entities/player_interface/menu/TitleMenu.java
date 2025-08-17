@@ -1,4 +1,4 @@
-package com.zordo.entity_component_system.entity.menu;
+package com.zordo.entities.player_interface.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Screen;
 import com.zordo.LegendOfZordo;
-import com.zordo.entity_component_system.component.camera.Camera;
-import com.zordo.entity_component_system.component.Component;
+import com.zordo.components.camera.Camera;
+import com.zordo.components.Component;
 import com.zordo.utilities.GifDecoder;
 
 import java.util.HashMap;
@@ -39,7 +39,6 @@ public class TitleMenu implements Screen {
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
     	Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
     	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
     	
@@ -47,7 +46,6 @@ public class TitleMenu implements Screen {
 		Camera camera = (Camera) components.get("Camera");
 	    batch.setProjectionMatrix(camera.getCamera().combined);
 
-		// TODO Auto-generated method stub
         elapsed += Gdx.graphics.getDeltaTime();
 
         batch.begin();

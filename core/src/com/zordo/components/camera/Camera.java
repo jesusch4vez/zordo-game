@@ -1,7 +1,7 @@
-package com.zordo.entity_component_system.component.camera;
+package com.zordo.components.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.zordo.entity_component_system.component.Component;
+import com.zordo.components.Component;
 
 public class Camera extends Component {
     private OrthographicCamera camera;

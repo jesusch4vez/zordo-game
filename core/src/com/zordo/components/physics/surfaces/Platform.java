@@ -1,9 +1,9 @@
-package com.zordo.entity_component_system.component.physics.surfaces;
+package com.zordo.components.physics.surfaces;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.zordo.entity_component_system.component.Component;
+import com.zordo.components.Component;
 
 public class Platform extends Component {
 

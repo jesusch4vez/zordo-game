@@ -1,4 +1,4 @@
-package com.zordo.entity_component_system.entity.menu;
+package com.zordo.entities.player_interface.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,10 +14,10 @@ import com.zordo.LegendOfZordo;
 
 import java.util.concurrent.TimeUnit;
 
-import com.zordo.entity_component_system.component.Component;
-import com.zordo.entity_component_system.component.camera.Camera;
-import com.zordo.entity_component_system.component.menu.LevelItem;
-import com.zordo.entity_component_system.system.menu.MenuSystem;
+import com.zordo.components.Component;
+import com.zordo.components.camera.Camera;
+import com.zordo.components.menu.LevelItem;
+import com.zordo.systems.menu.MenuSystem;
 
 import java.util.HashMap;
 

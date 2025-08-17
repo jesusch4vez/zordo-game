@@ -1,8 +1,8 @@
-package com.zordo.entity_component_system.system.menu;
+package com.zordo.systems.menu;
 
 import com.zordo.LegendOfZordo;
-import com.zordo.entity_component_system.component.menu.LevelItem;
-import com.zordo.entity_component_system.entity.level.Level;
+import com.zordo.components.menu.LevelItem;
+import com.zordo.entities.world.level.Level;
 
 public class MenuSystem {
     public static void activateLevel(LegendOfZordo game, LevelItem levelItem) {
