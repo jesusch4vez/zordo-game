@@ -75,8 +75,6 @@ public class Character {
 
         hearts = new ArrayList<>(8);
 
-
-
         // running animation construction
         int j = 0;
         for(int i = 0; i < 6; i++) {

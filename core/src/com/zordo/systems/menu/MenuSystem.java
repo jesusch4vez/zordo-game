@@ -1,7 +1,6 @@
 package com.zordo.systems.menu;
 
 import com.zordo.LegendOfZordo;
-import com.zordo.components.menu.LevelItem;
 import com.zordo.entities.world.level.Level;
 
 public class MenuSystem {

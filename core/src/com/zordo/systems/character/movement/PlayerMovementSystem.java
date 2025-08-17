@@ -2,14 +2,14 @@ package com.zordo.systems.character.movement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.zordo.entities.characters.player.Player;
-import com.zordo.systems.camera.CameraSystem;
 import com.zordo.systems.health.HealthSystem;
+
+import static com.zordo.systems.character.animation.AnimationSystem.jumpRender;
 
 public class PlayerMovementSystem {
     static int jumps = 0;
@@ -35,7 +35,7 @@ public class PlayerMovementSystem {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             if(!player.getFlippedRight()) {
-                player.setFlippedRight(true);;
+                player.setFlippedRight(true);
             }
             if(!player.getJumping()){
                 animation = player.getWalkingRightAnimation();
@@ -91,13 +91,4 @@ public class PlayerMovementSystem {
             batch.draw(animation.getKeyFrame(elapsed,true), player.getCollider().x,player.getCollider().y);
         }
     }
-
-    public static void jumpRender(Player player, SpriteBatch batch) {
-        if(player.getFlippedRight()) {
-            batch.draw(player.getJumpRight(), player.getCollider().x, player.getCollider().y);
-        } else {
-            batch.draw(player.getJumpLeft(), player.getCollider().x, player.getCollider().y);
-        }
-    }
-
 }
