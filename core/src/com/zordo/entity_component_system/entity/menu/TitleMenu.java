@@ -1,32 +1,35 @@
-package com.zordo.system.title;
+package com.zordo.entity_component_system.entity.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Screen;
 import com.zordo.LegendOfZordo;
-import com.zordo.system.menu.LevelSelect;
-import com.zordo.entity.services.gif.GifDecoder;
+import com.zordo.entity_component_system.component.camera.Camera;
+import com.zordo.entity_component_system.component.Component;
+import com.zordo.utilities.GifDecoder;
 
-public class Screen implements com.badlogic.gdx.Screen {
+import java.util.HashMap;
+
+public class TitleMenu implements Screen {
 
 	final LegendOfZordo game;
     public SpriteBatch batch;
     public Animation<TextureRegion> animation;
     float elapsed;
+
+	HashMap<String, Component> components;
     
-    OrthographicCamera camera;
-    
-    public Screen(final LegendOfZordo game) {
+    public TitleMenu(final LegendOfZordo game) {
     	this.game = game;
-    	
     	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle.gif").read());
-    	camera = new OrthographicCamera();
-    	camera.setToOrtho(false, 1920,1080);
+
+		components = new HashMap<>();
+		components.put("Camera", new Camera());
     }
 	
 	@Override
@@ -41,7 +44,8 @@ public class Screen implements com.badlogic.gdx.Screen {
     	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
     	
 	    batch = new SpriteBatch();
-	    batch.setProjectionMatrix(camera.combined);
+		Camera camera = (Camera) components.get("Camera");
+	    batch.setProjectionMatrix(camera.getCamera().combined);
 
 		// TODO Auto-generated method stub
         elapsed += Gdx.graphics.getDeltaTime();
@@ -52,10 +56,8 @@ public class Screen implements com.badlogic.gdx.Screen {
         
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
         	ScreenUtils.clear(0, 0, 0.2f, 1);
-        	//this.dispose();
-        	this.game.setScreen(new LevelSelect(game));
+        	this.game.setScreen(new LevelSelectMenu(game));
         }
-        // camera.update();
 	}
 
 	@Override

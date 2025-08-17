@@ -3,7 +3,7 @@
 /* Released under Apache 2.0 */
 /* https://code.google.com/p/animated-gifs-in-android/ */
 
-package com.zordo.entity.services.gif;
+package com.zordo.utilities;
 
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
