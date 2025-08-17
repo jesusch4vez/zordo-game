@@ -14,14 +14,14 @@ import static com.zordo.systems.character.animation.AnimationSystem.jumpRender;
 public class PlayerMovementSystem {
     static int jumps = 0;
     static float jump2 = 0;
-    static Boolean stepping = false;
+    static Boolean stepping = true;
     static float elapsed;
 
     static Animation<Sprite> animation;
 
     public static void move(Player player, SpriteBatch batch) {
         elapsed += Gdx.graphics.getDeltaTime();
-        player.setPosition(player.getCollider().getX(), player.getCollider().getY());
+        player.setPosition(player.getCollider().x, player.getCollider().y);
 
         HealthSystem.healthRender(player.getHearts(), batch);
         if(!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -34,6 +34,7 @@ public class PlayerMovementSystem {
             }
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            stepping = true;
             if(!player.getFlippedRight()) {
                 player.setFlippedRight(true);
             }
@@ -47,6 +48,7 @@ public class PlayerMovementSystem {
                 player.getCollider().x += 150 * Gdx.graphics.getDeltaTime();
             }
         } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            stepping = true;
             if(player.getFlippedRight()) {
                 player.setFlippedRight(false);
             }
