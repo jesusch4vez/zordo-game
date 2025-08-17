@@ -118,7 +118,7 @@ public class LevelMenu implements Screen {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            MenuSystem.activateLevel(this.game , levels.get("Level_" + selectedLevel));
+            MenuSystem.activateLevel(this.game, levels.get("Level_" + selectedLevel));
         }
 
         batch.end();
