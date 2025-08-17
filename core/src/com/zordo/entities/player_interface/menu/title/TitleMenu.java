@@ -1,4 +1,4 @@
-package com.zordo.entities.player_interface.menu;
+package com.zordo.entities.player_interface.menu.title;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,7 +11,8 @@ import com.badlogic.gdx.Screen;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.camera.Camera;
 import com.zordo.components.Component;
-import com.zordo.utilities.GifDecoder;
+import com.zordo.entities.player_interface.menu.game.LevelMenu;
+import com.zordo.systems.utilities.GifDecoder;
 
 import java.util.HashMap;
 

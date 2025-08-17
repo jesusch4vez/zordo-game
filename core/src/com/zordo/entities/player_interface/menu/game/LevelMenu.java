@@ -1,4 +1,4 @@
-package com.zordo.entities.player_interface.menu;
+package com.zordo.entities.player_interface.menu.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -118,7 +118,7 @@ public class LevelMenu implements Screen {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            MenuSystem.activateLevel(this.game, levels.get("Level_" + selectedLevel));
+            MenuSystem.activateLevel(this.game);
         }
 
         batch.end();

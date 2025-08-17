@@ -5,8 +5,8 @@ import com.zordo.components.menu.LevelItem;
 import com.zordo.entities.world.level.Level;
 
 public class MenuSystem {
-    public static void activateLevel(LegendOfZordo game, LevelItem levelItem) {
-        Level level = new Level(game, levelItem.getName());
+    public static void activateLevel(LegendOfZordo game) {
+        Level level = new Level(game);
         game.setScreen(level);
     }
 }

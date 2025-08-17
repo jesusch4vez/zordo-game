@@ -13,9 +13,10 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.Component;
 import com.zordo.components.camera.Camera;
-import com.zordo.components.physics.surfaces.Platform;
+import com.zordo.components.physics.terrain.surfaces.Platform;
 import com.zordo.entities.characters.player.Player;
 import com.zordo.systems.camera.CameraSystem;
+import com.zordo.systems.character.movement.PlayerMovementSystem;
 
 import java.util.HashMap;
 
@@ -25,19 +26,17 @@ public class Level implements Screen {
     OrthographicCamera camera;
 
     public SpriteBatch batch;
-    private String levelName;
     protected Platform slat;
     private final Texture backgroundTexture;
 
-    Player linko;
+    Player player;
 
     boolean paused;
 
     HashMap<String, Component> components;
 
-    public Level(final LegendOfZordo game, String levelName) {
+    public Level(final LegendOfZordo game) {
         this.game = game;
-        this.levelName = levelName;
 
         components = new HashMap<>();
 
@@ -54,11 +53,11 @@ public class Level implements Screen {
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
-        Camera tempCam = (Camera) components.get("Camera");
-        this.camera = tempCam.getCamera();
+        Camera cam = (Camera) components.get("Camera");
+        this.camera = cam.getCamera();
         this.camera.setToOrtho(false, 1290,1080);
 
-        linko = new Player();
+        player = new Player();
     }
 
     @Override
@@ -73,8 +72,6 @@ public class Level implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch = new SpriteBatch();
-        Camera tempCamera = (Camera) components.get("Camera");
-        OrthographicCamera camera = tempCamera.getCamera();
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
@@ -87,12 +84,11 @@ public class Level implements Screen {
             this.pause();
         }
 
-        if (!this.paused) {
-            linko.move(batch);
-            CameraSystem.follow(linko, camera);
 
-            linko.collisionWithPlatform();
-            if (linko.health <= 0) {
+        if (!this.paused) {
+            PlayerMovementSystem.move(player, batch);
+            CameraSystem.follow(player, camera);
+            if (player.health <= 0) {
                 BitmapFont font = new BitmapFont();
                 font.draw(batch, "GAME OVER", 400, 200);
             }
@@ -100,7 +96,6 @@ public class Level implements Screen {
 
         batch.end();
         camera.update();
-
     }
 
     @Override

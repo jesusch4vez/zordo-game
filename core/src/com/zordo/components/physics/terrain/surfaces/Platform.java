@@ -1,4 +1,4 @@
-package com.zordo.components.physics.surfaces;
+package com.zordo.components.physics.terrain.surfaces;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

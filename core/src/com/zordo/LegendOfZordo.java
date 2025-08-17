@@ -2,7 +2,7 @@ package com.zordo;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.zordo.entities.player_interface.menu.TitleMenu;
+import com.zordo.entities.player_interface.menu.title.TitleMenu;
 
 public class LegendOfZordo extends Game {
 
