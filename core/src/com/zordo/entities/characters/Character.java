@@ -1,10 +1,8 @@
 package com.zordo.entities.characters;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.zordo.components.animation.Animation;
 import com.zordo.components.health.Heart;
 
 import java.util.ArrayList;
@@ -19,28 +17,7 @@ public class Character {
 
     public ArrayList<Heart> hearts;
     public int health;
-
-    Animation<Sprite> runningRightAnimation;
-    Animation<Sprite> runningLeftAnimation;
-    Animation<Sprite> walkingRightAnimation;
-    Animation<Sprite> walkingLeftAnimation;
-    Animation<Sprite> animation;
-
-    Sprite[] runningRightFrames;
-    Sprite[] runningLeftFrames;
-    Sprite[] walkingRightFrames;
-    Sprite[] walkingLeftFrames;
-    Sprite standRight;
-    Sprite standLeft;
-    Sprite jumpRight;
-    Sprite jumpLeft;
-
-
-    // accessing sprite assets from the directory files
-    String standuri = "character/player/link-standing-sprites/";
-    String runuri = "character/player/link-running-sprites/";
-    String jumpuri = "character/player/link-jumping-sprites/";
-
+    Animation animation;
 
     public Character() {
         position = new Vector3();
@@ -59,47 +36,11 @@ public class Character {
 
         health = 8;
 
-        // animation objects
-        runningRightFrames = new Sprite[6];
-        runningLeftFrames = new Sprite[6];
-        walkingRightFrames = new Sprite[4];
-        walkingLeftFrames = new Sprite[4];
-
-        // standing and jumping sprite creation
-        standRight = new Sprite(new Texture(standuri + "link-standing-0.png"));
-        standLeft = new Sprite(standRight);
-        jumpRight = new Sprite(new Texture(jumpuri + "link-jumping-0.png"));
-        jumpLeft = new Sprite(jumpRight);
-        standLeft.flip(true, false);
-        jumpLeft.flip(true, false);
-
-        hearts = new ArrayList<>(8);
-
-        // running animation construction
-        int j = 0;
-        for(int i = 0; i < 6; i++) {
-            runningRightFrames[i] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
-            runningLeftFrames[i] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
-            if( i != 2 && i != 5) {
-                walkingRightFrames[j] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
-                walkingLeftFrames[j] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
-                walkingLeftFrames[j].flip(true, false);
-                j++;
-            }
-            runningLeftFrames[i].flip(true, false);
-        }
-
+        hearts = new ArrayList<>(health);
         for(int i = 0; i < health; i++) {
             hearts.add(new Heart());
         }
-
-        // setting the animations
-        runningRightAnimation = new Animation<>(1f / 6f, runningRightFrames);
-        runningLeftAnimation = new Animation<>(1f / 6f, runningLeftFrames);
-        walkingRightAnimation = new Animation<>(1f / 3f, walkingRightFrames);
-        walkingLeftAnimation = new Animation<>(1f / 3f, walkingLeftFrames);
-
-        animation = walkingRightAnimation;
+        animation = new Animation();
     }
 
     public int getHealth() {
@@ -157,87 +98,15 @@ public class Character {
         return this.jumping;
     };
 
-    public void setWalkingRightAnimation(Animation<Sprite> walkingRightAnimation) {
-        this.walkingRightAnimation = walkingRightAnimation;
-    }
-
-    public Animation<Sprite> getWalkingRightAnimation () {
-        return this.walkingRightAnimation;
-    }
-
-    public void setWalkingLeftAnimation(Animation<Sprite> walkingLeftAnimation) {
-        this.walkingLeftAnimation = walkingLeftAnimation;
-    }
-
-    public Animation<Sprite> getWalkingLeftAnimation () {
-        return this.walkingLeftAnimation;
-    }
-
-    public void setRunningRightAnimation(Animation<Sprite> runningRightAnimation) {
-        this.runningRightAnimation = runningRightAnimation;
-    };
-
-    public Animation<Sprite> getRunningRightAnimation() {
-        return this.runningRightAnimation;
-    };
-
-    public void setRunningLeftAnimation(Animation<Sprite> runningLeftAnimation) {
-        this.runningLeftAnimation = runningLeftAnimation;
-    };
-
-    public Animation<Sprite> getRunningLeftAnimation() {
-        return this.runningLeftAnimation;
-    };
-
-    public void setRunningRightFrames(Sprite[] runningRightFrames) {
-        this.runningRightFrames = runningRightFrames;
-    };
-
-    public Sprite[] getRunningRightFrames() {
-        return this.runningRightFrames;
-    };
-
-    public void setRunningLeftFrames(Sprite[] runningLeftFrames) {
-        this.runningLeftFrames = runningLeftFrames;
-    };
-
-    public Sprite[] getRunningLeftFrames() {
-        return this.runningLeftFrames;
-    };
-
-    public void setStandRight(Sprite standRight) {
-        this.standRight = standRight;
-    };
-
-    public Sprite getStandRight() {
-        return this.standRight;
-    };
-
-    public void setStandLeft(Sprite standLeft) {
-        this.standLeft = standLeft;
-    };
-
-    public Sprite getStandLeft() {
-        return this.standLeft;
-    };
-
-    public void setJumpRight(Sprite jumpRight) {
-        this.jumpRight = jumpRight;
-    };
-
-    public Sprite getJumpRight() {
-        return this.jumpRight;
-    };
-
-    public void setJumpLeft(Sprite jumpLeft) {
-        this.jumpLeft = jumpLeft;
-    };
-
-    public Sprite getJumpLeft() {
-        return this.jumpLeft;
-    }
-
     public ArrayList<Heart> getHearts() {
         return this.hearts;
+    }
+
+    public void setAnimation(Animation animation) {
+        this.animation = animation;
+    }
+
+    public Animation getAnimation() {
+        return this.animation;
     }
 }
