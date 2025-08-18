@@ -28,18 +28,18 @@ public class HealthSystem {
         }
     }
 
-    public void damage(ArrayList<HeartComponent> hearts, Character character) {
+    public static void damage(ArrayList<HeartComponent> hearts, Character character) {
         damageHeart(topHeart(hearts));
         if(topHeart(hearts).getHeartHealth() <= 0) {
             character.getCharacterComponent().health--;
         }
     }
 
-    private HeartComponent topHeart(ArrayList<HeartComponent> hearts) {
+    private static HeartComponent topHeart(ArrayList<HeartComponent> hearts) {
         return hearts.get(topHeartIndex(hearts));
     }
 
-    private int topHeartIndex(ArrayList<HeartComponent> hearts) {
+    private static int topHeartIndex(ArrayList<HeartComponent> hearts) {
         if(!hearts.isEmpty()) {
             return hearts.size() - 1;
         } else {

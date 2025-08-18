@@ -50,10 +50,6 @@ public class Level implements Screen {
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
-        CameraComponent cam = (CameraComponent) components.get("Camera");
-        this.camera = cam.getCamera();
-        this.camera.setToOrtho(false, 1290,1080);
-
         player = new Player();
     }
 
@@ -69,6 +65,8 @@ public class Level implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch = new SpriteBatch();
+        CameraComponent cam = (CameraComponent) components.get("Camera");
+        camera = cam.getCamera();
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
