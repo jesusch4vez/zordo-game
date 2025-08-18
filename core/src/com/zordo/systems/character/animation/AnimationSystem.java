@@ -27,7 +27,7 @@ public class AnimationSystem {
         }
     }
 
-    public static void walkLeftRender(Character character, SpriteBatch batch) {
+    public static void moveLeftRender(Character character, SpriteBatch batch) {
         if(character.getCharacterComponent().getFlippedRight()) {
             character.getCharacterComponent().setFlippedRight(false);
         }
@@ -42,9 +42,7 @@ public class AnimationSystem {
         }
     }
 
-    public static void runLeftRender(Character character, SpriteBatch batch) {}
-
-    public static void walkRightRender(Character character, SpriteBatch batch) {
+    public static void moveRightRender(Character character, SpriteBatch batch) {
         if(!character.getCharacterComponent().getFlippedRight()) {
             character.getCharacterComponent().setFlippedRight(true);
         }
@@ -58,8 +56,6 @@ public class AnimationSystem {
             character.getCharacterComponent().getCollider().x += 150 * Gdx.graphics.getDeltaTime();
         }
     }
-
-    public static void runRightRender(Character character, SpriteBatch batch) {}
 
     public static void animate(Character character, SpriteBatch batch, float elapsed ) {
         batch.draw(animation.getKeyFrame(elapsed,true), character.getCharacterComponent().getCollider().x,character.getCharacterComponent().getCollider().y);

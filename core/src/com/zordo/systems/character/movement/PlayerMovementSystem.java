@@ -24,10 +24,10 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             stepping = true;
-            AnimationSystem.walkRightRender(character,batch);
+            AnimationSystem.moveRightRender(character,batch);
         } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             stepping = true;
-            AnimationSystem.walkLeftRender(character,batch);
+            AnimationSystem.moveLeftRender(character,batch);
         }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumps < 2) {

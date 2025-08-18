@@ -1,16 +1,17 @@
 package com.zordo.components.animation.character;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.zordo.components.Component;
 
 public class AnimationComponent extends Component {
 
-    com.badlogic.gdx.graphics.g2d.Animation<Sprite> runningRightAnimation;
-    com.badlogic.gdx.graphics.g2d.Animation<Sprite> runningLeftAnimation;
-    com.badlogic.gdx.graphics.g2d.Animation<Sprite> walkingRightAnimation;
-    com.badlogic.gdx.graphics.g2d.Animation<Sprite> walkingLeftAnimation;
-    com.badlogic.gdx.graphics.g2d.Animation<Sprite> animation;
+    Animation<Sprite> runningRightAnimation;
+    Animation<Sprite> runningLeftAnimation;
+    Animation<Sprite> walkingRightAnimation;
+    Animation<Sprite> walkingLeftAnimation;
+    Animation<Sprite> animation;
 
     Sprite[] runningRightFrames;
     Sprite[] runningLeftFrames;
@@ -58,43 +59,43 @@ public class AnimationComponent extends Component {
         }
 
         // setting the animations
-        runningRightAnimation = new com.badlogic.gdx.graphics.g2d.Animation<>(1f / 6f, runningRightFrames);
-        runningLeftAnimation = new com.badlogic.gdx.graphics.g2d.Animation<>(1f / 6f, runningLeftFrames);
-        walkingRightAnimation = new com.badlogic.gdx.graphics.g2d.Animation<>(1f / 3f, walkingRightFrames);
-        walkingLeftAnimation = new com.badlogic.gdx.graphics.g2d.Animation<>(1f / 3f, walkingLeftFrames);
+        runningRightAnimation = new Animation<>(1f / 6f, runningRightFrames);
+        runningLeftAnimation = new Animation<>(1f / 6f, runningLeftFrames);
+        walkingRightAnimation = new Animation<>(1f / 3f, walkingRightFrames);
+        walkingLeftAnimation = new Animation<>(1f / 3f, walkingLeftFrames);
 
         animation = walkingRightAnimation;
     }
 
-    public void setWalkingRightAnimation(com.badlogic.gdx.graphics.g2d.Animation<Sprite> walkingRightAnimation) {
+    public void setWalkingRightAnimation(Animation<Sprite> walkingRightAnimation) {
         this.walkingRightAnimation = walkingRightAnimation;
     }
 
-    public com.badlogic.gdx.graphics.g2d.Animation<Sprite> getWalkingRightAnimation () {
+    public Animation<Sprite> getWalkingRightAnimation () {
         return this.walkingRightAnimation;
     }
 
-    public void setWalkingLeftAnimation(com.badlogic.gdx.graphics.g2d.Animation<Sprite> walkingLeftAnimation) {
+    public void setWalkingLeftAnimation(Animation<Sprite> walkingLeftAnimation) {
         this.walkingLeftAnimation = walkingLeftAnimation;
     }
 
-    public com.badlogic.gdx.graphics.g2d.Animation<Sprite> getWalkingLeftAnimation () {
+    public Animation<Sprite> getWalkingLeftAnimation () {
         return this.walkingLeftAnimation;
     }
 
-    public void setRunningRightAnimation(com.badlogic.gdx.graphics.g2d.Animation<Sprite> runningRightAnimation) {
+    public void setRunningRightAnimation(Animation<Sprite> runningRightAnimation) {
         this.runningRightAnimation = runningRightAnimation;
     };
 
-    public com.badlogic.gdx.graphics.g2d.Animation<Sprite> getRunningRightAnimation() {
+    public Animation<Sprite> getRunningRightAnimation() {
         return this.runningRightAnimation;
     };
 
-    public void setRunningLeftAnimation(com.badlogic.gdx.graphics.g2d.Animation<Sprite> runningLeftAnimation) {
+    public void setRunningLeftAnimation(Animation<Sprite> runningLeftAnimation) {
         this.runningLeftAnimation = runningLeftAnimation;
     };
 
-    public com.badlogic.gdx.graphics.g2d.Animation<Sprite> getRunningLeftAnimation() {
+    public Animation<Sprite> getRunningLeftAnimation() {
         return this.runningLeftAnimation;
     };
 
