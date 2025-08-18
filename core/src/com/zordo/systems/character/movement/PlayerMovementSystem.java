@@ -47,12 +47,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             AnimationSystem.jumpRender(character, batch);
         }
 
-        if(character.getCharacterComponent().getCollider().y > 11) {
-            character.getCharacterComponent().getCollider().y -= 120 * Gdx.graphics.getDeltaTime();
-        } else if (character.getCharacterComponent().getCollider().y < 11) {
-            character.getCharacterComponent().setJumps(0);
-            character.getCharacterComponent().setIsJumping(false);
-        }
+        character.getCharacterComponent().getCollider().y -= 120 * Gdx.graphics.getDeltaTime();
 
         if(character.getCharacterComponent().getIsStepping()) {
             AnimationSystem.animate(character, batch, elapsed);
