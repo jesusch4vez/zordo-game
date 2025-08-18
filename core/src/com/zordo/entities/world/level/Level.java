@@ -19,6 +19,7 @@ import com.zordo.systems.camera.CameraSystem;
 import com.zordo.systems.character.movement.PlayerMovementSystem;
 import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Level implements Screen {
@@ -34,15 +35,22 @@ public class Level implements Screen {
     boolean paused;
 
     HashMap<String, Component> components;
+    ArrayList<PlatformComponent> platforms;
 
     public Level(final LegendOfZordo game) {
         this.game = game;
+        platforms = new ArrayList<>();
         PlatformComponent platform = new PlatformComponent(10,1920);
         platform.setCoordinates(0,0);
 
+        PlatformComponent platform2 = new PlatformComponent(10,100);
+        platform2.setCoordinates(100,100);
+
+        platforms.add(platform);
+        platforms.add(platform2);
+
         components = new HashMap<>();
         components.put("Camera", new CameraComponent());
-        components.put("Platform", platform);
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
@@ -72,7 +80,8 @@ public class Level implements Screen {
         batch.begin();
         batch.draw(backgroundTexture, 0, 0, 1920, 1080);
 
-        PlatformSystem.render((PlatformComponent) components.get("Platform"), batch);
+        PlatformSystem.render(platforms, batch);
+//        PlatformSystem.render((PlatformComponent) components.get("Platform2"), batch);
 
         if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.paused = true;
