@@ -8,9 +8,11 @@ import com.zordo.components.health.HeartComponent;
 import java.util.ArrayList;
 
 public class CharacterComponent {
-    Boolean flippedRight;
-    Boolean jumping;
-    Boolean stepping;
+    Boolean isFlippedRight;
+    Boolean isJumping;
+    Boolean isStepping;
+
+    int jumps;
 
     Rectangle collider;
     Vector3 position;
@@ -20,6 +22,7 @@ public class CharacterComponent {
     AnimationComponent animation;
 
     public CharacterComponent() {
+        jumps = 0;
         position = new Vector3();
         collider = new Rectangle();
         collider.x = 10;
@@ -29,10 +32,10 @@ public class CharacterComponent {
         position.x = collider.x;
         position.y = collider.y;
 
-        // orientation and jumping status
-        flippedRight = true;
-        jumping = false;
-        stepping = false;
+        // orientation and isJumping status
+        isFlippedRight = true;
+        isJumping = false;
+        isStepping = false;
 
         health = 8;
 
@@ -82,20 +85,30 @@ public class CharacterComponent {
         return this.position.y;
     }
 
-    public void setFlippedRight(Boolean flip) {
-        this.flippedRight = flip;
+    public void setX(float x) {
+        this.position.x = x;
+        this.collider.x = x;
+    }
+
+    public void setY(float y) {
+        this.position.y = y;
+        this.collider.y = y;
+    }
+
+    public void setIsFlippedRight(Boolean flip) {
+        this.isFlippedRight = flip;
     };
 
-    public Boolean getFlippedRight() {
-        return this.flippedRight;
+    public Boolean getIsFlippedRight() {
+        return this.isFlippedRight;
     };
 
-    public void setJumping(Boolean jumping) {
-        this.jumping = jumping;
+    public void setIsJumping(Boolean isJumping) {
+        this.isJumping = isJumping;
     };
 
-    public Boolean getJumping() {
-        return this.jumping;
+    public Boolean getIsJumping() {
+        return this.isJumping;
     };
 
     public ArrayList<HeartComponent> getHearts() {
@@ -108,5 +121,21 @@ public class CharacterComponent {
 
     public AnimationComponent getAnimation() {
         return this.animation;
+    }
+
+    public Boolean getIsStepping() {
+        return isStepping;
+    }
+
+    public void setIsStepping(Boolean stepping) {
+        this.isStepping = stepping;
+    }
+
+    public void setJumps(int jumps) {
+        this.jumps = jumps;
+    }
+
+    public int getJumps() {
+        return this.jumps;
     }
 }

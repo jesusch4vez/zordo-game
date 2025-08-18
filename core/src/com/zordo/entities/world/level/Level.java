@@ -43,7 +43,7 @@ public class Level implements Screen {
         PlatformComponent platform = new PlatformComponent(10,1920);
         platform.setCoordinates(0,0);
 
-        PlatformComponent platform2 = new PlatformComponent(10,100);
+        PlatformComponent platform2 = new PlatformComponent(10,500);
         platform2.setCoordinates(100,100);
 
         platforms.add(platform);
@@ -81,7 +81,7 @@ public class Level implements Screen {
         batch.draw(backgroundTexture, 0, 0, 1920, 1080);
 
         PlatformSystem.render(platforms, batch);
-//        PlatformSystem.render((PlatformComponent) components.get("Platform2"), batch);
+        PlatformSystem.solidPlatform(platforms, player);
 
         if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.paused = true;
