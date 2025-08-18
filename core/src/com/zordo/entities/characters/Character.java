@@ -141,36 +141,6 @@ public class Character {
         return this.position.y;
     }
 
-    public void damage() {
-        topHeart(health-1).damageHeart();
-        if(topHeart(health-1).getHeartHealth() <= 0) {
-            health--;
-        }
-    }
-
-    private Heart topHeart(int health) {
-        if(health > -1) {
-            return this.hearts.get(health);
-        } else {
-            return this.hearts.get(0);
-        }
-    }
-
-    private Heart topHeart() {
-        // TODO Auto-generated method stub
-        return this.hearts.get(topHeartIndex());
-
-    }
-
-    private int topHeartIndex() {
-        // TODO Auto-generated method stub
-        if(!this.hearts.isEmpty()) {
-            return this.hearts.size() - 1;
-        } else {
-            return 0;
-        }
-    }
-
     public void setFlippedRight(Boolean flip) {
         this.flippedRight = flip;
     };

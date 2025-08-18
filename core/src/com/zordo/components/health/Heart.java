@@ -3,12 +3,13 @@ package com.zordo.components.health;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Disposable;
+import com.zordo.components.Component;
 
-public class Heart implements Disposable {
+public class Heart extends Component implements Disposable {
     String heartsuri = "character/player/hearts/";
 
     private Sprite heartState;
-    private final Sprite[] heartSegments;
+    private Sprite[] heartSegments;
     private int heartHealth;
 
     public Heart() {
@@ -19,13 +20,6 @@ public class Heart implements Disposable {
             this.heartSegments[i] = new Sprite(new Texture(heartsuri + "heart-" + i + ".png"));
         }
         this.heartState = this.heartSegments[4];
-    }
-
-    public void damageHeart() {
-        this.heartHealth = this.heartHealth -1;
-        if(this.heartHealth >= 0) {
-            this.heartState = this.heartSegments[this.heartHealth];
-        }
     }
 
     public Sprite getHeartState() {
@@ -40,11 +34,20 @@ public class Heart implements Disposable {
         return this.heartHealth;
     }
 
-    @Override
-    public void dispose() {
-        // TODO Auto-generated method stub
-
-
+    public void setHeartHealth(int heartHealth) {
+        this.heartHealth = heartHealth;
     }
 
+    public void setHeartSegments(Sprite[] heartSegments) {
+        this.heartSegments = heartSegments;
+    }
+
+    public Sprite[] getHeartSegments() {
+        return this.heartSegments;
+    }
+
+    @Override
+    public void dispose() {
+
+    }
 }
