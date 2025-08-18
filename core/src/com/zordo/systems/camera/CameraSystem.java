@@ -7,7 +7,7 @@ import com.zordo.entities.characters.player.Player;
 
 public class CameraSystem {
     public static void follow(Player player, OrthographicCamera camera) {
-        camera.position.set(player.getPosition().x, player.getPosition().y, 0);
+        camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             camera.zoom += 0.02F;
             //If the A Key is pressed, add 0.02 to the Camera's Zoom

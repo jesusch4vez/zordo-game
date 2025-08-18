@@ -15,7 +15,7 @@ import com.zordo.LegendOfZordo;
 import java.util.concurrent.TimeUnit;
 
 import com.zordo.components.Component;
-import com.zordo.components.camera.Camera;
+import com.zordo.components.camera.CameraComponent;
 import com.zordo.components.menu.LevelItem;
 import com.zordo.systems.menu.MenuSystem;
 
@@ -36,7 +36,7 @@ public class LevelMenu implements Screen {
         this.game = game;
         int levelCount = 10;
         components = new HashMap<>();
-        components.put("Camera", new Camera());
+        components.put("Camera", new CameraComponent());
 
         levels = new HashMap<>();
         for(int i = 1; i <= levelCount; i++) {
@@ -57,7 +57,7 @@ public class LevelMenu implements Screen {
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
-        Camera tempCam = (Camera) components.get("Camera");
+        CameraComponent tempCam = (CameraComponent) components.get("Camera");
         this.camera = tempCam.getCamera();
         this.camera.setToOrtho(false, 800,400);
     }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Screen;
 import com.zordo.LegendOfZordo;
-import com.zordo.components.camera.Camera;
+import com.zordo.components.camera.CameraComponent;
 import com.zordo.components.Component;
 import com.zordo.entities.player_interface.menu.game.LevelMenu;
 import com.zordo.systems.utilities.GifDecoder;
@@ -30,7 +30,7 @@ public class TitleMenu implements Screen {
     	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle.gif").read());
 
 		components = new HashMap<>();
-		components.put("Camera", new Camera());
+		components.put("Camera", new CameraComponent());
     }
 	
 	@Override
@@ -44,7 +44,7 @@ public class TitleMenu implements Screen {
     	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
     	
 	    batch = new SpriteBatch();
-		Camera camera = (Camera) components.get("Camera");
+		CameraComponent camera = (CameraComponent) components.get("Camera");
 	    batch.setProjectionMatrix(camera.getCamera().combined);
 
         elapsed += Gdx.graphics.getDeltaTime();

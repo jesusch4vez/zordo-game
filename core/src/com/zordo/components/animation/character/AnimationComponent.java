@@ -1,10 +1,10 @@
-package com.zordo.components.animation;
+package com.zordo.components.animation.character;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.zordo.components.Component;
 
-public class Animation extends Component {
+public class AnimationComponent extends Component {
 
     com.badlogic.gdx.graphics.g2d.Animation<Sprite> runningRightAnimation;
     com.badlogic.gdx.graphics.g2d.Animation<Sprite> runningLeftAnimation;
@@ -27,7 +27,7 @@ public class Animation extends Component {
     String runuri = "character/player/link-running-sprites/";
     String jumpuri = "character/player/link-jumping-sprites/";
 
-    public Animation() {
+    public AnimationComponent() {
         // animation objects
         runningRightFrames = new Sprite[6];
         runningLeftFrames = new Sprite[6];

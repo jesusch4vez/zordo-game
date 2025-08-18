@@ -1,20 +1,27 @@
 package com.zordo.components.physics.terrain.surfaces;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.zordo.components.Component;
 
-public class Platform extends Component {
+public class PlatformComponent extends Component {
 
-    private final Texture platformTexture;
+    private Texture platformTexture;
     private Rectangle platform;
 
-    public Platform() {
+    public PlatformComponent() {
         super();
         this.platform = new Rectangle();
         platform.setWidth(100);
         platform.setHeight(10);
+        platformTexture = new Texture("environment/platform-square.png");
+    }
+
+    public PlatformComponent(int height, int width) {
+        super();
+        this.platform = new Rectangle();
+        platform.setWidth(width);
+        platform.setHeight(height);
         platformTexture = new Texture("environment/platform-square.png");
     }
 
@@ -39,7 +46,11 @@ public class Platform extends Component {
         this.platform = platform;
     }
 
-    public void render(SpriteBatch batch) {
-        batch.draw(platformTexture, getX(), getY(),platform.getWidth(),platform.getHeight());
+    public Texture getPlatformTexture() {
+        return this.platformTexture;
+    }
+
+    public void setPlatformTexture(Texture platformTexture) {
+        this.platformTexture = platformTexture;
     }
 }

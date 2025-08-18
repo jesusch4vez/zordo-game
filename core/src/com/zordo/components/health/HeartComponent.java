@@ -5,14 +5,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Disposable;
 import com.zordo.components.Component;
 
-public class Heart extends Component implements Disposable {
+public class HeartComponent extends Component implements Disposable {
     String heartsuri = "character/player/hearts/";
 
     private Sprite heartState;
     private Sprite[] heartSegments;
     private int heartHealth;
 
-    public Heart() {
+    public HeartComponent() {
         this.heartSegments = new Sprite[5];
         this.heartHealth = 4;
         // heart textures

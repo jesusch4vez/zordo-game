@@ -11,57 +11,57 @@ public class AnimationSystem {
     static Animation<Sprite> animation;
 
     public static void standRender(Character character, SpriteBatch batch) {
-        if(character.getFlippedRight() && !character.getJumping()) {
-            character.getAnimation().setStandRight(character.getAnimation().getStandRight());
-            batch.draw(character.getAnimation().getStandRight(), character.getCollider().x, character.getCollider().y);
-        } else if (!character.getJumping()) {
-            batch.draw(character.getAnimation().getStandLeft(), character.getCollider().x, character.getCollider().y);
+        if(character.getCharacterComponent().getFlippedRight() && !character.getCharacterComponent().getJumping()) {
+            character.getCharacterComponent().getAnimation().setStandRight(character.getCharacterComponent().getAnimation().getStandRight());
+            batch.draw(character.getCharacterComponent().getAnimation().getStandRight(), character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
+        } else if (!character.getCharacterComponent().getJumping()) {
+            batch.draw(character.getCharacterComponent().getAnimation().getStandLeft(), character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
         }
     }
 
     public static void jumpRender(Character character, SpriteBatch batch) {
-        if (character.getFlippedRight()) {
-            batch.draw(character.getAnimation().getJumpRight(), character.getCollider().x, character.getCollider().y);
+        if (character.getCharacterComponent().getFlippedRight()) {
+            batch.draw(character.getCharacterComponent().getAnimation().getJumpRight(), character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
         } else {
-            batch.draw(character.getAnimation().getJumpLeft(), character.getCollider().x, character.getCollider().y);
+            batch.draw(character.getCharacterComponent().getAnimation().getJumpLeft(), character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
         }
     }
 
     public static void walkLeftRender(Character character, SpriteBatch batch) {
-        if(character.getFlippedRight()) {
-            character.setFlippedRight(false);
+        if(character.getCharacterComponent().getFlippedRight()) {
+            character.getCharacterComponent().setFlippedRight(false);
         }
-        if(!character.getJumping()){
-            animation = character.getAnimation().getWalkingLeftAnimation();
+        if(!character.getCharacterComponent().getJumping()){
+            animation = character.getCharacterComponent().getAnimation().getWalkingLeftAnimation();
         }
         if(!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            character.getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
+            character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
         } else {
-            animation = character.getAnimation().getRunningLeftAnimation();
-            character.getCollider().x -= 150 * Gdx.graphics.getDeltaTime();
+            animation = character.getCharacterComponent().getAnimation().getRunningLeftAnimation();
+            character.getCharacterComponent().getCollider().x -= 150 * Gdx.graphics.getDeltaTime();
         }
     }
 
     public static void runLeftRender(Character character, SpriteBatch batch) {}
 
     public static void walkRightRender(Character character, SpriteBatch batch) {
-        if(!character.getFlippedRight()) {
-            character.setFlippedRight(true);
+        if(!character.getCharacterComponent().getFlippedRight()) {
+            character.getCharacterComponent().setFlippedRight(true);
         }
-        if(!character.getJumping()){
-            animation = character.getAnimation().getWalkingRightAnimation();
+        if(!character.getCharacterComponent().getJumping()){
+            animation = character.getCharacterComponent().getAnimation().getWalkingRightAnimation();
         }
         if(!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            character.getCollider().x += 100 * Gdx.graphics.getDeltaTime();
+            character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
         } else {
-            animation = character.getAnimation().getRunningRightAnimation();
-            character.getCollider().x += 150 * Gdx.graphics.getDeltaTime();
+            animation = character.getCharacterComponent().getAnimation().getRunningRightAnimation();
+            character.getCharacterComponent().getCollider().x += 150 * Gdx.graphics.getDeltaTime();
         }
     }
 
     public static void runRightRender(Character character, SpriteBatch batch) {}
 
     public static void animate(Character character, SpriteBatch batch, float elapsed ) {
-        batch.draw(animation.getKeyFrame(elapsed,true), character.getCollider().x,character.getCollider().y);
+        batch.draw(animation.getKeyFrame(elapsed,true), character.getCharacterComponent().getCollider().x,character.getCharacterComponent().getCollider().y);
     }
 }

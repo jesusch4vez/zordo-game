@@ -1,112 +1,18 @@
 package com.zordo.entities.characters;
 
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.zordo.components.animation.Animation;
-import com.zordo.components.health.Heart;
-
-import java.util.ArrayList;
+import com.zordo.components.character.CharacterComponent;
 
 public class Character {
-    Boolean flippedRight;
-    Boolean jumping;
-    Boolean stepping;
-
-    Rectangle collider;
-    Vector3 position;
-
-    public ArrayList<Heart> hearts;
-    public int health;
-    Animation animation;
-
+    CharacterComponent characterComponent;
     public Character() {
-        position = new Vector3();
-        collider = new Rectangle();
-        collider.x = 10;
-        collider.y = 10;
-        collider.height = 53;
-        collider.width = 23;
-        position.x = collider.x;
-        position.y = collider.y;
-
-        // orientation and jumping status
-        flippedRight = true;
-        jumping = false;
-        stepping = false;
-
-        health = 8;
-
-        hearts = new ArrayList<>(health);
-        for(int i = 0; i < health; i++) {
-            hearts.add(new Heart());
-        }
-        animation = new Animation();
+        characterComponent = new CharacterComponent();
     }
 
-    public int getHealth() {
-        return this.health;
+    public CharacterComponent getCharacterComponent() {
+        return characterComponent;
     }
 
-
-    public void setCollider(Rectangle collider) {
-        this.collider = collider;
-    }
-
-    public void setCollider(float x, float y) {
-        this.collider.x = x;
-        this.collider.y = y;
-    }
-
-    public Rectangle getCollider() {
-        return this.collider;
-    }
-
-    public Vector3 getPosition() {
-        return this.position;
-    }
-
-    public void setPosition(Vector3 position) {
-        this.position = position;
-    }
-
-    public void setPosition(float x, float y) {
-        this.position.x = x;
-        this.position.y = y;
-    }
-
-    public float getX() {
-        return this.position.x;
-    }
-
-    public float getY() {
-        return this.position.y;
-    }
-
-    public void setFlippedRight(Boolean flip) {
-        this.flippedRight = flip;
-    };
-
-    public Boolean getFlippedRight() {
-        return this.flippedRight;
-    };
-
-    public void setJumping(Boolean jumping) {
-        this.jumping = jumping;
-    };
-
-    public Boolean getJumping() {
-        return this.jumping;
-    };
-
-    public ArrayList<Heart> getHearts() {
-        return this.hearts;
-    }
-
-    public void setAnimation(Animation animation) {
-        this.animation = animation;
-    }
-
-    public Animation getAnimation() {
-        return this.animation;
+    public void setCharacterComponent(CharacterComponent characterComponent) {
+        this.characterComponent = characterComponent;
     }
 }

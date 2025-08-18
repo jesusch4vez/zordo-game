@@ -3,9 +3,9 @@ package com.zordo.components.camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.zordo.components.Component;
 
-public class Camera extends Component {
+public class CameraComponent extends Component {
     private OrthographicCamera camera;
-    public Camera() {
+    public CameraComponent() {
         super();
         this.camera = new OrthographicCamera();
         camera.setToOrtho(false, 1920,1080);

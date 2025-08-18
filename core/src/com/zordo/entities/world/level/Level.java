@@ -12,11 +12,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.Component;
-import com.zordo.components.camera.Camera;
-import com.zordo.components.physics.terrain.surfaces.Platform;
+import com.zordo.components.camera.CameraComponent;
+import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.entities.characters.player.Player;
 import com.zordo.systems.camera.CameraSystem;
 import com.zordo.systems.character.movement.PlayerMovementSystem;
+import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 import java.util.HashMap;
 
@@ -26,7 +27,6 @@ public class Level implements Screen {
     OrthographicCamera camera;
 
     public SpriteBatch batch;
-    protected Platform slat;
     private final Texture backgroundTexture;
 
     Player player;
@@ -37,15 +37,12 @@ public class Level implements Screen {
 
     public Level(final LegendOfZordo game) {
         this.game = game;
+        PlatformComponent platform = new PlatformComponent(10,1920);
+        platform.setCoordinates(0,0);
 
         components = new HashMap<>();
-
-        components.put("Camera", new Camera());
-        components.put("Platform", new Platform());
-
-        this.slat = (Platform) components.get("Platform");
-        this.slat.getPlatform().setWidth(1920);
-        this.slat.setCoordinates(0, 0);
+        components.put("Camera", new CameraComponent());
+        components.put("Platform", platform);
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
@@ -53,7 +50,7 @@ public class Level implements Screen {
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
-        Camera cam = (Camera) components.get("Camera");
+        CameraComponent cam = (CameraComponent) components.get("Camera");
         this.camera = cam.getCamera();
         this.camera.setToOrtho(false, 1290,1080);
 
@@ -77,18 +74,17 @@ public class Level implements Screen {
         batch.begin();
         batch.draw(backgroundTexture, 0, 0, 1920, 1080);
 
-        this.slat.render(batch);
+        PlatformSystem.render((PlatformComponent) components.get("Platform"), batch);
 
         if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.paused = true;
             this.pause();
         }
 
-
         if (!this.paused) {
             PlayerMovementSystem.move(player, batch);
             CameraSystem.follow(player, camera);
-            if (player.health <= 0) {
+            if (player.getCharacterComponent().health <= 0) {
                 BitmapFont font = new BitmapFont();
                 font.draw(batch, "GAME OVER", 400, 200);
             }
