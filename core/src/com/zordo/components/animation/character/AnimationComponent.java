@@ -11,16 +11,21 @@ public class AnimationComponent extends Component {
     Animation<Sprite> runningLeftAnimation;
     Animation<Sprite> walkingRightAnimation;
     Animation<Sprite> walkingLeftAnimation;
+    Animation<Sprite> standingRightAnimation;
+    Animation<Sprite> standingLeftAnimation;
+    Animation<Sprite> jumpingRightAnimation;
+    Animation<Sprite> jumpingLeftAnimation;
+
     Animation<Sprite> animation;
 
     Sprite[] runningRightFrames;
     Sprite[] runningLeftFrames;
     Sprite[] walkingRightFrames;
     Sprite[] walkingLeftFrames;
-    Sprite standRight;
-    Sprite standLeft;
-    Sprite jumpRight;
-    Sprite jumpLeft;
+    Sprite[] standingRightFrames;
+    Sprite[] standingLeftFrames;
+    Sprite[] jumpingRightFrames;
+    Sprite[] jumpingLeftFrames;
 
 
     // accessing sprite assets from the directory files
@@ -35,13 +40,18 @@ public class AnimationComponent extends Component {
         walkingRightFrames = new Sprite[4];
         walkingLeftFrames = new Sprite[4];
 
+        standingRightFrames = new Sprite[1];
+        standingLeftFrames = new Sprite[1];
+        jumpingRightFrames = new Sprite[1];
+        jumpingLeftFrames = new Sprite[1];
+
         // standing and jumping sprite creation
-        standRight = new Sprite(new Texture(standuri + "link-standing-0.png"));
-        standLeft = new Sprite(standRight);
-        jumpRight = new Sprite(new Texture(jumpuri + "link-jumping-0.png"));
-        jumpLeft = new Sprite(jumpRight);
-        standLeft.flip(true, false);
-        jumpLeft.flip(true, false);
+        standingRightFrames[0] = new Sprite(new Texture(standuri + "link-standing-0.png"));
+        standingLeftFrames[0] = new Sprite(standingRightFrames[0]);
+        jumpingRightFrames[0] = new Sprite(new Texture(jumpuri + "link-jumping-0.png"));
+        jumpingLeftFrames[0] = new Sprite(jumpingRightFrames[0]);
+        standingLeftFrames[0].flip(true, false);
+        jumpingLeftFrames[0].flip(true, false);
 
 
         // running animation construction
@@ -63,6 +73,11 @@ public class AnimationComponent extends Component {
         runningLeftAnimation = new Animation<>(1f / 6f, runningLeftFrames);
         walkingRightAnimation = new Animation<>(1f / 3f, walkingRightFrames);
         walkingLeftAnimation = new Animation<>(1f / 3f, walkingLeftFrames);
+
+        standingRightAnimation = new Animation<>(1f / 6f, standingRightFrames);
+        standingLeftAnimation = new Animation<>(1f / 6f, standingLeftFrames);
+        jumpingRightAnimation = new Animation<>(1f / 6f, jumpingRightFrames);
+        jumpingLeftAnimation = new Animation<>(1f / 6f, jumpingLeftFrames);
 
         animation = walkingRightAnimation;
     }
@@ -99,51 +114,35 @@ public class AnimationComponent extends Component {
         return this.runningLeftAnimation;
     };
 
-    public void setRunningRightFrames(Sprite[] runningRightFrames) {
-        this.runningRightFrames = runningRightFrames;
-    };
+    public void setJumpingRightAnimation(Animation<Sprite> jumpingRightAnimation) {
+        this.jumpingRightAnimation = jumpingRightAnimation;
+    }
 
-    public Sprite[] getRunningRightFrames() {
-        return this.runningRightFrames;
-    };
+    public Animation<Sprite> getJumpingRightAnimation() {
+        return this.jumpingRightAnimation;
+    }
 
-    public void setRunningLeftFrames(Sprite[] runningLeftFrames) {
-        this.runningLeftFrames = runningLeftFrames;
-    };
+    public void setJumpingLeftAnimation(Animation<Sprite> jumpingLeftAnimation) {
+        this.jumpingLeftAnimation = jumpingLeftAnimation;
+    }
 
-    public Sprite[] getRunningLeftFrames() {
-        return this.runningLeftFrames;
-    };
+    public Animation<Sprite> getJumpingLeftAnimation() {
+        return this.jumpingLeftAnimation;
+    }
 
-    public void setStandRight(Sprite standRight) {
-        this.standRight = standRight;
-    };
+    public void setStandingRightAnimation(Animation<Sprite> standingRightAnimation) {
+        this.standingRightAnimation = standingRightAnimation;
+    }
 
-    public Sprite getStandRight() {
-        return this.standRight;
-    };
+    public Animation<Sprite> getStandingRightAnimation() {
+        return this.standingRightAnimation;
+    }
 
-    public void setStandLeft(Sprite standLeft) {
-        this.standLeft = standLeft;
-    };
+    public void setStandingLeftAnimation(Animation<Sprite> standingLeftAnimation) {
+        this.standingLeftAnimation = standingLeftAnimation;
+    }
 
-    public Sprite getStandLeft() {
-        return this.standLeft;
-    };
-
-    public void setJumpRight(Sprite jumpRight) {
-        this.jumpRight = jumpRight;
-    };
-
-    public Sprite getJumpRight() {
-        return this.jumpRight;
-    };
-
-    public void setJumpLeft(Sprite jumpLeft) {
-        this.jumpLeft = jumpLeft;
-    };
-
-    public Sprite getJumpLeft() {
-        return this.jumpLeft;
+    public Animation<Sprite> getStandingLeftAnimation() {
+        return this.standingLeftAnimation;
     }
 }
