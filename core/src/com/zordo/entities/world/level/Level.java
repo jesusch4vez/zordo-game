@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -17,6 +18,7 @@ import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.entities.characters.player.Player;
 import com.zordo.systems.camera.CameraSystem;
 import com.zordo.systems.character.movement.PlayerMovementSystem;
+import com.zordo.systems.health.HealthSystem;
 import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class Level implements Screen {
     OrthographicCamera camera;
 
     public SpriteBatch batch;
+    public SpriteBatch hudBatch;
     private final Texture backgroundTexture;
 
     Player player;
@@ -73,6 +76,7 @@ public class Level implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch = new SpriteBatch();
+        hudBatch = new SpriteBatch();
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
         batch.setProjectionMatrix(camera.combined);
@@ -99,6 +103,10 @@ public class Level implements Screen {
 
         batch.end();
         camera.update();
+
+        hudBatch.begin();
+        HealthSystem.healthRender(player.getCharacterComponent().getHearts(), hudBatch);
+        hudBatch.end();
     }
 
     @Override

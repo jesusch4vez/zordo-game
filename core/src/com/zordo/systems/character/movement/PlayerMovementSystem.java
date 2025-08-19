@@ -15,7 +15,6 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
         elapsed += Gdx.graphics.getDeltaTime();
         character.getCharacterComponent().setPosition(character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
 
-        HealthSystem.healthRender(character.getCharacterComponent().getHearts(), batch);
         if(!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             character.getCharacterComponent().setIsStepping(false);
             AnimationSystem.standRender(character,batch);

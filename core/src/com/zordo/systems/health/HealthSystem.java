@@ -1,5 +1,6 @@
 package com.zordo.systems.health;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.zordo.components.health.HeartComponent;
 import com.zordo.entities.characters.Character;
@@ -7,9 +8,15 @@ import com.zordo.entities.characters.Character;
 import java.util.ArrayList;
 
 public class HealthSystem {
+
     public static void healthRender(ArrayList<HeartComponent> hearts, SpriteBatch batch) {
+        int HEART_WIDTH = 40;
+        int HEART_HEIGHT = 40;
+        int HEART_MARGIN = 5;
+        int SCREEN_MARGIN = 10;
+
         for( int i = 0; i < hearts.size(); i++) {
-            batch.draw(hearts.get(i).getHeartState(), 200 + i*10, 200);
+            batch.draw(hearts.get(i).getHeartState(), SCREEN_MARGIN + i*(HEART_WIDTH+HEART_MARGIN), Gdx.graphics.getHeight()-HEART_HEIGHT-SCREEN_MARGIN, HEART_WIDTH, HEART_HEIGHT);
         }
     }
 
