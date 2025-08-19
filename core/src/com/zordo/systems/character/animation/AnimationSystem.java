@@ -4,9 +4,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.zordo.entities.characters.Character;
+import com.zordo.entities.world.level.Level;
 
 public class AnimationSystem {
     static Animation<Sprite> animation;
+    static Sprite nextFrame;
 
     public static void standRender(Character character) {
         if(character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsJumping()) {
@@ -41,7 +43,10 @@ public class AnimationSystem {
         }
     }
 
-    public static void animate(Character character, SpriteBatch batch, float elapsed ) {
-        batch.draw(animation.getKeyFrame(elapsed,true), character.getCharacterComponent().getCollider().x,character.getCharacterComponent().getCollider().y);
+    public static void animate(Character character, SpriteBatch batch, float elapsed, Level level ) {
+        if(!level.paused) {
+            nextFrame = animation.getKeyFrame(elapsed, true);
+        }
+        batch.draw(nextFrame, character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
     }
 }

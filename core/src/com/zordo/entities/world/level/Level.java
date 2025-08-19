@@ -33,12 +33,14 @@ public class Level implements Screen {
 
     Player player;
 
-    boolean paused;
+    public boolean paused;
+    float elapsed;
 
     HashMap<String, Component> components;
     ArrayList<PlatformComponent> platforms;
 
     public Level(final LegendOfZordo game) {
+        elapsed = 0.0f;
         this.game = game;
         platforms = new ArrayList<>();
         PlatformComponent platform = new PlatformComponent(10,1920);
@@ -69,6 +71,7 @@ public class Level implements Screen {
 
     @Override
     public void render(float v) {
+        elapsed += Gdx.graphics.getDeltaTime();
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -83,21 +86,18 @@ public class Level implements Screen {
         PlatformSystem.render(platforms, batch);
         PlatformSystem.solidPlatform(platforms, player);
 
+        PlayerMovementSystem.move(player, batch, this);
+
+        batch.end();
+
         if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.paused = true;
             this.pause();
         }
 
         if (!this.paused) {
-            PlayerMovementSystem.move(player, batch);
             CameraSystem.follow(player, camera);
-            if (player.getCharacterComponent().health <= 0) {
-                BitmapFont font = new BitmapFont();
-                font.draw(batch, "GAME OVER", 400, 200);
-            }
         }
-
-        batch.end();
         camera.update();
         HudSystem.renderHUD(player);
     }
@@ -109,11 +109,7 @@ public class Level implements Screen {
 
     @Override
     public void pause() {
-        BitmapFont font = new BitmapFont();
-        font.draw(batch, ">>>PAUSED<<<", 200, 200);
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            this.paused = false;
-        }
+        HudSystem.pause(this);
     }
 
     @Override
