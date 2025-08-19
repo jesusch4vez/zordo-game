@@ -17,6 +17,7 @@ import com.zordo.components.camera.CameraComponent;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.entities.characters.player.Player;
 import com.zordo.systems.camera.CameraSystem;
+import com.zordo.systems.camera.HudSystem;
 import com.zordo.systems.character.movement.PlayerMovementSystem;
 import com.zordo.systems.health.HealthSystem;
 import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
@@ -30,7 +31,6 @@ public class Level implements Screen {
     OrthographicCamera camera;
 
     public SpriteBatch batch;
-    public SpriteBatch hudBatch;
     private final Texture backgroundTexture;
 
     Player player;
@@ -71,12 +71,10 @@ public class Level implements Screen {
 
     @Override
     public void render(float v) {
-
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch = new SpriteBatch();
-        hudBatch = new SpriteBatch();
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
         batch.setProjectionMatrix(camera.combined);
@@ -103,10 +101,7 @@ public class Level implements Screen {
 
         batch.end();
         camera.update();
-
-        hudBatch.begin();
-        HealthSystem.healthRender(player.getCharacterComponent().getHearts(), hudBatch);
-        hudBatch.end();
+        HudSystem.renderHUD(player);
     }
 
     @Override
