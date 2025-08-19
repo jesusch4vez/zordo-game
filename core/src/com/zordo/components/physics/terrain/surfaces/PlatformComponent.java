@@ -8,6 +8,7 @@ public class PlatformComponent extends Component {
 
     private Texture platformTexture;
     private Rectangle platform;
+    private Boolean holdsCharacter;
 
     public PlatformComponent() {
         super();
@@ -15,6 +16,7 @@ public class PlatformComponent extends Component {
         platform.setWidth(100);
         platform.setHeight(10);
         platformTexture = new Texture("environment/platform-square.png");
+        holdsCharacter = false;
     }
 
     public PlatformComponent(int height, int width) {
@@ -23,6 +25,7 @@ public class PlatformComponent extends Component {
         platform.setWidth(width);
         platform.setHeight(height);
         platformTexture = new Texture("environment/platform-square.png");
+        holdsCharacter = false;
     }
 
     public void setCoordinates(int x, int y) {
@@ -53,4 +56,10 @@ public class PlatformComponent extends Component {
     public void setPlatformTexture(Texture platformTexture) {
         this.platformTexture = platformTexture;
     }
+
+    public Boolean getHoldsCharacter() {
+        return this.holdsCharacter;
+    }
+
+    public void setHoldsCharacter(Boolean holdsCharacter) {}
 }

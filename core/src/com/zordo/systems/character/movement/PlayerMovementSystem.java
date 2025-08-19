@@ -23,56 +23,50 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 AnimationSystem.standRender(character);
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(true);
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.walkRender(character);
+                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                    character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
+                    character.getCharacterComponent().setIsStepping(false);
+                    character.getCharacterComponent().setIsFlippedRight(true);
+                    character.getCharacterComponent().setIsRunning(true);
+                    AnimationSystem.runRender(character);
+                }
             }
 
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(false);
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.walkRender(character);
-            }
-
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
-                character.getCharacterComponent().setIsStepping(false);
-                character.getCharacterComponent().setIsFlippedRight(true);
-                character.getCharacterComponent().setIsRunning(true);
-                AnimationSystem.runRender(character);
-            }
-
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
-                character.getCharacterComponent().setIsStepping(false);
-                character.getCharacterComponent().setIsFlippedRight(false);
-                character.getCharacterComponent().setIsRunning(true);
-                AnimationSystem.runRender(character);
+                if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+                    character.getCharacterComponent().setIsRunning(true);
+                    character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
+                    character.getCharacterComponent().setIsStepping(false);
+                    character.getCharacterComponent().setIsFlippedRight(false);
+                    AnimationSystem.runRender(character);
+                }
             }
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && character.getCharacterComponent().getJumps() < 2) {
+                character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
                 if (character.getCharacterComponent().getJumps() == 0) {
                     character.getCharacterComponent().getCollider().y += (100 * Gdx.graphics.getDeltaTime()) + 75;
-                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                        character.getCharacterComponent().getCollider().y += 50;
-                    }
+//                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+//                        character.getCharacterComponent().getCollider().y += 50;
+//                    }
                     jump2 = character.getCharacterComponent().getCollider().y * 1.5f;
                 } else {
                     character.getCharacterComponent().getCollider().y = jump2;
                 }
                 character.getCharacterComponent().setJumps(character.getCharacterComponent().getJumps() + 1);
-            }
-
-            if (character.getCharacterComponent().getIsJumping()) {
-                character.getCharacterComponent().setIsStepping(false);
-                AnimationSystem.jumpRender(character);
             }
 
             if(character.getCharacterComponent().getIsAirborne()) {
