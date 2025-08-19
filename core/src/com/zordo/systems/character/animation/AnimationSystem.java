@@ -43,7 +43,7 @@ public class AnimationSystem {
         }
     }
 
-    public static void animate(Character character, SpriteBatch batch, float elapsed, Level level ) {
+    public static void animate(Character character, SpriteBatch batch, float elapsed, Level level) {
         if(!level.paused) {
             nextFrame = animation.getKeyFrame(elapsed, true);
         }

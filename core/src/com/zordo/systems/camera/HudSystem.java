@@ -22,7 +22,8 @@ public class HudSystem {
         BitmapFont font = new BitmapFont();
 
         hudBatch.begin();
-        font.draw(hudBatch, ">>>PAUSED<<<", 200, 200);
+        font.getData().setScale(5);
+        font.draw(hudBatch, "PAUSED", Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 500);
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
             level.paused = false;
         }
