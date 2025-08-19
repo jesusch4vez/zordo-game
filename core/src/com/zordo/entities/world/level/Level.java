@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.Component;
 import com.zordo.components.camera.CameraComponent;
+import com.zordo.components.physics.terrain.surfaces.LevelBoundaryComponent;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.entities.characters.player.Player;
 import com.zordo.systems.camera.CameraSystem;
@@ -48,8 +49,20 @@ public class Level implements Screen {
         PlatformComponent platform2 = new PlatformComponent(10,500);
         platform2.setCoordinates(100,100);
 
+        LevelBoundaryComponent ceiling = new LevelBoundaryComponent(false,true,false);
+        ceiling.setCoordinates(0,1080);
+        ceiling.getPlatform().setHeight(100);
+        ceiling.getPlatform().setWidth(1920);
+
+        LevelBoundaryComponent leftWall = new LevelBoundaryComponent(true,false,false);
+        leftWall.setCoordinates(-100,0);
+        leftWall.getPlatform().setHeight(1080);
+        leftWall.getPlatform().setWidth(100);
+
         platforms.add(platform);
         platforms.add(platform2);
+        platforms.add(ceiling);
+        platforms.add(leftWall);
 
         components = new HashMap<>();
         components.put("Camera", new CameraComponent());

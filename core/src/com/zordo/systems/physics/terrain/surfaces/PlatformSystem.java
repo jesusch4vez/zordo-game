@@ -13,6 +13,7 @@ public class PlatformSystem {
             if(platform.getPlatform().overlaps(character.getCharacterComponent().getCollider())) {
                 character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight());
                 character.getCharacterComponent().setIsJumping(false);
+                character.getCharacterComponent().setIsAirborne(false);
                 character.getCharacterComponent().setJumps(0);
             }
         }

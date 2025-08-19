@@ -12,6 +12,10 @@ public class CharacterComponent {
     Boolean isJumping;
     Boolean isStepping;
     Boolean isRunning;
+    Boolean isAirborne;
+    Boolean isStanding;
+
+    Boolean isColliding;
 
     int jumps;
 
@@ -38,6 +42,9 @@ public class CharacterComponent {
         isJumping = false;
         isStepping = false;
         isRunning = false;
+        isAirborne = false;
+        isColliding = false;
+        isStanding = true;
 
         health = 8;
 
@@ -147,5 +154,29 @@ public class CharacterComponent {
 
     public Boolean getIsRunning() {
         return this.isRunning;
+    }
+
+    public void setIsAirborne(Boolean isAirborne) {
+        this.isAirborne = isAirborne;
+    }
+
+    public Boolean getIsAirborne() {
+        return this.isAirborne;
+    }
+
+    public void setIsColliding(Boolean isColliding) {
+        this.isColliding = isColliding;
+    }
+
+    public Boolean getIsColliding() {
+        return this.isColliding;
+    }
+
+    public void setIsStanding(Boolean isStanding) {
+        this.isStanding = isStanding;
+    }
+
+    public Boolean getIsStanding() {
+        return this.isStanding;
     }
 }

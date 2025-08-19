@@ -19,6 +19,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 character.getCharacterComponent().setIsStepping(false);
                 character.getCharacterComponent().setIsRunning(false);
+                character.getCharacterComponent().setIsJumping(false);
                 AnimationSystem.standRender(character);
             }
 
@@ -56,6 +57,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && character.getCharacterComponent().getJumps() < 2) {
                 character.getCharacterComponent().setIsJumping(true);
+                character.getCharacterComponent().setIsAirborne(true);
                 if (character.getCharacterComponent().getJumps() == 0) {
                     character.getCharacterComponent().getCollider().y += (100 * Gdx.graphics.getDeltaTime()) + 75;
                     if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
@@ -73,7 +75,10 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 AnimationSystem.jumpRender(character);
             }
 
-            character.getCharacterComponent().getCollider().y -= 120 * Gdx.graphics.getDeltaTime();
+            if(character.getCharacterComponent().getIsAirborne()) {
+                AnimationSystem.jumpRender(character);
+                character.getCharacterComponent().getCollider().y -= 120 * Gdx.graphics.getDeltaTime();
+            }
         }
         AnimationSystem.animate(character, batch, elapsed, level);
     }
