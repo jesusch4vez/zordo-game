@@ -11,6 +11,7 @@ public class CharacterComponent {
     Boolean isFlippedRight;
     Boolean isJumping;
     Boolean isStepping;
+    Boolean isRunning;
 
     int jumps;
 
@@ -36,6 +37,7 @@ public class CharacterComponent {
         isFlippedRight = true;
         isJumping = false;
         isStepping = false;
+        isRunning = false;
 
         health = 8;
 
@@ -137,5 +139,13 @@ public class CharacterComponent {
 
     public int getJumps() {
         return this.jumps;
+    }
+
+    public void setIsRunning(Boolean isRunning) {
+        this.isRunning = isRunning;
+    }
+
+    public Boolean getIsRunning() {
+        return this.isRunning;
     }
 }

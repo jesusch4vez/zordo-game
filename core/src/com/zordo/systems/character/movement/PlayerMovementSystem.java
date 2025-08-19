@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.zordo.entities.characters.Character;
 import com.zordo.systems.character.animation.AnimationSystem;
-import com.zordo.systems.health.HealthSystem;
 
 public class PlayerMovementSystem extends CharacterMovementSystem {
     static float jump2 = 0;
