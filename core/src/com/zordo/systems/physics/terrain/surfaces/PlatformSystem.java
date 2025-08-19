@@ -16,18 +16,19 @@ public class PlatformSystem {
             Vector2 plat = new Vector2(platform.getX(), platform.getY());
             Vector2 platCenter = platform.getPlatform().getCenter(plat);
             Vector2 charCenter = character.getCharacterComponent().getCollider().getCenter(chara);
-            if (!platform.getHoldsCharacter() && platform.getPlatform().overlaps(character.getCharacterComponent().getCollider()) && platCenter.y < charCenter.y) {
-                character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight());
-//                character.getCharacterComponent().setIsJumping(false);
+            if (!character.getCharacterComponent().getIsColliding() && !platform.getHoldsCharacter() && platform.getPlatform().overlaps(character.getCharacterComponent().getCollider()) && platCenter.y < charCenter.y) {
+                character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight()-2);
+                character.getCharacterComponent().setIsColliding(true);
                 character.getCharacterComponent().setIsAirborne(false);
+                character.getCharacterComponent().setIsJumping(false);
                 character.getCharacterComponent().setJumps(0);
 
                 platform.setHoldsCharacter(true);
-                if (platform.getHoldsCharacter() && !platform.getPlatform().overlaps(character.getCharacterComponent().getCollider())) {
-                    character.getCharacterComponent().setIsAirborne(true);
-                    platform.setHoldsCharacter(false);
-                }
             }
+        }
+
+        if(!character.getCharacterComponent().getIsColliding()) {
+            character.getCharacterComponent().setIsAirborne(true);
         }
     }
 

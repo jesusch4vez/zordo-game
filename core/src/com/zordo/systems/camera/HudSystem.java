@@ -12,8 +12,16 @@ public class HudSystem {
 
     public static void renderHUD(Character player) {
         SpriteBatch hudBatch = new SpriteBatch();
+        BitmapFont font = new BitmapFont();
         hudBatch.begin();
         HealthSystem.healthRender(player.getCharacterComponent().getHearts(), hudBatch);
+        font.getData().setScale(2);
+        font.draw(hudBatch, "AIRBORNE " + player.getCharacterComponent().getIsAirborne().toString(), Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 500);
+        font.draw(hudBatch, "COLLIDING " + player.getCharacterComponent().getIsColliding().toString(), Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 400);
+        font.draw(hudBatch, "JUMPING " + player.getCharacterComponent().getIsJumping().toString(), Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 300);
+        font.draw(hudBatch, "RUNNING " + player.getCharacterComponent().getIsRunning().toString(), Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 200);
+        font.draw(hudBatch, "WALKING " + player.getCharacterComponent().getIsStepping().toString(), Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 100);
+
         hudBatch.end();
     }
 

@@ -83,6 +83,7 @@ public class Level implements Screen {
 
     @Override
     public void render(float v) {
+        player.getCharacterComponent().setIsColliding(false);
         elapsed += Gdx.graphics.getDeltaTime();
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -95,10 +96,11 @@ public class Level implements Screen {
         batch.begin();
         batch.draw(backgroundTexture, 0, 0, 1920, 1080);
 
+        PlayerMovementSystem.move(player, batch, this);
+
         PlatformSystem.render(platforms, batch);
         PlatformSystem.solidPlatform(platforms, player);
 
-        PlayerMovementSystem.move(player, batch, this);
 
         batch.end();
 
