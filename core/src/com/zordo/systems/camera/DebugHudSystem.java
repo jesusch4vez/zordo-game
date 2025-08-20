@@ -24,8 +24,11 @@ public class DebugHudSystem {
         font.draw(hudBatch, "LEVEL ", Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 450);
         font.draw(hudBatch, "SIZE " + level.getLevelSize().getWidth() + "x" + level.getLevelSize().getHeight(), Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 500);
 
-        font.draw(hudBatch, "COORDINATES", Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 550);
-        font.draw(hudBatch, player.getCharacterComponent().getX() + " , "+ player.getCharacterComponent().getY(), Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 600);
+        font.draw(hudBatch, "PRIOR COORDINATES", Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 550);
+        font.draw(hudBatch, player.getCharacterComponent().getPreviousPosition().x + " , "+ player.getCharacterComponent().getPreviousPosition().y, Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 600);
+
+        font.draw(hudBatch, "COORDINATES", Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 650);
+        font.draw(hudBatch, player.getCharacterComponent().getPosition().x + " , "+ player.getCharacterComponent().getPosition().y, Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 700);
         hudBatch.end();
     }
 }

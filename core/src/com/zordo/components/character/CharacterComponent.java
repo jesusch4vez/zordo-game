@@ -25,6 +25,8 @@ public class CharacterComponent {
     Rectangle collider;
     Vector3 position;
 
+    Vector3 previousPosition;
+
     public ArrayList<HeartComponent> hearts;
     public int health;
     AnimationComponent animation;
@@ -32,6 +34,7 @@ public class CharacterComponent {
     public CharacterComponent() {
         jumps = 0;
         position = new Vector3();
+        previousPosition = new Vector3();
         collider = new Rectangle();
         collider.x = 10;
         collider.y = 10;
@@ -39,8 +42,9 @@ public class CharacterComponent {
         collider.width = 23;
         position.x = collider.x;
         position.y = collider.y;
+        previousPosition.x = collider.x;
+        previousPosition.y = collider.y;
 
-        // orientation and isJumping status
         isFlippedRight = true;
         isJumping = false;
         isStepping = false;
@@ -64,14 +68,8 @@ public class CharacterComponent {
         return this.health;
     }
 
-
     public void setCollider(Rectangle collider) {
         this.collider = collider;
-    }
-
-    public void setCollider(float x, float y) {
-        this.collider.x = x;
-        this.collider.y = y;
     }
 
     public Rectangle getCollider() {
@@ -83,20 +81,21 @@ public class CharacterComponent {
     }
 
     public void setPosition(Vector3 position) {
-        this.position = position;
+        this.collider.x = position.x;
+        this.collider.y = position.y;
+        this.position.x = collider.x;
+        this.position.y = collider.y;
     }
 
     public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
+        this.collider.x = position.x;
+        this.collider.y = position.y;
     }
 
-    public float getX() {
-        return this.position.x;
-    }
-
-    public float getY() {
-        return this.position.y;
+    public Vector3 getPreviousPosition() {
+        return this.previousPosition;
     }
 
     public void setX(float x) {
@@ -107,6 +106,10 @@ public class CharacterComponent {
     public void setY(float y) {
         this.position.y = y;
         this.collider.y = y;
+    }
+
+    public void setPreviousPosition(Vector3 previousPosition) {
+        this.previousPosition = previousPosition;
     }
 
     public void setIsFlippedRight(Boolean flip) {

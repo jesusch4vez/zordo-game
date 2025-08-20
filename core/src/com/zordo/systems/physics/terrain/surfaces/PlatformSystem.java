@@ -1,9 +1,7 @@
 package com.zordo.systems.physics.terrain.surfaces;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.entities.characters.Character;
 
@@ -99,6 +97,12 @@ public class PlatformSystem {
         font.getData().setScale(2);
 
         for (PlatformComponent platform : platforms) {
+            long widthCoordinate = (long) platform.getX() + (long) platform.getWidth();
+            long heightCoordinate = (long) platform.getY() + (long) platform.getHeight();
+            font.draw(batch, platform.getX() + ", " + platform.getY(), platform.getX(), platform.getY() - 25);
+
+            font.draw(batch, widthCoordinate + ", " + heightCoordinate, platform.getX() + platform.getWidth(), platform.getY() + platform.getHeight() + 25);
+
             font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
             batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
         }
