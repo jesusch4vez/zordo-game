@@ -54,18 +54,18 @@ public class PlatformSystem {
                 }
                 character.getCharacterComponent().setIsColliding(true);
             } else {
-                if ((platCenter.y < charCenter.y) || platformIsBelow(character,platform)) {
+                if (platformIsBelow(character,platform)) {
                     platform.setCharacterRelativePosition("Character is above");
-                } else if ((platCenter.y > charCenter.y) || (platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
+                } else if ((platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
                     platform.setCharacterRelativePosition("Character is below");
-                } else if ((platCenter.x < charCenter.x) && !platformIsAbove(character,platform)
+                } else if (!platformIsAbove(character,platform)
                         && !platformIsBelow(character,platform)
                         && platformisOnLeft(character,platform)) {
-                    platform.setCharacterRelativePosition("Character is left");
-                } else if ((platCenter.x > charCenter.x) && !platformIsAbove(character,platform)
+                    platform.setCharacterRelativePosition("Character is right");
+                } else if (!platformIsAbove(character,platform)
                         && !platformIsBelow(character,platform)
                         && platformIsOnRight(character,platform)) {
-                    platform.setCharacterRelativePosition("Character is right");
+                    platform.setCharacterRelativePosition("Character is left");
                 }
             }
         }
