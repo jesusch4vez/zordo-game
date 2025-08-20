@@ -13,12 +13,8 @@ public class PlatformSystem {
 
     public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character) {
         for (PlatformComponent platform : platforms) {
-            Vector2 plat = new Vector2(platform.getPlatform().getX(), platform.getPlatform().getY());
-            Vector2 chara = new Vector2(character.getCharacterComponent().getCollider().getX(), character.getCharacterComponent().getCollider().getY());
-            Vector2 platCenter = platform.getPlatform().getCenter(plat);
-            Vector2 charCenter = character.getCharacterComponent().getCollider().getCenter(chara);
             if (!character.getCharacterComponent().getIsColliding() && platform.getPlatform().overlaps(character.getCharacterComponent().getCollider())) {
-                if ((platCenter.y < charCenter.y) || platformIsBelow(character,platform)) {
+                if (platformIsBelow(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     character.getCharacterComponent().setIsAirborne(false);
                     character.getCharacterComponent().setIsJumping(false);
@@ -28,7 +24,8 @@ public class PlatformSystem {
                     platform.setHoldsCharacter(true);
                     platform.setCharacterRelativePosition("Character is above");
                     character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight() - 2);
-                } else if ((platCenter.y > charCenter.y) || (platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
+                    break;
+                } else if ((platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
                     character.getCharacterComponent().setIsColliding(true);
                     character.getCharacterComponent().setIsAirborne(true);
                     character.getCharacterComponent().setIsDescending(true);
@@ -37,23 +34,27 @@ public class PlatformSystem {
                     platform.setHoldsCharacter(false);
                     platform.setCharacterRelativePosition("Character is below");
                     character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight() - 5);
-                } else if ((platCenter.x < charCenter.x) && !platformIsAbove(character,platform)
+                    break;
+                } else if (!platformIsAbove(character,platform)
                         && !platformIsBelow(character,platform)
                         && platformisOnLeft(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     platform.setHoldsCharacter(false);
-                    platform.setCharacterRelativePosition("Character is left");
+                    platform.setCharacterRelativePosition("Character is right");
                     character.getCharacterComponent().setX(platform.getX() + platform.getWidth() + 10);
-                } else if ((platCenter.x > charCenter.x) && !platformIsAbove(character,platform)
+                    break;
+                } else if (!platformIsAbove(character,platform)
                         && !platformIsBelow(character,platform)
                         && platformIsOnRight(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
-                    platform.setCharacterRelativePosition("Character is right");
+                    platform.setCharacterRelativePosition("Character is left");
                     platform.setHoldsCharacter(false);
                     character.getCharacterComponent().setX(platform.getX() - character.getCharacterComponent().getCollider().getWidth() - 10);
+                    break;
                 }
                 character.getCharacterComponent().setIsColliding(true);
             } else {
+                character.getCharacterComponent().setIsColliding(false);
                 if (platformIsBelow(character,platform)) {
                     platform.setCharacterRelativePosition("Character is above");
                 } else if ((platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
@@ -77,19 +78,19 @@ public class PlatformSystem {
 
 
     public static Boolean platformIsAbove(Character character, PlatformComponent platform) {
-       return platform.getPlatform().getY() > character.getCharacterComponent().getCollider().getY() + character.getCharacterComponent().getCollider().getHeight()- 30;
+       return platform.getPlatform().getY() > character.getCharacterComponent().getCollider().getY() + character.getCharacterComponent().getCollider().getHeight()- 10;
     };
 
     public static Boolean platformIsBelow(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getY() + platform.getHeight() < character.getCharacterComponent().getCollider().getY();
+        return platform.getPlatform().getY() + platform.getHeight() - 10 < character.getCharacterComponent().getCollider().getY();
     };
 
     public static Boolean platformisOnLeft(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getX() + platform.getWidth() < character.getCharacterComponent().getCollider().getX();
+        return platform.getPlatform().getX() < character.getCharacterComponent().getCollider().getX() + 10;
     };
 
     public static Boolean platformIsOnRight(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getX() > character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() - 30;
+        return platform.getPlatform().getX() > character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() - 10;
     };
 
     public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
