@@ -67,7 +67,7 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void show() {
-        platform = new PlatformComponent(10,500);
+        platform = new PlatformComponent(50,500);
         platform.setCoordinates(100,100);
 
         platforms.add(platform);
@@ -76,16 +76,16 @@ public class Level extends LevelComponent implements Screen {
         floor.getPlatform().setWidth(this.getLevelSize().getWidth());
         floor.setCoordinates(0,-(int)floor.getPlatform().getHeight());
 
-        ceiling.getPlatform().setHeight(10);
+        ceiling.getPlatform().setHeight(50);
         ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
         ceiling.setCoordinates(0,this.getLevelSize().getHeight());
 
         leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        leftWall.getPlatform().setWidth(10);
+        leftWall.getPlatform().setWidth(50);
         leftWall.setCoordinates(-(int) leftWall.getWidth(),0);
 
         rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        rightWall.getPlatform().setWidth(10);
+        rightWall.getPlatform().setWidth(50);
         rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) rightWall.getWidth(),0);
 
         TextureRegion background = new TextureRegion();

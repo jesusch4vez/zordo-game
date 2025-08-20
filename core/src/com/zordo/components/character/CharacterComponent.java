@@ -17,6 +17,9 @@ public class CharacterComponent {
 
     Boolean isColliding;
 
+    Boolean isAscending;
+    Boolean isDescending;
+
     int jumps;
 
     Rectangle collider;
@@ -44,6 +47,8 @@ public class CharacterComponent {
         isRunning = false;
         isAirborne = false;
         isColliding = false;
+        isAscending = false;
+        isDescending = false;
         isStanding = true;
 
         health = 8;
@@ -178,5 +183,18 @@ public class CharacterComponent {
 
     public Boolean getIsStanding() {
         return this.isStanding;
+    }
+
+    public Boolean getIsAscending() {
+        return isAscending;
+    }
+    public void setIsAscending(Boolean isAscending) {
+        this.isAscending = isAscending;
+    }
+    public Boolean getIsDescending() {
+        return isDescending;
+    }
+    public void setIsDescending(Boolean isDescending) {
+        this.isDescending = isDescending;
     }
 }
