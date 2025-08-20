@@ -53,23 +53,20 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 }
             }
 
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && character.getCharacterComponent().getJumps() < 2) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
-                if (character.getCharacterComponent().getJumps() == 0) {
-                    character.getCharacterComponent().getCollider().y += (100 * Gdx.graphics.getDeltaTime()) + 75;
-//                    if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-//                        character.getCharacterComponent().getCollider().y += 50;
-//                    }
-                    jump2 = character.getCharacterComponent().getCollider().y * 1.5f;
-                } else {
-                    character.getCharacterComponent().getCollider().y = jump2;
-                }
-                character.getCharacterComponent().setJumps(character.getCharacterComponent().getJumps() + 1);
+                character.getCharacterComponent().setIsAscending(true);
+                character.getCharacterComponent().setIsDescending(false);
+                character.getCharacterComponent().getCollider().y += 100 * Gdx.graphics.getDeltaTime();
+                AnimationSystem.jumpRender(character);
             }
 
-            if(character.getCharacterComponent().getIsAirborne()) {
+            else if(!Gdx.input.isKeyPressed(Input.Keys.SPACE) && character.getCharacterComponent().getIsAirborne()) {
+                character.getCharacterComponent().setIsDescending(true);
+                character.getCharacterComponent().setIsAscending(false);
+                character.getCharacterComponent().setIsJumping(false);
                 AnimationSystem.jumpRender(character);
                 character.getCharacterComponent().getCollider().y -= 120 * Gdx.graphics.getDeltaTime();
             }

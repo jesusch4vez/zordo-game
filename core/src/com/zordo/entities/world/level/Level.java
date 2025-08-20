@@ -24,6 +24,7 @@ import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Level extends LevelComponent implements Screen {
     final LegendOfZordo game;
@@ -47,11 +48,32 @@ public class Level extends LevelComponent implements Screen {
     LevelBoundaryComponent rightWall;
 
     PlatformComponent platform;
+    int platformCount;
 
     public Level(final LegendOfZordo game) {
         elapsed = 0.0f;
         this.game = game;
         platforms = new ArrayList<>();
+        platformCount = 100;
+
+        for(int i = 1; i <= platformCount; i++) {
+            Random random = new Random();
+            int min = 1; // Minimum value (inclusive)
+            int max = 1920*3; // Maximum value (inclusive)
+            int randx = random.nextInt(max - min + 1) + min;
+            int randy = random.nextInt(max - min + 1) + min;
+            PlatformComponent platform = new PlatformComponent();
+            if(i % 2 == 0) {
+                platform.setCoordinates(randx, randy);
+                platform.setHeight(200);
+                platform.setWidth(100);
+            } else {
+                platform.setCoordinates(randx, randy);
+                platform.setHeight(100);
+                platform.setWidth(200);
+            }
+            platforms.add(platform);
+        }
 
         floor = new LevelBoundaryComponent(false, false, true);
         ceiling = new LevelBoundaryComponent(false,true,false);
@@ -67,8 +89,8 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void show() {
-        platform = new PlatformComponent(10,500);
-        platform.setCoordinates(100,100);
+        platform = new PlatformComponent(50,500);
+        platform.setCoordinates(500,500);
 
         platforms.add(platform);
 
@@ -76,16 +98,16 @@ public class Level extends LevelComponent implements Screen {
         floor.getPlatform().setWidth(this.getLevelSize().getWidth());
         floor.setCoordinates(0,-(int)floor.getPlatform().getHeight());
 
-        ceiling.getPlatform().setHeight(10);
+        ceiling.getPlatform().setHeight(50);
         ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
         ceiling.setCoordinates(0,this.getLevelSize().getHeight());
 
         leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        leftWall.getPlatform().setWidth(10);
+        leftWall.getPlatform().setWidth(50);
         leftWall.setCoordinates(-(int) leftWall.getWidth(),0);
 
         rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        rightWall.getPlatform().setWidth(10);
+        rightWall.getPlatform().setWidth(50);
         rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) rightWall.getWidth(),0);
 
         TextureRegion background = new TextureRegion();

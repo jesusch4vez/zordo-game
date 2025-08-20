@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+
+import com.zordo.components.world.levels.LevelSize;
 import com.zordo.entities.player_interface.menu.title.TitleMenu;
 
 public class LegendOfZordo extends Game {
@@ -39,33 +41,8 @@ public class LegendOfZordo extends Game {
 			e.printStackTrace();
 		}
 
-		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+//		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		this.setScreen(new TitleMenu(this));
-	}
-
-	public static class LevelSize {
-		private int width;
-		private int height;
-
-		LevelSize(int width, int height) {
-			this.width = width;
-			this.height = height;
-		}
-
-		public int getWidth() {
-			return width;
-		}
-		public int getHeight() {
-			return height;
-		}
-
-		public void setHeight(int height) {
-			this.height = height;
-		}
-
-		public void setWidth(int width) {
-			this.width = width;
-		}
 	}
 
     @Override
