@@ -19,9 +19,8 @@ public class DebugHudSystem {
         font.draw(hudBatch, "RUNNING " + player.getCharacterComponent().getIsRunning().toString(), Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight() - 200);
         font.draw(hudBatch, "WALKING " + player.getCharacterComponent().getIsStepping().toString(), Gdx.graphics.getWidth() - 250, Gdx.graphics.getHeight() - 250);
 
-        font.draw(hudBatch, "LEVEL " + level.getName(), Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 350);
+        font.draw(hudBatch, "LEVEL ", Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 350);
         font.draw(hudBatch, "SIZE " + level.getLevelSize().getWidth() + "x" + level.getLevelSize().getHeight(), Gdx.graphics.getWidth() - 300, Gdx.graphics.getHeight() - 400);
-
 
         hudBatch.end();
     }
