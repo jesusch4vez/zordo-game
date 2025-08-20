@@ -53,6 +53,20 @@ public class PlatformSystem {
                     character.getCharacterComponent().setX(platform.getX() - character.getCharacterComponent().getCollider().getWidth() - 10);
                 }
                 character.getCharacterComponent().setIsColliding(true);
+            } else {
+                if ((platCenter.y < charCenter.y) || platformIsBelow(character,platform)) {
+                    platform.setCharacterRelativePosition("Character is above");
+                } else if ((platCenter.y > charCenter.y) || (platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
+                    platform.setCharacterRelativePosition("Character is below");
+                } else if ((platCenter.x < charCenter.x) && !platformIsAbove(character,platform)
+                        && !platformIsBelow(character,platform)
+                        && platformisOnLeft(character,platform)) {
+                    platform.setCharacterRelativePosition("Character is left");
+                } else if ((platCenter.x > charCenter.x) && !platformIsAbove(character,platform)
+                        && !platformIsBelow(character,platform)
+                        && platformIsOnRight(character,platform)) {
+                    platform.setCharacterRelativePosition("Character is right");
+                }
             }
         }
 
@@ -67,11 +81,11 @@ public class PlatformSystem {
     };
 
     public static Boolean platformIsBelow(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getY() + platform.getHeight() - 30 < character.getCharacterComponent().getCollider().getY();
+        return platform.getPlatform().getY() + platform.getHeight() < character.getCharacterComponent().getCollider().getY();
     };
 
     public static Boolean platformisOnLeft(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getX() + platform.getWidth() - 30 < character.getCharacterComponent().getCollider().getX();
+        return platform.getPlatform().getX() + platform.getWidth() < character.getCharacterComponent().getCollider().getX();
     };
 
     public static Boolean platformIsOnRight(Character character, PlatformComponent platform) {
@@ -81,7 +95,7 @@ public class PlatformSystem {
     public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
         BitmapFont font = new BitmapFont();
 
-//        font.getData().setScale(2);
+        font.getData().setScale(2);
 
         for (PlatformComponent platform : platforms) {
             font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
