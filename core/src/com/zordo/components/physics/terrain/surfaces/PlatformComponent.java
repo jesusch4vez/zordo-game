@@ -10,6 +10,7 @@ public class PlatformComponent extends Component {
     private Rectangle platform;
     private Boolean holdsCharacter;
     private Boolean isJumpable;
+    private String characterRelativePosition;
 
     public PlatformComponent() {
         super();
@@ -19,6 +20,7 @@ public class PlatformComponent extends Component {
         platformTexture = new Texture("environment/platform-square.png");
         holdsCharacter = false;
         isJumpable = false;
+        characterRelativePosition = "";
     }
 
     public PlatformComponent(int height, int width) {
@@ -29,6 +31,7 @@ public class PlatformComponent extends Component {
         platformTexture = new Texture("environment/platform-square.png");
         holdsCharacter = false;
         isJumpable = false;
+        characterRelativePosition = "";
     }
 
     public void setCoordinates(int x, int y) {
@@ -88,5 +91,12 @@ public class PlatformComponent extends Component {
 
     public Boolean getIsJumpable() {
         return isJumpable;
+    }
+
+    public void setCharacterRelativePosition(String characterRelativePosition) {
+        this.characterRelativePosition = characterRelativePosition;
+    }
+    public String getCharacterRelativePosition() {
+        return characterRelativePosition;
     }
 }

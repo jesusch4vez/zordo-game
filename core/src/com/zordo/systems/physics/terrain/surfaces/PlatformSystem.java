@@ -1,5 +1,7 @@
 package com.zordo.systems.physics.terrain.surfaces;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
@@ -24,8 +26,8 @@ public class PlatformSystem {
                     character.getCharacterComponent().setJumps(0);
 
                     platform.setHoldsCharacter(true);
+                    platform.setCharacterRelativePosition("Character is above");
                     character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight() - 2);
-                    break;
                 } else if ((platCenter.y > charCenter.y) || (platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
                     character.getCharacterComponent().setIsColliding(true);
                     character.getCharacterComponent().setIsAirborne(true);
@@ -33,26 +35,24 @@ public class PlatformSystem {
                     character.getCharacterComponent().setIsAscending(false);
 
                     platform.setHoldsCharacter(false);
+                    platform.setCharacterRelativePosition("Character is below");
                     character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight() - 5);
-                    break;
                 } else if ((platCenter.x < charCenter.x) && !platformIsAbove(character,platform)
                         && !platformIsBelow(character,platform)
                         && platformisOnLeft(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     platform.setHoldsCharacter(false);
+                    platform.setCharacterRelativePosition("Character is left");
                     character.getCharacterComponent().setX(platform.getX() + platform.getWidth() + 10);
-                    break;
                 } else if ((platCenter.x > charCenter.x) && !platformIsAbove(character,platform)
                         && !platformIsBelow(character,platform)
                         && platformIsOnRight(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
+                    platform.setCharacterRelativePosition("Character is right");
                     platform.setHoldsCharacter(false);
                     character.getCharacterComponent().setX(platform.getX() - character.getCharacterComponent().getCollider().getWidth() - 10);
-                    break;
                 }
                 character.getCharacterComponent().setIsColliding(true);
-            } else {
-                character.getCharacterComponent().setIsColliding(false);
             }
         }
 
@@ -79,7 +79,12 @@ public class PlatformSystem {
     };
 
     public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
+        BitmapFont font = new BitmapFont();
+
+//        font.getData().setScale(2);
+
         for (PlatformComponent platform : platforms) {
+            font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
             batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
         }
     }
