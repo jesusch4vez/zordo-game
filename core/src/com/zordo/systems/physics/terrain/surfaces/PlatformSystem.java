@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class PlatformSystem {
 
     public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character) {
-//        character.getCharacterComponent().getCollider()
         Vector2 chara = new Vector2(character.getCharacterComponent().getCollider().getX(), character.getCharacterComponent().getCollider().getY());
         for (PlatformComponent platform : platforms) {
             Vector2 plat = new Vector2(platform.getX(), platform.getY());

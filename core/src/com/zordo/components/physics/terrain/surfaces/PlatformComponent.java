@@ -62,4 +62,20 @@ public class PlatformComponent extends Component {
     }
 
     public void setHoldsCharacter(Boolean holdsCharacter) {}
+
+    public void setWidth(int width) {
+        platform.setWidth(width);
+    }
+
+    public float getWidth() {
+        return platform.getWidth();
+    }
+
+    public void setHeight(int height) {
+        platform.setHeight(height);
+    }
+
+    public float getHeight() {
+        return platform.getHeight();
+    }
 }

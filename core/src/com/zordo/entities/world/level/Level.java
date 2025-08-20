@@ -14,8 +14,10 @@ import com.zordo.components.Component;
 import com.zordo.components.camera.CameraComponent;
 import com.zordo.components.physics.terrain.surfaces.LevelBoundaryComponent;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
+import com.zordo.components.world.levels.LevelComponent;
 import com.zordo.entities.characters.player.Player;
 import com.zordo.systems.camera.CameraSystem;
+import com.zordo.systems.camera.DebugHudSystem;
 import com.zordo.systems.camera.HudSystem;
 import com.zordo.systems.character.movement.PlayerMovementSystem;
 import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
@@ -23,13 +25,13 @@ import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Level implements Screen {
+public class Level extends LevelComponent implements Screen {
     final LegendOfZordo game;
 
     OrthographicCamera camera;
 
     public SpriteBatch batch;
-    private final Texture backgroundTexture;
+    private Texture backgroundTexture;
 
     Player player;
 
@@ -39,46 +41,63 @@ public class Level implements Screen {
     HashMap<String, Component> components;
     ArrayList<PlatformComponent> platforms;
 
+    LevelBoundaryComponent ceiling;
+    LevelBoundaryComponent floor;
+    LevelBoundaryComponent leftWall;
+    LevelBoundaryComponent rightWall;
+
+    PlatformComponent platform;
+
     public Level(final LegendOfZordo game) {
         elapsed = 0.0f;
         this.game = game;
         platforms = new ArrayList<>();
-        PlatformComponent platform = new PlatformComponent(10,1920);
-        platform.setCoordinates(0,0);
 
-        PlatformComponent platform2 = new PlatformComponent(10,500);
-        platform2.setCoordinates(100,100);
-
-        LevelBoundaryComponent ceiling = new LevelBoundaryComponent(false,true,false);
-        ceiling.setCoordinates(0,1080);
-        ceiling.getPlatform().setHeight(100);
-        ceiling.getPlatform().setWidth(1920);
-
-        LevelBoundaryComponent leftWall = new LevelBoundaryComponent(true,false,false);
-        leftWall.setCoordinates(-100,0);
-        leftWall.getPlatform().setHeight(1080);
-        leftWall.getPlatform().setWidth(100);
-
-        platforms.add(platform);
-        platforms.add(platform2);
-        platforms.add(ceiling);
-        platforms.add(leftWall);
+        floor = new LevelBoundaryComponent(false, false, true);
+        ceiling = new LevelBoundaryComponent(false,true,false);
+        leftWall = new LevelBoundaryComponent(true,false,false);
+        rightWall = new LevelBoundaryComponent(true,false,false);
 
         components = new HashMap<>();
         components.put("Camera", new CameraComponent());
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
-
-        TextureRegion background = new TextureRegion();
-        backgroundTexture = new Texture("environment/background_32.png");
-        background.setTexture(backgroundTexture);
-
         player = new Player();
     }
 
     @Override
     public void show() {
+        platform = new PlatformComponent(10,500);
+        platform.setCoordinates(100,100);
 
+        platforms.add(platform);
+
+        floor.getPlatform().setHeight(800);
+        floor.getPlatform().setWidth(this.getLevelSize().getWidth());
+        floor.setCoordinates(0,-(int)floor.getPlatform().getHeight());
+
+        ceiling.getPlatform().setHeight(10);
+        ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
+        ceiling.setCoordinates(0,this.getLevelSize().getHeight());
+
+        leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
+        leftWall.getPlatform().setWidth(10);
+        leftWall.setCoordinates(-(int) leftWall.getWidth(),0);
+
+        rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
+        rightWall.getPlatform().setWidth(10);
+        rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) rightWall.getWidth(),0);
+
+        TextureRegion background = new TextureRegion();
+        backgroundTexture = new Texture("environment/background_32.png");
+        background.setTexture(backgroundTexture);
+        background.setRegionWidth(this.getLevelSize().getWidth());
+        background.setRegionHeight(this.getLevelSize().getHeight());
+
+        platforms.add(floor);
+        platforms.add(ceiling);
+        platforms.add(leftWall);
+        platforms.add(rightWall);
     }
 
     @Override
@@ -94,13 +113,12 @@ public class Level implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        batch.draw(backgroundTexture, 0, 0, 1920, 1080);
+        batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
         PlayerMovementSystem.move(player, batch, this);
 
         PlatformSystem.render(platforms, batch);
         PlatformSystem.solidPlatform(platforms, player);
-
 
         batch.end();
 
@@ -114,6 +132,7 @@ public class Level implements Screen {
         }
         camera.update();
         HudSystem.renderHUD(player);
+        DebugHudSystem.renderDebugHud(player, this);
     }
 
     @Override
