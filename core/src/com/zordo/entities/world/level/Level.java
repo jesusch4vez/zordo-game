@@ -39,8 +39,8 @@ public class Level extends LevelComponent implements Screen {
     public boolean paused;
     float elapsed;
 
-    HashMap<String, Component> components;
-    ArrayList<PlatformComponent> platforms;
+    public HashMap<String, Component> components;
+    public ArrayList<PlatformComponent> platforms;
 
     LevelBoundaryComponent ceiling;
     LevelBoundaryComponent floor;
@@ -124,7 +124,7 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void render(float v) {
-        player.getCharacterComponent().setIsColliding(false);
+//        player.getCharacterComponent().setPreviousPosition(player.getCharacterComponent().getPosition());
         elapsed += Gdx.graphics.getDeltaTime();
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -140,7 +140,6 @@ public class Level extends LevelComponent implements Screen {
         PlayerMovementSystem.move(player, batch, this);
 
         PlatformSystem.render(platforms, batch);
-        PlatformSystem.solidPlatform(platforms, player);
 
         batch.end();
 

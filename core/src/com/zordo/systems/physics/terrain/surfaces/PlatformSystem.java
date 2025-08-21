@@ -23,7 +23,7 @@ public class PlatformSystem {
                     platform.setCharacterRelativePosition("Character is above");
                     character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight() - 2);
                     break;
-                } else if ((platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
+                } else if (platformIsAbove(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     character.getCharacterComponent().setIsAirborne(true);
                     character.getCharacterComponent().setIsDescending(true);

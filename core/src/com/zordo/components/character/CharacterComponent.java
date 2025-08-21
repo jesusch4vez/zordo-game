@@ -16,6 +16,7 @@ public class CharacterComponent {
     Boolean isStanding;
 
     Boolean isColliding;
+    Boolean onSurface;
 
     Boolean isAscending;
     Boolean isDescending;
@@ -54,6 +55,7 @@ public class CharacterComponent {
         isAscending = false;
         isDescending = false;
         isStanding = true;
+        onSurface = false;
 
         health = 8;
 
@@ -199,5 +201,13 @@ public class CharacterComponent {
     }
     public void setIsDescending(Boolean isDescending) {
         this.isDescending = isDescending;
+    }
+
+    public void setOnSurface(Boolean isOnSurface) {
+        this.onSurface = isOnSurface;
+    }
+
+    public Boolean getOnSurface() {
+        return this.onSurface;
     }
 }

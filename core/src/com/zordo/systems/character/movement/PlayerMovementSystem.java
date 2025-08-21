@@ -3,16 +3,21 @@ package com.zordo.systems.character.movement;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.zordo.entities.characters.Character;
 import com.zordo.entities.world.level.Level;
 import com.zordo.systems.character.animation.AnimationSystem;
+import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 public class PlayerMovementSystem extends CharacterMovementSystem {
-    static float jump2 = 0;
     static float elapsed;
+    static Vector3 previousPosition;
 
     public static void move(Character character, SpriteBatch batch, Level level) {
         if (!level.paused) {
+            previousPosition = new Vector3();
+            previousPosition = character.getCharacterComponent().getPosition();
+            character.getCharacterComponent().setPreviousPosition(previousPosition);
             elapsed += Gdx.graphics.getDeltaTime();
             character.getCharacterComponent().setPosition(character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
 
@@ -59,6 +64,8 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsAirborne(true);
                 character.getCharacterComponent().setIsAscending(true);
                 character.getCharacterComponent().setIsDescending(false);
+                character.getCharacterComponent().setOnSurface(false);
+                character.getCharacterComponent().setIsColliding(false);
                 character.getCharacterComponent().getCollider().y += 100 * Gdx.graphics.getDeltaTime();
                 AnimationSystem.jumpRender(character);
             }
@@ -71,6 +78,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().getCollider().y -= 120 * Gdx.graphics.getDeltaTime();
             }
         }
+        PlatformSystem.solidPlatform(level.platforms, character);
         AnimationSystem.animate(character, batch, elapsed, level);
     }
 }
