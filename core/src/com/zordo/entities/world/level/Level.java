@@ -124,7 +124,6 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void render(float v) {
-//        player.getCharacterComponent().setPreviousPosition(player.getCharacterComponent().getPosition());
         elapsed += Gdx.graphics.getDeltaTime();
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -138,7 +137,6 @@ public class Level extends LevelComponent implements Screen {
         batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
         PlayerMovementSystem.move(player, batch, this);
-
         PlatformSystem.render(platforms, batch);
 
         batch.end();

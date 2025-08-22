@@ -102,12 +102,13 @@ public class CharacterComponent {
 
     public void setX(float x) {
         this.position.x = x;
-        this.collider.x = x;
+        this.getCollider().setX(x);
+//        this.collider.x = x;
     }
 
     public void setY(float y) {
         this.position.y = y;
-        this.collider.y = y;
+        this.getCollider().setY(y);
     }
 
     public void setPreviousPosition(Vector3 previousPosition) {

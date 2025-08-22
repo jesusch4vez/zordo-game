@@ -33,17 +33,13 @@ public class PlatformSystem {
                     platform.setCharacterRelativePosition("Character is below");
                     character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight() - 5);
                     break;
-                } else if (!platformIsAbove(character,platform)
-                        && !platformIsBelow(character,platform)
-                        && platformisOnLeft(character,platform)) {
+                } else if (platformisOnLeft(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     platform.setHoldsCharacter(false);
                     platform.setCharacterRelativePosition("Character is right");
                     character.getCharacterComponent().setX(platform.getX() + platform.getWidth() + 10);
                     break;
-                } else if (!platformIsAbove(character,platform)
-                        && !platformIsBelow(character,platform)
-                        && platformIsOnRight(character,platform)) {
+                } else if (platformIsOnRight(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     platform.setCharacterRelativePosition("Character is left");
                     platform.setHoldsCharacter(false);
@@ -55,15 +51,11 @@ public class PlatformSystem {
                 character.getCharacterComponent().setIsColliding(false);
                 if (platformIsBelow(character,platform)) {
                     platform.setCharacterRelativePosition("Character is above");
-                } else if ((platformIsAbove(character,platform) && !platformIsOnRight(character,platform) && !platformisOnLeft(character,platform))) {
+                } else if (platformIsAbove(character,platform)) {
                     platform.setCharacterRelativePosition("Character is below");
-                } else if (!platformIsAbove(character,platform)
-                        && !platformIsBelow(character,platform)
-                        && platformisOnLeft(character,platform)) {
+                } else if (platformisOnLeft(character,platform)) {
                     platform.setCharacterRelativePosition("Character is right");
-                } else if (!platformIsAbove(character,platform)
-                        && !platformIsBelow(character,platform)
-                        && platformIsOnRight(character,platform)) {
+                } else if (platformIsOnRight(character,platform)) {
                     platform.setCharacterRelativePosition("Character is left");
                 }
             }
@@ -84,11 +76,11 @@ public class PlatformSystem {
     };
 
     public static Boolean platformisOnLeft(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getX() < character.getCharacterComponent().getCollider().getX() + 10;
+        return (platform.getPlatform().getX() + platform.getWidth() < character.getCharacterComponent().getCollider().getX() + 10) && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
     };
 
     public static Boolean platformIsOnRight(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getX() > character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() - 10;
+        return platform.getPlatform().getX() > character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() - 10 && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
     };
 
     public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
