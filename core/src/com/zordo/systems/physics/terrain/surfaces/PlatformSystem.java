@@ -12,6 +12,7 @@ public class PlatformSystem {
     public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character) {
         for (PlatformComponent platform : platforms) {
             if (!character.getCharacterComponent().getIsColliding() && platform.getPlatform().overlaps(character.getCharacterComponent().getCollider())) {
+                character.getCharacterComponent().setPosition(character.getCharacterComponent().getPreviousPosition());
                 if (platformIsBelow(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     character.getCharacterComponent().setIsAirborne(false);
@@ -21,7 +22,7 @@ public class PlatformSystem {
 
                     platform.setHoldsCharacter(true);
                     platform.setCharacterRelativePosition("Character is above");
-                    character.getCharacterComponent().setY(platform.getY() + platform.getPlatform().getHeight() - 2);
+                    character.getCharacterComponent().setY(platform.getY() + platform.getHeight());
                     break;
                 } else if (platformIsAbove(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
@@ -31,19 +32,19 @@ public class PlatformSystem {
 
                     platform.setHoldsCharacter(false);
                     platform.setCharacterRelativePosition("Character is below");
-                    character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight() - 5);
+                    character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight());
                     break;
                 } else if (platformisOnLeft(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     platform.setHoldsCharacter(false);
                     platform.setCharacterRelativePosition("Character is right");
-                    character.getCharacterComponent().setX(platform.getX() + platform.getWidth() + 10);
+                    character.getCharacterComponent().setX(platform.getX() + platform.getWidth());
                     break;
                 } else if (platformIsOnRight(character,platform)) {
                     character.getCharacterComponent().setIsColliding(true);
                     platform.setCharacterRelativePosition("Character is left");
                     platform.setHoldsCharacter(false);
-                    character.getCharacterComponent().setX(platform.getX() - character.getCharacterComponent().getCollider().getWidth() - 10);
+                    character.getCharacterComponent().setX(platform.getX() - character.getCharacterComponent().getCollider().getWidth());
                     break;
                 }
                 character.getCharacterComponent().setIsColliding(true);
@@ -68,19 +69,19 @@ public class PlatformSystem {
 
 
     public static Boolean platformIsAbove(Character character, PlatformComponent platform) {
-       return platform.getPlatform().getY() > character.getCharacterComponent().getCollider().getY() + character.getCharacterComponent().getCollider().getHeight()- 10;
+       return platform.getPlatform().getY() >= character.getCharacterComponent().getCollider().getY() + character.getCharacterComponent().getCollider().getHeight();
     };
 
     public static Boolean platformIsBelow(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getY() + platform.getHeight() - 10 < character.getCharacterComponent().getCollider().getY();
+        return platform.getPlatform().getY() + platform.getHeight() <= character.getCharacterComponent().getCollider().getY();
     };
 
     public static Boolean platformisOnLeft(Character character, PlatformComponent platform) {
-        return (platform.getPlatform().getX() + platform.getWidth() < character.getCharacterComponent().getCollider().getX() + 10) && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
+        return (platform.getPlatform().getX() + platform.getWidth() <= character.getCharacterComponent().getCollider().getX()) && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
     };
 
     public static Boolean platformIsOnRight(Character character, PlatformComponent platform) {
-        return platform.getPlatform().getX() > character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() - 10 && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
+        return platform.getPlatform().getX() >= character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
     };
 
     public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
