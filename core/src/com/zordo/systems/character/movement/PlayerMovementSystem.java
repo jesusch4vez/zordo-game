@@ -17,18 +17,19 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             elapsed += Gdx.graphics.getDeltaTime();
             character.getCharacterComponent().setPosition(character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
 
-            character.getCharacterComponent().setIsStepping(false);
-            character.getCharacterComponent().setIsRunning(false);
-            character.getCharacterComponent().setIsJumping(false);
-            AnimationSystem.standRender(character);
+            if(!character.getCharacterComponent().getIsAirborne()) {
+                character.getCharacterComponent().setIsStepping(false);
+                character.getCharacterComponent().setIsRunning(false);
+                character.getCharacterComponent().setIsJumping(false);
+                character.getCharacterComponent().setIsDescending(false);
+                character.getCharacterComponent().setIsAscending(false);
+                AnimationSystem.standRender(character);
+            } else {
+                AnimationSystem.jumpRender(character);
+            }
+
             character.getCharacterComponent().getCollider().y -= 100 * Gdx.graphics.getDeltaTime();
             PlatformSystem.solidPlatform(level.platforms, character);
-//            if (!Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-//                character.getCharacterComponent().setIsStepping(false);
-//                character.getCharacterComponent().setIsRunning(false);
-//                character.getCharacterComponent().setIsJumping(false);
-//                AnimationSystem.standRender(character);
-//            }
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
@@ -37,14 +38,18 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(true);
                 character.getCharacterComponent().setIsRunning(false);
-                AnimationSystem.walkRender(character);
+                if(!character.getCharacterComponent().getIsAirborne()) {
+                    AnimationSystem.walkRender(character);
+                }
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(true);
                     character.getCharacterComponent().setIsRunning(true);
-                    AnimationSystem.runRender(character);
+                    if(!character.getCharacterComponent().getIsAirborne()) {
+                        AnimationSystem.runRender(character);
+                    }
                 }
             }
 
@@ -55,40 +60,37 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(false);
                 character.getCharacterComponent().setIsRunning(false);
-                AnimationSystem.walkRender(character);
+                if(!character.getCharacterComponent().getIsAirborne()) {
+                    AnimationSystem.walkRender(character);
+                }
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
                     character.getCharacterComponent().setIsRunning(true);
                     character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(false);
-                    AnimationSystem.runRender(character);
+                    if(!character.getCharacterComponent().getIsAirborne()) {
+                        AnimationSystem.runRender(character);
+                    }
                 }
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
+
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
                 character.getCharacterComponent().setIsAscending(true);
                 character.getCharacterComponent().setIsDescending(false);
-                character.getCharacterComponent().setOnSurface(false);
                 character.getCharacterComponent().setIsColliding(false);
+
                 character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
-                AnimationSystem.jumpRender(character);
+            } else {
+                character.getCharacterComponent().setIsDescending(true);
+                character.getCharacterComponent().setIsJumping(false);
             }
-
-//            else if(!Gdx.input.isKeyPressed(Input.Keys.SPACE) && character.getCharacterComponent().getIsAirborne()) {
-//                character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
-//                character.getCharacterComponent().setIsDescending(true);
-//                character.getCharacterComponent().setIsAscending(false);
-//                character.getCharacterComponent().setIsJumping(false);
-//                AnimationSystem.jumpRender(character);
-//
-//                PlatformSystem.solidPlatform(level.platforms, character);
-//            }
         }
         AnimationSystem.animate(character, batch, elapsed, level);
     }
