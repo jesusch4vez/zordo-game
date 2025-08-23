@@ -63,9 +63,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                         character.getCharacterComponent().setIsStepping(false);
                     }
                 }
-            }
-
-            else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
                 character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
