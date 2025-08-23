@@ -27,7 +27,8 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             } else {
                 AnimationSystem.jumpRender(character);
             }
-
+            character.getCharacterComponent().setIsAscending(false);
+            character.getCharacterComponent().setIsDescending(true);
             character.getCharacterComponent().getCollider().y -= 100 * Gdx.graphics.getDeltaTime();
             PlatformSystem.solidPlatform(level.platforms, character);
 
@@ -39,8 +40,13 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsFlippedRight(true);
                 character.getCharacterComponent().setIsRunning(false);
                 if(!character.getCharacterComponent().getIsAirborne()) {
+                    character.getCharacterComponent().setIsColliding(true);
                     AnimationSystem.walkRender(character);
+                } else {
+                    character.getCharacterComponent().setIsRunning(false);
+                    character.getCharacterComponent().setIsStepping(false);
                 }
+
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character);
@@ -48,7 +54,11 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     character.getCharacterComponent().setIsFlippedRight(true);
                     character.getCharacterComponent().setIsRunning(true);
                     if(!character.getCharacterComponent().getIsAirborne()) {
+                        character.getCharacterComponent().setIsColliding(true);
                         AnimationSystem.runRender(character);
+                    } else {
+                        character.getCharacterComponent().setIsRunning(false);
+                        character.getCharacterComponent().setIsStepping(false);
                     }
                 }
             }
@@ -61,7 +71,11 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsFlippedRight(false);
                 character.getCharacterComponent().setIsRunning(false);
                 if(!character.getCharacterComponent().getIsAirborne()) {
+                    character.getCharacterComponent().setIsColliding(true);
                     AnimationSystem.walkRender(character);
+                } else {
+                    character.getCharacterComponent().setIsRunning(false);
+                    character.getCharacterComponent().setIsStepping(false);
                 }
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
                     character.getCharacterComponent().setIsRunning(true);
@@ -70,25 +84,26 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(false);
                     if(!character.getCharacterComponent().getIsAirborne()) {
+                        character.getCharacterComponent().setIsColliding(true);
                         AnimationSystem.runRender(character);
+                    } else {
+                        character.getCharacterComponent().setIsRunning(false);
+                        character.getCharacterComponent().setIsStepping(false);
                     }
                 }
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
-
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
                 character.getCharacterComponent().setIsAscending(true);
                 character.getCharacterComponent().setIsDescending(false);
                 character.getCharacterComponent().setIsColliding(false);
-
                 character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
             } else {
-                character.getCharacterComponent().setIsDescending(true);
                 character.getCharacterComponent().setIsJumping(false);
             }
         }
