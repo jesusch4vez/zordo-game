@@ -48,6 +48,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 } else {
                     character.getCharacterComponent().setIsRunning(false);
                     character.getCharacterComponent().setIsStepping(false);
+                    AnimationSystem.jumpRender(character);
                 }
 
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
@@ -63,21 +64,24 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     } else {
                         character.getCharacterComponent().setIsRunning(false);
                         character.getCharacterComponent().setIsStepping(false);
+                        AnimationSystem.jumpRender(character);
                     }
                 }
             } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
-                character.getCharacterComponent().setIsStepping(true);
-                character.getCharacterComponent().setIsFlippedRight(false);
-                character.getCharacterComponent().setIsRunning(false);
 
                 if(!character.getCharacterComponent().getIsAirborne()) {
+                    character.getCharacterComponent().setIsStepping(true);
+                    character.getCharacterComponent().setIsFlippedRight(false);
+                    character.getCharacterComponent().setIsRunning(false);
                     character.getCharacterComponent().setIsColliding(true);
                     AnimationSystem.walkRender(character);
                 } else {
-                    character.getCharacterComponent().setIsRunning(false);
                     character.getCharacterComponent().setIsStepping(false);
+                    character.getCharacterComponent().setIsFlippedRight(false);
+                    character.getCharacterComponent().setIsRunning(false);
+                    AnimationSystem.jumpRender(character);
                 }
 
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
@@ -88,11 +92,16 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     character.getCharacterComponent().setIsFlippedRight(false);
 
                     if(!character.getCharacterComponent().getIsAirborne()) {
-                        character.getCharacterComponent().setIsColliding(true);
-                        AnimationSystem.runRender(character);
-                    } else {
+                        character.getCharacterComponent().setIsStepping(true);
+                        character.getCharacterComponent().setIsFlippedRight(false);
                         character.getCharacterComponent().setIsRunning(false);
+                        character.getCharacterComponent().setIsColliding(true);
+                        AnimationSystem.walkRender(character);
+                    } else {
                         character.getCharacterComponent().setIsStepping(false);
+                        character.getCharacterComponent().setIsFlippedRight(false);
+                        character.getCharacterComponent().setIsRunning(false);
+                        AnimationSystem.jumpRender(character);
                     }
                 }
             }
@@ -104,6 +113,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsAscending(true);
                 character.getCharacterComponent().setIsDescending(false);
                 character.getCharacterComponent().setIsColliding(false);
+                AnimationSystem.jumpRender(character);
                 character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
             } else {
