@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.Component;
 import com.zordo.components.camera.CameraComponent;
-import com.zordo.components.world.levels.LevelComponent;
 import com.zordo.entities.world.level.Level;
 
 import java.util.HashMap;
@@ -22,7 +21,6 @@ public class PauseMenu implements Screen {
 
     int selection;
     final LegendOfZordo game;
-    LevelComponent selectedLevel;
     private final Texture backgroundTexture;
     Level level;
     private SpriteBatch batch;
