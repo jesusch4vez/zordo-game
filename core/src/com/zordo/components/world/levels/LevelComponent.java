@@ -4,9 +4,11 @@ import com.zordo.components.menu.LevelItem;
 
 public class LevelComponent extends LevelItem {
     LevelSize levelSize;
+    boolean debugMode;
 
     public LevelComponent() {
         super();
+        debugMode = false;
     }
 
     public void setLevelSize(LevelSize levelSize) {
@@ -15,5 +17,13 @@ public class LevelComponent extends LevelItem {
 
     public LevelSize getLevelSize() {
         return this.levelSize;
+    }
+
+    public void setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
+    }
+
+    public boolean getDebugMode() {
+        return this.debugMode;
     }
 }

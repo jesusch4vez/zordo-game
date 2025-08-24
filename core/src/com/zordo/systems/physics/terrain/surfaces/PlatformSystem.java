@@ -77,7 +77,13 @@ public class PlatformSystem {
         return platform.getPlatform().getX() >= character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
     };
 
-    public static void render(ArrayList<PlatformComponent> platforms, DebugCollision intersection, SpriteBatch batch) {
+    public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
+        for (PlatformComponent platform : platforms) {
+            batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
+        }
+    }
+
+    public static void renderCollisionDebugPlatform(DebugCollision intersection, ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
         BitmapFont font = new BitmapFont();
 
         font.getData().setScale(2);
@@ -92,7 +98,6 @@ public class PlatformSystem {
             font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
             batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
         }
-
         batch.draw(intersection.getPlatformTexture(), intersection.getX(), intersection.getY(), intersection.getPlatform().getWidth(), intersection.getPlatform().getHeight());
     }
 }

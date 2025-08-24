@@ -75,7 +75,11 @@ public class LevelMenu implements Screen {
 
     @Override
     public void show() {
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -132,7 +136,7 @@ public class LevelMenu implements Screen {
         }
 
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            MenuSystem.activateLevel(this.game, levels.get("Level " + selectedLevel));
+            MenuSystem.debugModeMenu(this.game, levels.get("Level " + selectedLevel));
         }
 
         batch.end();

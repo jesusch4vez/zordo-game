@@ -140,7 +140,10 @@ public class Level extends LevelComponent implements Screen {
         batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
         PlayerMovementSystem.move(player, batch, this);
-        PlatformSystem.render(platforms, platformIntersection, batch);
+        PlatformSystem.render(platforms, batch);
+        if(this.getDebugMode()) {
+            PlatformSystem.renderCollisionDebugPlatform(platformIntersection, platforms, batch);
+        }
 
         batch.end();
 
@@ -153,7 +156,9 @@ public class Level extends LevelComponent implements Screen {
             CameraSystem.follow(player, camera);
         }
         HudSystem.renderHUD(player);
-        DebugHudSystem.renderDebugHud(player, this, camera);
+        if(this.getDebugMode()) {
+            DebugHudSystem.renderDebugHud(player, this, camera);
+        }
         camera.update();
     }
 

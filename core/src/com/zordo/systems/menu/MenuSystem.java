@@ -2,11 +2,17 @@ package com.zordo.systems.menu;
 
 import com.zordo.LegendOfZordo;
 import com.zordo.components.world.levels.LevelComponent;
+import com.zordo.entities.player_interface.menu.game.DebugModeMenu;
 import com.zordo.entities.world.level.Level;
 
 public class MenuSystem {
+    public static void debugModeMenu(LegendOfZordo game, LevelComponent selectedLevel) {
+        game.setScreen(new DebugModeMenu(game, selectedLevel));
+    }
+
     public static void activateLevel(LegendOfZordo game, LevelComponent level) {
         Level loadLevel = new Level(game);
+        loadLevel.setDebugMode(level.getDebugMode());
         loadLevel.setLevelSize(level.getLevelSize());
 //        loadLevel.setLevelTheme(level.getLevelTheme());
 //        loadLevel.setLevelTerrain(level.setLevelTerrain());
