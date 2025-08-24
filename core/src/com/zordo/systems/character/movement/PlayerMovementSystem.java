@@ -10,11 +10,14 @@ import com.zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 public class PlayerMovementSystem extends CharacterMovementSystem {
     static float elapsed;
+    static float gravity = -98f;
+//    static float term_velocity = 120f;
 
     public static void move(Character character, SpriteBatch batch, Level level) {
         if (!level.paused) {
             elapsed += Gdx.graphics.getDeltaTime();
             character.getCharacterComponent().setPosition(character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
+            character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
 
             if(!character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().setIsStepping(false);
@@ -29,11 +32,10 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
             character.getCharacterComponent().setIsAscending(false);
             character.getCharacterComponent().setIsDescending(true);
-            character.getCharacterComponent().getCollider().y -= 100 * Gdx.graphics.getDeltaTime();
+            character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
             PlatformSystem.solidPlatform(level.platforms, character);
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
                 character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
                 character.getCharacterComponent().setIsStepping(true);
@@ -64,7 +66,6 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     }
                 }
             } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
                 character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
                 character.getCharacterComponent().setIsStepping(true);
@@ -97,7 +98,6 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                character.getCharacterComponent().setPreviousPosition(character.getCharacterComponent().getPosition());
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
@@ -107,6 +107,13 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character);
             } else {
+                if(character.getCharacterComponent().getIsDescending()) {
+                    AnimationSystem.jumpRender(character);
+                    character.getCharacterComponent().setIsAscending(false);
+                    character.getCharacterComponent().setIsDescending(true);
+                    character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
+                    PlatformSystem.solidPlatform(level.platforms, character);
+                }
                 character.getCharacterComponent().setIsJumping(false);
             }
         }
