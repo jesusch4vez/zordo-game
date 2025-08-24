@@ -2,18 +2,24 @@ package com.zordo.systems.physics.terrain.surfaces;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
+import com.zordo.components.debug.DebugCollision;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.entities.characters.Character;
+import com.zordo.entities.world.level.Level;
 
 import java.util.ArrayList;
 
 public class PlatformSystem {
 
-    public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character) {
+    public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character, Level level) {
         for (PlatformComponent platform : platforms) {
-            if (!character.getCharacterComponent().getIsColliding() && platform.getPlatform().overlaps(character.getCharacterComponent().getCollider())) {
+            Rectangle intersector = new Rectangle();
+            if (!character.getCharacterComponent().getIsColliding() && Intersector.intersectRectangles(character.getCharacterComponent().getCollider(), platform.getPlatform(), intersector)) {
                 character.getCharacterComponent().setPosition(character.getCharacterComponent().getPreviousPosition());
                 character.getCharacterComponent().setIsColliding(true);
+                level.platformIntersection.setPlatform(intersector);
                 if (platformIsBelow(character,platform)) {
                     character.getCharacterComponent().setIsAirborne(false);
                     character.getCharacterComponent().setIsJumping(false);
@@ -71,7 +77,7 @@ public class PlatformSystem {
         return platform.getPlatform().getX() >= character.getCharacterComponent().getCollider().getX() + character.getCharacterComponent().getCollider().getWidth() && !platformIsAbove(character,platform) && !platformIsBelow(character,platform);
     };
 
-    public static void render(ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
+    public static void render(ArrayList<PlatformComponent> platforms, DebugCollision intersection, SpriteBatch batch) {
         BitmapFont font = new BitmapFont();
 
         font.getData().setScale(2);
@@ -86,5 +92,7 @@ public class PlatformSystem {
             font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
             batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
         }
+
+        batch.draw(intersection.getPlatformTexture(), intersection.getX(), intersection.getY(), intersection.getPlatform().getWidth(), intersection.getPlatform().getHeight());
     }
 }

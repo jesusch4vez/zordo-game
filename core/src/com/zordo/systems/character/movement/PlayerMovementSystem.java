@@ -33,11 +33,11 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             character.getCharacterComponent().setIsAscending(false);
             character.getCharacterComponent().setIsDescending(true);
             character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
-            PlatformSystem.solidPlatform(level.platforms, character);
+            PlatformSystem.solidPlatform(level.platforms, character, level);
 
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
-                PlatformSystem.solidPlatform(level.platforms, character);
+                PlatformSystem.solidPlatform(level.platforms, character, level);
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(true);
                 character.getCharacterComponent().setIsRunning(false);
@@ -53,7 +53,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
-                    PlatformSystem.solidPlatform(level.platforms, character);
+                    PlatformSystem.solidPlatform(level.platforms, character, level);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(true);
                     character.getCharacterComponent().setIsRunning(true);
@@ -69,7 +69,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 }
             } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
-                PlatformSystem.solidPlatform(level.platforms, character);
+                PlatformSystem.solidPlatform(level.platforms, character, level);
 
                 if(!character.getCharacterComponent().getIsAirborne()) {
                     character.getCharacterComponent().setIsStepping(true);
@@ -87,7 +87,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
                     character.getCharacterComponent().setIsRunning(true);
                     character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
-                    PlatformSystem.solidPlatform(level.platforms, character);
+                    PlatformSystem.solidPlatform(level.platforms, character, level);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(false);
 
@@ -115,14 +115,14 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsColliding(false);
                 AnimationSystem.jumpRender(character);
                 character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
-                PlatformSystem.solidPlatform(level.platforms, character);
+                PlatformSystem.solidPlatform(level.platforms, character, level);
             } else {
                 if(character.getCharacterComponent().getIsDescending()) {
                     AnimationSystem.jumpRender(character);
                     character.getCharacterComponent().setIsAscending(false);
                     character.getCharacterComponent().setIsDescending(true);
                     character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
-                    PlatformSystem.solidPlatform(level.platforms, character);
+                    PlatformSystem.solidPlatform(level.platforms, character, level);
                 }
                 character.getCharacterComponent().setIsJumping(false);
             }

@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.Component;
 import com.zordo.components.camera.CameraComponent;
+import com.zordo.components.debug.DebugCollision;
 import com.zordo.components.physics.terrain.surfaces.LevelBoundaryComponent;
 import com.zordo.components.physics.terrain.surfaces.PlatformComponent;
 import com.zordo.components.world.levels.LevelComponent;
@@ -41,6 +42,7 @@ public class Level extends LevelComponent implements Screen {
 
     public HashMap<String, Component> components;
     public ArrayList<PlatformComponent> platforms;
+    public DebugCollision platformIntersection;
 
     LevelBoundaryComponent ceiling;
     LevelBoundaryComponent floor;
@@ -54,6 +56,7 @@ public class Level extends LevelComponent implements Screen {
         elapsed = 0.0f;
         this.game = game;
         platforms = new ArrayList<>();
+        platformIntersection = new DebugCollision();
         platformCount = 100;
 
         for(int i = 1; i <= platformCount; i++) {
@@ -137,7 +140,7 @@ public class Level extends LevelComponent implements Screen {
         batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
         PlayerMovementSystem.move(player, batch, this);
-        PlatformSystem.render(platforms, batch);
+        PlatformSystem.render(platforms, platformIntersection, batch);
 
         batch.end();
 
@@ -149,9 +152,9 @@ public class Level extends LevelComponent implements Screen {
         if (!this.paused) {
             CameraSystem.follow(player, camera);
         }
-        camera.update();
         HudSystem.renderHUD(player);
-        DebugHudSystem.renderDebugHud(player, this);
+        DebugHudSystem.renderDebugHud(player, this, camera);
+        camera.update();
     }
 
     @Override
