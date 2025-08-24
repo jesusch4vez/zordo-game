@@ -3,6 +3,7 @@ package com.zordo.systems.menu;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.world.levels.LevelComponent;
 import com.zordo.entities.player_interface.menu.game.DebugModeMenu;
+import com.zordo.entities.player_interface.menu.game.PauseMenu;
 import com.zordo.entities.world.level.Level;
 
 public class MenuSystem {
@@ -18,5 +19,9 @@ public class MenuSystem {
 //        loadLevel.setLevelTerrain(level.setLevelTerrain());
 //        loadLevel.setLevelCharacters(level.setLevelCharacters());
         game.setScreen(loadLevel);
+    }
+
+    public static void pauseMenu(LegendOfZordo game, Level level) {
+        game.setScreen(new PauseMenu(game, level));
     }
 }

@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class Level extends LevelComponent implements Screen {
-    final LegendOfZordo game;
+    public final LegendOfZordo game;
 
     OrthographicCamera camera;
 
@@ -169,7 +169,7 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void pause() {
-        HudSystem.pause(this);
+        HudSystem.pause(this.game, this);
     }
 
     @Override
