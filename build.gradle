@@ -3,6 +3,7 @@ buildscript {
         mavenLocal()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/com/badlogicgames/gdx-controllers/"}
         mavenCentral()
         google()
     }
@@ -35,12 +36,12 @@ allprojects {
     version = '1.0'
     ext {
         appName = "the-legend-of-zordo"
-        gdxVersion = '1.10.0'
+        gdxVersion = '1.13.1'
         roboVMVersion = '2.3.8'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
-        gdxControllersVersion = '2.2.3'
+        gdxControllersVersion = '2.2.4'
     }
 
     repositories {
@@ -49,6 +50,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/com/badlogicgames/gdx-controllers/"}
     }
 }
 
@@ -57,11 +59,11 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
-        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
+        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
     }
 }
 
@@ -69,9 +71,9 @@ project(":core") {
     apply plugin: "java-library"
 
     dependencies {
-        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
+        implementation "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
     }
 }

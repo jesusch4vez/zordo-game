@@ -1,7 +1,6 @@
 package com.zordo;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 
 import java.io.File;
 import java.io.FileInputStream;

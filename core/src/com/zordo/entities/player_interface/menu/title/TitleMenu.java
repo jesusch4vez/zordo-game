@@ -1,22 +1,25 @@
 package com.zordo.entities.player_interface.menu.title;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.Screen;
 import com.zordo.LegendOfZordo;
 import com.zordo.components.camera.CameraComponent;
 import com.zordo.components.Component;
-import com.zordo.entities.player_interface.menu.game.LevelMenu;
+import com.zordo.components.gamePad.ControllersListener;
 import com.zordo.systems.utilities.GifDecoder;
 
 import java.util.HashMap;
 
 public class TitleMenu implements Screen {
+
+    Controller controller;
+    public ControllersListener controllerListener;
 
 	final LegendOfZordo game;
     public SpriteBatch batch;
@@ -31,6 +34,10 @@ public class TitleMenu implements Screen {
 
 		components = new HashMap<>();
 		components.put("Camera", new CameraComponent());
+
+        controllerListener = new ControllersListener();
+        Controllers.addListener(controllerListener);
+        Gdx.app.log("Controller", "ControllerListener added.");
     }
 	
 	@Override
@@ -52,11 +59,12 @@ public class TitleMenu implements Screen {
         batch.begin();
         batch.draw(animation.getKeyFrame(elapsed), 0, 0);
         batch.end();
-        
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-        	ScreenUtils.clear(0, 0, 0.2f, 1);
-        	this.game.setScreen(new LevelMenu(game));
-        }
+
+        controllerListener.handleInput(Gdx.graphics.getDeltaTime());
+//        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+//        	ScreenUtils.clear(0, 0, 0.2f, 1);
+//        	this.game.setScreen(new LevelMenu(game));
+//        }
 	}
 
 	@Override
