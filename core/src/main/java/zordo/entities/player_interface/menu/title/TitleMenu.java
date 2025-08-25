@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.components.camera.CameraComponent;
 import zordo.components.Component;
-import zordo.components.gamePad.ControllersListener;
+import zordo.systems.gamePad.MenuControllerSystem;
 import zordo.entities.player_interface.menu.game.LevelMenu;
 import zordo.systems.utilities.GifDecoder;
 
@@ -22,7 +22,7 @@ import java.util.HashMap;
 public class TitleMenu implements Screen {
 
     Controller controller;
-    public ControllersListener controllerListener;
+    public MenuControllerSystem controllerListener;
 
 	final LegendOfZordo game;
     public SpriteBatch batch;
@@ -38,7 +38,7 @@ public class TitleMenu implements Screen {
 		components = new HashMap<>();
 		components.put("Camera", new CameraComponent());
 
-        controllerListener = new ControllersListener();
+        controllerListener = new MenuControllerSystem();
         Controllers.addListener(controllerListener);
         Gdx.app.log("Controller", "ControllerListener added.");
 

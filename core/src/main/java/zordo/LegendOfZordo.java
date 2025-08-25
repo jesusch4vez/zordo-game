@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
-import zordo.components.gamePad.ControllersListener;
+import zordo.systems.gamePad.MenuControllerSystem;
 import zordo.components.world.levels.LevelSize;
 import zordo.entities.player_interface.menu.title.TitleMenu;
 
@@ -18,12 +18,12 @@ public class LegendOfZordo extends Game {
 	public LevelSize medium;
 	public LevelSize large;
 
-	private ControllersListener controllersListener;
+	private MenuControllerSystem controllersListener;
 
 	@Override
 	public void create () {
 		// --- IMPORTANT: Add this class as a Controller Listener ---
-		controllersListener = new ControllersListener();
+		controllersListener = new MenuControllerSystem();
 		Controllers.addListener(controllersListener);
 		Gdx.app.log("Controller", "Controller Listener added.");
 
