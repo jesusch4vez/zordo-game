@@ -1,33 +1,24 @@
 package zordo.components.gamePad;
 
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.ControllerListener;
 import zordo.components.Component;
 
-public class ControllerComponent extends Component implements ControllerListener {
+public class ControllerComponent extends Component {
+    public static Button START_BUTTON = new Button(6);
+    public static Button SELECT_BUTTON = new Button(4);
 
-    @Override
-    public void connected(Controller controller) {
+    public static Button D_PAD_UP = new Button(11);
+    public static Button D_PAD_DOWN = new Button(12);
+    public static Button D_PAD_LEFT = new Button(13);
+    public static Button D_PAD_RIGHT = new Button(14);
 
-    }
+    public static Button A_BUTTON = new Button(0);
+    public static Button B_BUTTON = new Button(1);
+    public static Button X_BUTTON = new Button(2);
+    public static Button Y_BUTTON = new Button(3);
 
-    @Override
-    public void disconnected(Controller controller) {
+    public static Button LEFT_STICK = new Button(7);
+    public static Button RIGHT_STICK = new Button(8);
 
-    }
-
-    @Override
-    public boolean buttonDown(Controller controller, int buttonCode) {
-        return false;
-    }
-
-    @Override
-    public boolean buttonUp(Controller controller, int buttonCode) {
-        return false;
-    }
-
-    @Override
-    public boolean axisMoved(Controller controller, int axisCode, float value) {
-        return false;
-    }
+    public static Button LEFT_BUMPER = new Button(9);
+    public static Button RIGHT_BUMPER = new Button(10);
 }
