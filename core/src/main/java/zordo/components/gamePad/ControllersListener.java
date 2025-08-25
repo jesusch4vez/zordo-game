@@ -1,5 +1,6 @@
 package zordo.components.gamePad;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
@@ -7,6 +8,9 @@ import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
+import zordo.LegendOfZordo;
+import zordo.entities.player_interface.menu.game.LevelMenu;
 
 public class ControllersListener implements ControllerListener {
 
@@ -83,7 +87,7 @@ public class ControllersListener implements ControllerListener {
         return false;
     }
 
-    public void handleInput(float deltaTime) {
+    public void handleInput(float deltaTime, LegendOfZordo game) {
         if (activeController == null) return;
 
         // --- Axis Input for Movement ---
@@ -93,6 +97,11 @@ public class ControllersListener implements ControllerListener {
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             System.out.println(xAxis);
             System.out.println(yAxis);
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER) || Gdx.input.isKeyJustPressed(6)) {
+            ScreenUtils.clear(0, 0, 0.2f, 1);
+            game.setScreen(new LevelMenu(game));
         }
     }
 }

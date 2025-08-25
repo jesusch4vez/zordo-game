@@ -28,7 +28,7 @@ public class LegendOfZordo extends Game {
 		Gdx.app.log("Controller", "Controller Listener added.");
 
 		Properties properties = new Properties();
-		File propertiesFile = new File("../../resources/game_config.properties");
+		File propertiesFile = new File("game_config.properties");
 
 		try (FileInputStream props = new FileInputStream(propertiesFile)) {
 			properties.load(props);
