@@ -1,14 +1,3 @@
 #!/bin/sh
 
-
-stash_commit="$(git stash create)"
-
 gradle build && gradle lint
-
-status=$?
-
-if [[ -n "${stash_commit}" ]]
-then git stash apply "${stash_commit}"
-fi
-
-exit $status

@@ -1,13 +1,14 @@
-apply plugin: "java"
-
-project.ext.mainClassName = "com.zordo.game.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../core/assets");
-
-jar.archiveBaseName = "The Legend of Zordo - Core"
-sourceSets.main.java.srcDirs = [ "src/" ]
-
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+eclipse.project.name = appName + '-core'
 
-eclipse.project {
-    name = appName + "-core"
+
+dependencies {
+  api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
+  api "com.badlogicgames.gdx:gdx:$gdxVersion"
+  api "de.golfgl.gdxcontrollerutils:gdx-controllers-advanced:$controllerUtilsVersion"
+  api "org.apache.groovy:groovy-all:$groovyVersion"
+
+  if(enableGraalNative == 'true') {
+    implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
+  }
 }
