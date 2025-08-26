@@ -1,6 +1,7 @@
 package zordo.systems.gamePad;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
@@ -82,7 +83,6 @@ public class GamePadSystem implements ControllerListener {
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON UP", controller.getName() + " | Button Up: " + buttonCode);
-//        buttonSwitch(controller, buttonCode);
         return false;
     }
 
@@ -96,6 +96,10 @@ public class GamePadSystem implements ControllerListener {
 
     public void handleInput(float deltaTime, LegendOfZordo game) {
         this.game = game;
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            ScreenUtils.clear(0, 0, 0.2f, 1);
+            this.game.setScreen(new LevelMenu(game));
+        }
     }
 
     public void handleGameInput(int buttonCode) {
@@ -115,8 +119,6 @@ public class GamePadSystem implements ControllerListener {
     }
 
     public void handleLevelMenuInput(int buttonCode) {
-
-
         if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
 
         }

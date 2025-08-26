@@ -11,7 +11,6 @@ import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 public class PlayerMovementSystem extends CharacterMovementSystem {
     static float elapsed;
     static float gravity = -98f;
-//    static float term_velocity = 120f;
 
     public static void move(Character character, SpriteBatch batch, Level level) {
         if (!level.paused) {

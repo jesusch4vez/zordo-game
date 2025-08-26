@@ -25,7 +25,6 @@ import java.util.HashMap;
 public class LevelMenu implements Screen {
     final LegendOfZordo game;
     LevelComponent loadLevel;
-    private SpriteBatch batch;
     private final Texture backgroundTexture;
     OrthographicCamera camera;
 
@@ -88,7 +87,7 @@ public class LevelMenu implements Screen {
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch = new SpriteBatch();
+        SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(backgroundTexture,0,0,1920,1080);

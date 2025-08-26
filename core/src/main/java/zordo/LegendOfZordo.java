@@ -23,9 +23,7 @@ public class LegendOfZordo extends Game {
     public boolean isOnPauseMenu;
     public boolean isOnLevel;
 
-	private GamePadSystem controllersListener;
-
-	@Override
+    @Override
 	public void create () {
         this.isOnTitleMenu = true;
         this.isOnLevelMenu = false;
@@ -33,7 +31,7 @@ public class LegendOfZordo extends Game {
         this.isOnLevel = false;
 
 		// --- IMPORTANT: Add this class as a Controller Listener ---
-		controllersListener = new GamePadSystem();
+        GamePadSystem controllersListener = new GamePadSystem();
 		Controllers.addListener(controllersListener);
 		Gdx.app.log("Controller", "Controller Listener added.");
 
@@ -58,8 +56,6 @@ public class LegendOfZordo extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-//		Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		this.setScreen(new TitleMenu(this));
 	}
 

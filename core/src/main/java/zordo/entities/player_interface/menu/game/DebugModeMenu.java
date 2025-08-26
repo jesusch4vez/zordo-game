@@ -25,7 +25,6 @@ public class DebugModeMenu implements Screen {
 
     int debug;
 
-    private SpriteBatch batch;
     OrthographicCamera camera;
 
     HashMap<String, Component> components;
@@ -63,7 +62,7 @@ public class DebugModeMenu implements Screen {
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch = new SpriteBatch();
+        SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(backgroundTexture,0,0,1920,1080);

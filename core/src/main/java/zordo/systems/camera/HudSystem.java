@@ -2,20 +2,15 @@ package zordo.systems.camera;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import zordo.LegendOfZordo;
 import zordo.entities.characters.Character;
-import zordo.entities.player_interface.menu.title.TitleMenu;
 import zordo.entities.world.level.Level;
 import zordo.systems.health.HealthSystem;
 import zordo.systems.menu.MenuSystem;
 
-import java.util.concurrent.TimeUnit;
-
 public class HudSystem {
-
     public static void renderHUD(Character player) {
         SpriteBatch hudBatch = new SpriteBatch();
         hudBatch.begin();
