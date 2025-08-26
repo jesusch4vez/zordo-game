@@ -73,7 +73,7 @@ public class GameControllerSystem implements ControllerListener {
 
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
-        Gdx.app.log("BUTTON DOWN", this.game.isOnLevelMenu + " | Button Down: " + buttonCode);
+        Gdx.app.log("BUTTON DOWN", this.game.isOnLevel + " | Button Down: " + buttonCode);
         if (this.game.isOnTitleMenu) {
             handleGameStart(buttonCode);
         }
@@ -155,6 +155,11 @@ public class GameControllerSystem implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
+        // We handle axis movement directly in render(), but you could log it here too
+        if (Math.abs(value) < 0.2f) {
+            value = 0;
+        }
+        Gdx.app.log("ControllerInput", controller.getName() + " | Axis Moved: " + axisCode + " | Value: " + value);
         if(this.game.isOnLevel) {
             handleAxis(axisCode,value);
         }

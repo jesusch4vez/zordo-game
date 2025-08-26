@@ -35,10 +35,17 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             character.getCharacterComponent().setIsDescending(true);
             character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
             PlatformSystem.solidPlatform(level.platforms, character, level);
+
             float axis = ControllerComponent.LEFT_STICK_X.getAxisValue();
 
-            if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || ControllerComponent.LEFT_STICK_X.isTilted() || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                character.getCharacterComponent().getCollider().x += 100 * axis * Gdx.graphics.getDeltaTime();
+            character.getCharacterComponent().setIsFlippedRight(!(axis < 0));
+
+            if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || (axis > 0) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                if(axis > 0) {
+                    character.getCharacterComponent().getCollider().x += 100 * (axis) * Gdx.graphics.getDeltaTime();
+                } else {
+                    character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
+                }
                 PlatformSystem.solidPlatform(level.platforms, character, level);
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(true);
@@ -54,7 +61,12 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 }
 
                 if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                    character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
+                    if(axis > 0) {
+                        character.getCharacterComponent().getCollider().x += 125 * (axis) * Gdx.graphics.getDeltaTime();
+                    } else {
+                        character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
+                    }
+                    character.getCharacterComponent().getCollider().x += 125 * (axis) * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character, level);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(true);
@@ -69,8 +81,12 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                         AnimationSystem.jumpRender(character);
                     }
                 }
-            } else if (ControllerComponent.D_PAD_LEFT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
+            } else if (ControllerComponent.D_PAD_LEFT.isPressed() || (axis < 0) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                if(axis < 0) {
+                    character.getCharacterComponent().getCollider().x -= 100 * (-axis) * Gdx.graphics.getDeltaTime();
+                } else {
+                    character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
+                }
                 PlatformSystem.solidPlatform(level.platforms, character, level);
 
                 if(!character.getCharacterComponent().getIsAirborne()) {
@@ -88,7 +104,11 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
                 if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
                     character.getCharacterComponent().setIsRunning(true);
-                    character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
+                    if(axis < 0) {
+                        character.getCharacterComponent().getCollider().x -= 125 * (-axis) * Gdx.graphics.getDeltaTime();
+                    } else {
+                        character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
+                    }
                     PlatformSystem.solidPlatform(level.platforms, character, level);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(false);
