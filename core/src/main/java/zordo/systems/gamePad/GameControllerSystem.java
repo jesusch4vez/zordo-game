@@ -5,10 +5,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.components.gamePad.ControllerComponent;
+import zordo.entities.characters.Character;
+import zordo.entities.characters.player.Player;
 import zordo.entities.player_interface.menu.game.LevelMenu;
+import zordo.systems.character.movement.PlayerMovementSystem;
 import zordo.systems.menu.MenuSystem;
 
 import java.util.concurrent.TimeUnit;
@@ -134,12 +138,18 @@ public class GameControllerSystem implements ControllerListener {
                 MenuSystem.activateLevel(this.game, this.game.debugModeMenu.selectedLevel);
             }
         }
+        else if(this.game.isOnLevel) {
+            handleButton(buttonCode);
+        }
         return false;
     }
 
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON UP", controller.getName() + " | Button Up: " + buttonCode);
+        if(this.game.isOnLevel) {
+            handleButton(buttonCode);
+        }
         return false;
     }
 
@@ -212,6 +222,23 @@ public class GameControllerSystem implements ControllerListener {
                 this.game.debugModeMenu.selectedLevel.setDebugMode( this.game.debugModeMenu.debug == 1);
                 MenuSystem.activateLevel(this.game,  this.game.debugModeMenu.selectedLevel);
             }
+        }
+    }
+
+    private void handleButton(int buttonCode) {
+        this.game.level.player.buttonCode = buttonCode;
+    }
+
+    private void handleButtonUp(int buttonCode) {
+        this.game.level.player.buttonCode = buttonCode;
+    }
+
+    public void handleInput(Character character, SpriteBatch batch, float deltaTime, LegendOfZordo game) throws InterruptedException {
+        this.game.level = game.level;
+        this.game.level.batch = batch;
+        this.game.level.player = (Player) character;
+        if(this.game.isOnLevel) {
+            PlayerMovementSystem.move(character, this.game.level.player.buttonCode, batch, this.game.level);
         }
     }
 

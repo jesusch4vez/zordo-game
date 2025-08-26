@@ -33,6 +33,7 @@ public class LegendOfZordo extends Game {
     public LevelMenu levelMenu;
     public DebugModeMenu debugModeMenu;
     public PauseMenu pauseMenu;
+    public Level level;
 
     @Override
 	public void create () {
@@ -46,6 +47,7 @@ public class LegendOfZordo extends Game {
         levelMenu = new LevelMenu(this);
         debugModeMenu = new DebugModeMenu(this, new LevelComponent());
         pauseMenu = new PauseMenu(this, new Level(this));
+        level = new Level(this);
 
 		Properties properties = new Properties();
 		File propertiesFile = new File("game_config.properties");

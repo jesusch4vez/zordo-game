@@ -3,6 +3,7 @@ package zordo.entities.world.level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,7 +36,7 @@ public class Level extends LevelComponent implements Screen {
     public SpriteBatch batch;
     private Texture backgroundTexture;
 
-    Player player;
+    public Player player;
 
     public boolean paused;
     float elapsed;
@@ -53,8 +54,14 @@ public class Level extends LevelComponent implements Screen {
     int platformCount;
 
     public Level(final LegendOfZordo game) {
-        elapsed = 0.0f;
         this.game = game;
+        this.game.level = this;
+        this.game.isOnLevelMenu = false;
+        this.game.isOnDebugMenu = false;
+        this.game.isOnTitleMenu = false;
+        this.game.isOnLevel = true;
+
+        elapsed = 0.0f;
         platforms = new ArrayList<>();
         platformIntersection = new DebugCollision();
         platformCount = 100;
@@ -131,21 +138,25 @@ public class Level extends LevelComponent implements Screen {
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch = new SpriteBatch();
-        CameraComponent cam = (CameraComponent) components.get("Camera");
-        camera = cam.getCamera();
-        batch.setProjectionMatrix(camera.combined);
+        try {
+            batch = new SpriteBatch();
+            CameraComponent cam = (CameraComponent) components.get("Camera");
+            camera = cam.getCamera();
+            batch.setProjectionMatrix(camera.combined);
 
-        batch.begin();
-        batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
+            batch.begin();
+            batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
+            this.game.controllerListener.handleInput(player, batch, elapsed, this.game);
 
-        PlayerMovementSystem.move(player, batch, this);
-        PlatformSystem.render(platforms, batch);
-        if(this.getDebugMode()) {
-            PlatformSystem.renderCollisionDebugPlatform(platformIntersection, platforms, batch);
+            PlatformSystem.render(platforms, batch);
+
+            if(this.getDebugMode()) {
+                PlatformSystem.renderCollisionDebugPlatform(platformIntersection, platforms, batch);
+            }
+            batch.end();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-
-        batch.end();
 
         if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.paused = true;
