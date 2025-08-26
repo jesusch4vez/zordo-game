@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import zordo.components.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
+import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
 import zordo.systems.character.animation.AnimationSystem;
 import zordo.systems.physics.terrain.surfaces.PlatformSystem;
@@ -13,7 +14,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
     static float elapsed;
     static float gravity = -98f;
 
-    public static void move(Character character, int buttonCode, SpriteBatch batch, Level level) {
+    public static void move(Player character, SpriteBatch batch, Level level) {
         if (!level.paused) {
             elapsed += Gdx.graphics.getDeltaTime();
             character.getCharacterComponent().setPosition(character.getCharacterComponent().getCollider().x, character.getCharacterComponent().getCollider().y);
@@ -34,9 +35,10 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             character.getCharacterComponent().setIsDescending(true);
             character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
             PlatformSystem.solidPlatform(level.platforms, character, level);
+            float axis = ControllerComponent.LEFT_STICK_X.getAxisValue();
 
-            if ((buttonCode == ControllerComponent.D_PAD_RIGHT.getButtonCode()) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
+            if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || ControllerComponent.LEFT_STICK_X.isTilted() || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                character.getCharacterComponent().getCollider().x += 100 * axis * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character, level);
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(true);
@@ -51,7 +53,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     AnimationSystem.jumpRender(character);
                 }
 
-                if(buttonCode == ControllerComponent.X_BUTTON.getButtonCode() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                     character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character, level);
                     character.getCharacterComponent().setIsStepping(false);
@@ -67,7 +69,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                         AnimationSystem.jumpRender(character);
                     }
                 }
-            } else if (buttonCode == ControllerComponent.D_PAD_LEFT.getButtonCode() || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            } else if (ControllerComponent.D_PAD_LEFT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character, level);
 
@@ -84,7 +86,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     AnimationSystem.jumpRender(character);
                 }
 
-                if(buttonCode == ControllerComponent.X_BUTTON.getButtonCode() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+                if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
                     character.getCharacterComponent().setIsRunning(true);
                     character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character, level);
@@ -106,7 +108,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 }
             }
 
-            if (buttonCode == ControllerComponent.A_BUTTON.getButtonCode() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (ControllerComponent.A_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);

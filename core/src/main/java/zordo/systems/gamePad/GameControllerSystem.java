@@ -148,16 +148,16 @@ public class GameControllerSystem implements ControllerListener {
     public boolean buttonUp(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON UP", controller.getName() + " | Button Up: " + buttonCode);
         if(this.game.isOnLevel) {
-            handleButton(buttonCode);
+            handleButtonUp(buttonCode);
         }
         return false;
     }
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        // We handle axis movement directly in render(), but you could log it here too
-        if (Math.abs(value) < 0.2f) return false;
-        Gdx.app.log("ControllerInput", controller.getName() + " | Axis Moved: " + axisCode + " | Value: " + value);
+        if(this.game.isOnLevel) {
+            handleAxis(axisCode,value);
+        }
         return false;
     }
 
@@ -226,19 +226,23 @@ public class GameControllerSystem implements ControllerListener {
     }
 
     private void handleButton(int buttonCode) {
-        this.game.level.player.buttonCode = buttonCode;
+        this.game.level.player.playerController.pressButton(buttonCode);
     }
 
     private void handleButtonUp(int buttonCode) {
-        this.game.level.player.buttonCode = buttonCode;
+        this.game.level.player.playerController.releaseButton(buttonCode);
     }
 
-    public void handleInput(Character character, SpriteBatch batch, float deltaTime, LegendOfZordo game) throws InterruptedException {
+    private void handleAxis(int axisCode, float value) {
+        this.game.level.player.playerController.tiltAxis(axisCode, value);
+    }
+
+    public void handleInput(Player player, SpriteBatch batch, float deltaTime, LegendOfZordo game) throws InterruptedException {
         this.game.level = game.level;
         this.game.level.batch = batch;
-        this.game.level.player = (Player) character;
+        this.game.level.player = player;
         if(this.game.isOnLevel) {
-            PlayerMovementSystem.move(character, this.game.level.player.buttonCode, batch, this.game.level);
+            PlayerMovementSystem.move(player, batch, this.game.level);
         }
     }
 

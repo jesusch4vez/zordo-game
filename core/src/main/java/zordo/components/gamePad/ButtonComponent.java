@@ -23,16 +23,12 @@ public class ButtonComponent extends Component {
         return released;
     }
 
-    public void setPressed(boolean pressed) {
-        this.pressed = pressed;
-        if(!this.pressed) {
-            this.released = true;
-        }
+    public void press() {
+        this.pressed = true;
+        this.released = false;
     }
-    public void setReleased(boolean released) {
-        this.released = released;
-        if(!this.released) {
-            this.pressed = true;
-        }
+    public void release() {
+        this.released = true;
+        this.pressed = false;
     }
 }
