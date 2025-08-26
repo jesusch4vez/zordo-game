@@ -18,10 +18,20 @@ public class LegendOfZordo extends Game {
 	public LevelSize medium;
 	public LevelSize large;
 
+    public boolean isOnTitleMenu;
+    public boolean isOnLevelMenu;
+    public boolean isOnPauseMenu;
+    public boolean isOnLevel;
+
 	private GamePadSystem controllersListener;
 
 	@Override
 	public void create () {
+        this.isOnTitleMenu = true;
+        this.isOnLevelMenu = false;
+        this.isOnPauseMenu = false;
+        this.isOnLevel = false;
+
 		// --- IMPORTANT: Add this class as a Controller Listener ---
 		controllersListener = new GamePadSystem();
 		Controllers.addListener(controllersListener);

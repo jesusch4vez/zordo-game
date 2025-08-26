@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 public class TitleMenu implements Screen {
 
-    Controller controller;
+//    Controller controller;
     public GamePadSystem controllerListener;
 
 	final LegendOfZordo game;
@@ -43,7 +43,6 @@ public class TitleMenu implements Screen {
         Gdx.app.log("Controller", "ControllerListener added.");
 
 //        System.out.println("mappging");
-
 //        System.out.println(controller.getMapping());
 
     }
@@ -68,7 +67,8 @@ public class TitleMenu implements Screen {
         batch.draw(animation.getKeyFrame(elapsed), 0, 0);
         batch.end();
 
-        controllerListener.handleInput(Gdx.graphics.getDeltaTime(),game);
+//        controllerListener.handleInput(Gdx.graphics.getDeltaTime(),game);
+        controllerListener.handleInput(Gdx.graphics.getDeltaTime(), game);
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
         	ScreenUtils.clear(0, 0, 0.2f, 1);
         	this.game.setScreen(new LevelMenu(game));

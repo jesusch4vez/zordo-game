@@ -1,12 +1,13 @@
 package zordo.systems.gamePad;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.components.gamePad.ControllerComponent;
+import zordo.entities.player_interface.menu.game.LevelMenu;
 
 public class GamePadSystem implements ControllerListener {
 
@@ -65,19 +66,23 @@ public class GamePadSystem implements ControllerListener {
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON DOWN", controller.getName() + " | Button Down: " + buttonCode);
-        buttonSwitch(controller, buttonCode);
 
-//        if(buttonCode == 6) {
-//            ScreenUtils.clear(0, 0, 0.2f, 1);
-//            game.setScreen(new LevelMenu(game));
-//        }
+        if (this.game.isOnLevel) {
+            handleGameInput(buttonCode);
+        } else if (this.game.isOnPauseMenu) {
+            handlePauseInput(buttonCode);
+        } else if (this.game.isOnLevelMenu) {
+            handleLevelMenuInput(buttonCode);
+        } else if (this.game.isOnTitleMenu) {
+            handleGameStart(buttonCode);
+        }
         return false;
     }
 
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON UP", controller.getName() + " | Button Up: " + buttonCode);
-        buttonSwitch(controller, buttonCode);
+//        buttonSwitch(controller, buttonCode);
         return false;
     }
 
@@ -90,61 +95,84 @@ public class GamePadSystem implements ControllerListener {
     }
 
     public void handleInput(float deltaTime, LegendOfZordo game) {
-        if (activeController == null) return;
-
-        // --- Axis Input for Movement ---
-        float xAxis = activeController.getAxis(activeController.getMapping().axisLeftX);
-        float yAxis = activeController.getAxis(activeController.getMapping().axisLeftY); // Note: Y axis might be inverted (-1 is up)
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            System.out.println(xAxis);
-            System.out.println(yAxis);
-        }
         this.game = game;
     }
 
-    private void buttonSwitch(Controller controller, int buttonCode) {
+    public void handleGameInput(int buttonCode) {
         if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
-            Gdx.app.log("START BUTTON", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.SELECT_BUTTON.getButtonCode()) {
-            Gdx.app.log("SELECT BUTTON", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.A_BUTTON.getButtonCode()) {
-            Gdx.app.log("A BUTTON", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.B_BUTTON.getButtonCode()) {
-            Gdx.app.log("B BUTTON", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.X_BUTTON.getButtonCode()) {
-            Gdx.app.log("X BUTTON", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.Y_BUTTON.getButtonCode()) {
-            Gdx.app.log("Y BUTTON", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.D_PAD_DOWN.getButtonCode()) {
-            Gdx.app.log("D PAD DOWN", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.D_PAD_UP.getButtonCode()) {
-            Gdx.app.log("D PAD UP", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.D_PAD_LEFT.getButtonCode()) {
-            Gdx.app.log("D PAD LEFT", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.D_PAD_RIGHT.getButtonCode()){
-            Gdx.app.log("D PAD RIGHT", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.LEFT_STICK.getButtonCode()) {
-            Gdx.app.log("LEFT STICK", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.RIGHT_STICK.getButtonCode()) {
-            Gdx.app.log("RIGHT STICK", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.LEFT_BUMPER.getButtonCode()) {
-            Gdx.app.log("LEFT BUMPER", controller.getName());
-        }
-        if(buttonCode == ControllerComponent.RIGHT_BUMPER.getButtonCode()) {
-            Gdx.app.log("RIGHT BUMPER", controller.getName());
+
+//            ScreenUtils.clear(0, 0, 0.2f, 1);
+//            this.game.setScreen(new LevelMenu(game));
         }
     }
+
+    public void handlePauseInput(int buttonCode) {
+        if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
+
+//            ScreenUtils.clear(0, 0, 0.2f, 1);
+//            this.game.setScreen(new LevelMenu(game));
+        }
+    }
+
+    public void handleLevelMenuInput(int buttonCode) {
+
+
+        if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
+
+        }
+    }
+
+    public void handleGameStart(int buttonCode) {
+        if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
+            ScreenUtils.clear(0, 0, 0.2f, 1);
+            this.game.isOnTitleMenu = false;
+            this.game.isOnLevelMenu = true;
+            this.game.setScreen(new LevelMenu(game));
+        }
+    }
+
+//    private void buttonSwitch(Controller controller, int buttonCode) {
+//        if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
+//            Gdx.app.log("START BUTTON", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.SELECT_BUTTON.getButtonCode()) {
+//            Gdx.app.log("SELECT BUTTON", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.A_BUTTON.getButtonCode()) {
+//            Gdx.app.log("A BUTTON", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.B_BUTTON.getButtonCode()) {
+//            Gdx.app.log("B BUTTON", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.X_BUTTON.getButtonCode()) {
+//            Gdx.app.log("X BUTTON", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.Y_BUTTON.getButtonCode()) {
+//            Gdx.app.log("Y BUTTON", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.D_PAD_DOWN.getButtonCode()) {
+//            Gdx.app.log("D PAD DOWN", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.D_PAD_UP.getButtonCode()) {
+//            Gdx.app.log("D PAD UP", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.D_PAD_LEFT.getButtonCode()) {
+//            Gdx.app.log("D PAD LEFT", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.D_PAD_RIGHT.getButtonCode()){
+//            Gdx.app.log("D PAD RIGHT", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.LEFT_STICK.getButtonCode()) {
+//            Gdx.app.log("LEFT STICK", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.RIGHT_STICK.getButtonCode()) {
+//            Gdx.app.log("RIGHT STICK", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.LEFT_BUMPER.getButtonCode()) {
+//            Gdx.app.log("LEFT BUMPER", controller.getName());
+//        }
+//        if(buttonCode == ControllerComponent.RIGHT_BUMPER.getButtonCode()) {
+//            Gdx.app.log("RIGHT BUMPER", controller.getName());
+//        }
+//    }
 }
