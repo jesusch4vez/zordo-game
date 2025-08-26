@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 
 public class DebugModeMenu implements Screen {
     final LegendOfZordo game;
-    LevelComponent selectedLevel;
+    public LevelComponent selectedLevel;
     private final Texture backgroundTexture;
 
-    int debug;
+    public int debug;
 
     OrthographicCamera camera;
 
@@ -32,6 +32,10 @@ public class DebugModeMenu implements Screen {
     public DebugModeMenu(LegendOfZordo game, LevelComponent selectedLevel) {
         this.game = game;
         this.selectedLevel = selectedLevel;
+        this.game.debugModeMenu = this;
+        this.game.isOnDebugMenu = true;
+        this.game.isOnLevelMenu = false;
+        this.game.isOnTitleMenu = false;
 
         components = new HashMap<>();
         components.put("Camera", new CameraComponent());
@@ -67,23 +71,10 @@ public class DebugModeMenu implements Screen {
         batch.begin();
         batch.draw(backgroundTexture,0,0,1920,1080);
 
+
         try {
-            if( debug >= 0 && debug < 2 ) {
-                if (( Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) && debug < 2) {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    debug += 1;
-                    if(debug >= 2) {
-                        debug = 1;
-                    }
-                }
-                else if ( ( Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) && debug >= 0) {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    debug -= 1;
-                    if(debug <= 0) {
-                        debug = 0;
-                    }
-                }
-            }
+            this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), this.game);
+
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -94,11 +85,6 @@ public class DebugModeMenu implements Screen {
             font.draw(batch, " > DebugMode - OFF", listX, listY);
         } else {
             font.draw(batch, " > DebugMode - ON", listX, listY);
-        }
-
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            selectedLevel.setDebugMode(debug == 1);
-            MenuSystem.activateLevel(this.game, selectedLevel);
         }
 
         batch.end();

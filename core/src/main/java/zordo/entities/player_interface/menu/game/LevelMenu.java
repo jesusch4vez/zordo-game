@@ -40,6 +40,8 @@ public class LevelMenu implements Screen {
         this.game = game;
         this.game.isOnLevelMenu = true;
         this.game.levelMenu = this;
+        this.game.isOnDebugMenu = false;
+        this.game.isOnTitleMenu = false;
 
         int levelCount = 10;
         loadLevel = new LevelComponent();
@@ -115,9 +117,6 @@ public class LevelMenu implements Screen {
             listY -= 20;
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
-            MenuSystem.debugModeMenu(this.game, levels.get("Level " + selectedLevel));
-        }
 
         batch.end();
         camera.update();

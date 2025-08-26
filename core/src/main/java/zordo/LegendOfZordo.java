@@ -28,6 +28,7 @@ public class LegendOfZordo extends Game {
     public boolean isOnLevelMenu;
     public boolean isOnPauseMenu;
     public boolean isOnLevel;
+    public boolean isOnDebugMenu;
 
     public LevelMenu levelMenu;
     public DebugModeMenu debugModeMenu;
@@ -39,6 +40,7 @@ public class LegendOfZordo extends Game {
         this.isOnLevelMenu = false;
         this.isOnPauseMenu = false;
         this.isOnLevel = false;
+        this.isOnDebugMenu = false;
         controllerListener = new GameControllerSystem(this);
         Controllers.addListener(controllerListener);
         levelMenu = new LevelMenu(this);
