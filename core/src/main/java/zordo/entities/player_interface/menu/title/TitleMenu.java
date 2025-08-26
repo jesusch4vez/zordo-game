@@ -10,14 +10,12 @@ import com.badlogic.gdx.Screen;
 import zordo.LegendOfZordo;
 import zordo.components.camera.CameraComponent;
 import zordo.components.Component;
-import zordo.systems.gamePad.GamePadSystem;
+import zordo.systems.gamePad.GameControllerSystem;
 import zordo.systems.utilities.GifDecoder;
 
 import java.util.HashMap;
 
 public class TitleMenu implements Screen {
-    public GamePadSystem controllerListener;
-
 	final LegendOfZordo game;
     public SpriteBatch batch;
     public Animation<TextureRegion> animation;
@@ -27,13 +25,12 @@ public class TitleMenu implements Screen {
 
     public TitleMenu(final LegendOfZordo game) {
     	this.game = game;
+        this.game.isOnTitleMenu = true;
     	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle.gif").read());
 
 		components = new HashMap<>();
 		components.put("Camera", new CameraComponent());
 
-        controllerListener = new GamePadSystem();
-        Controllers.addListener(controllerListener);
         Gdx.app.log("Controller", "ControllerListener added.");
     }
 
@@ -57,8 +54,12 @@ public class TitleMenu implements Screen {
         batch.draw(animation.getKeyFrame(elapsed), 0, 0);
         batch.end();
 
-        controllerListener.handleInput(Gdx.graphics.getDeltaTime(), game);
-	}
+        try {
+            this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), game);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 	@Override
 	public void resize(int width, int height) {

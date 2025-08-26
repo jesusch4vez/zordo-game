@@ -3,6 +3,7 @@ package zordo.entities.player_interface.menu.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,23 +19,28 @@ import zordo.components.Component;
 import zordo.components.camera.CameraComponent;
 import zordo.components.menu.LevelItem;
 import zordo.components.world.levels.LevelComponent;
+import zordo.systems.gamePad.GameControllerSystem;
 import zordo.systems.menu.MenuSystem;
 
 import java.util.HashMap;
 
 public class LevelMenu implements Screen {
+
     final LegendOfZordo game;
-    LevelComponent loadLevel;
+    public LevelComponent loadLevel;
     private final Texture backgroundTexture;
     OrthographicCamera camera;
 
     HashMap<String, Component> components;
-    HashMap<String, LevelComponent> levels;
-    int selectedLevel = 1;
+    public HashMap<String, LevelComponent> levels;
+    public int selectedLevel = 1;
     int maxSelectable = 4;
 
     public LevelMenu(final LegendOfZordo game) {
         this.game = game;
+        this.game.isOnLevelMenu = true;
+        this.game.levelMenu = this;
+
         int levelCount = 10;
         loadLevel = new LevelComponent();
         components = new HashMap<>();
@@ -59,7 +65,6 @@ public class LevelMenu implements Screen {
         }
         levels.get("Level " + selectedLevel).setIsSelected(true);
         components.putAll(levels);
-
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
@@ -93,31 +98,7 @@ public class LevelMenu implements Screen {
         batch.draw(backgroundTexture,0,0,1920,1080);
 
         try {
-            if( selectedLevel >= 1 && selectedLevel < levels.size() ) {
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && selectedLevel < levels.size() - 1) {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get("Level " + selectedLevel).setIsSelected(false);
-                    selectedLevel += 1;
-                    levels.get("Level " + selectedLevel).setIsSelected(true);
-                    loadLevel = levels.get("Level " + selectedLevel);
-                }
-                else if ( ( Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) && selectedLevel > 0) {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get("Level " + selectedLevel).setIsSelected(false);
-                    selectedLevel -= 1;
-                    if(selectedLevel <= 1) {
-                        selectedLevel = 1;
-                    }
-                    levels.get("Level " + selectedLevel).setIsSelected(true);
-                    loadLevel = levels.get("Level " + selectedLevel);
-                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)  && selectedLevel < levels.size() - 1) {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                    levels.get("Level " + selectedLevel).setIsSelected(false);
-                    selectedLevel += 1;
-                    levels.get("Level " + selectedLevel).setIsSelected(true);
-                    loadLevel = levels.get("Level " + selectedLevel);
-                }
-            }
+            this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), this.game);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -165,5 +146,9 @@ public class LevelMenu implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void setSelectedLevel(int selectedLevel) {
+        this.selectedLevel = selectedLevel;
     }
 }

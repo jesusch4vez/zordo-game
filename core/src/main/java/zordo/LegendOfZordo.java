@@ -7,14 +7,20 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
+import zordo.components.world.levels.LevelComponent;
 import zordo.components.world.levels.LevelSize;
+import zordo.entities.player_interface.menu.game.DebugModeMenu;
+import zordo.entities.player_interface.menu.game.LevelMenu;
+import zordo.entities.player_interface.menu.game.PauseMenu;
 import zordo.entities.player_interface.menu.title.TitleMenu;
-import zordo.systems.gamePad.GamePadSystem;
+import zordo.entities.world.level.Level;
+import zordo.systems.gamePad.GameControllerSystem;
 
 public class LegendOfZordo extends Game {
-	public LevelSize small;
+    public GameControllerSystem controllerListener;
+
+    public LevelSize small;
 	public LevelSize medium;
 	public LevelSize large;
 
@@ -23,17 +29,21 @@ public class LegendOfZordo extends Game {
     public boolean isOnPauseMenu;
     public boolean isOnLevel;
 
+    public LevelMenu levelMenu;
+    public DebugModeMenu debugModeMenu;
+    public PauseMenu pauseMenu;
+
     @Override
 	public void create () {
-        this.isOnTitleMenu = true;
+        this.isOnTitleMenu = false;
         this.isOnLevelMenu = false;
         this.isOnPauseMenu = false;
         this.isOnLevel = false;
-
-		// --- IMPORTANT: Add this class as a Controller Listener ---
-        GamePadSystem controllersListener = new GamePadSystem();
-		Controllers.addListener(controllersListener);
-		Gdx.app.log("Controller", "Controller Listener added.");
+        controllerListener = new GameControllerSystem(this);
+        Controllers.addListener(controllerListener);
+        levelMenu = new LevelMenu(this);
+        debugModeMenu = new DebugModeMenu(this, new LevelComponent());
+        pauseMenu = new PauseMenu(this, new Level(this));
 
 		Properties properties = new Properties();
 		File propertiesFile = new File("game_config.properties");
