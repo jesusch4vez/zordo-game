@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import zordo.LegendOfZordo;
+import zordo.components.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.entities.world.level.Level;
 import zordo.systems.health.HealthSystem;
@@ -26,8 +27,9 @@ public class HudSystem {
         hudBatch.begin();
         font.getData().setScale(5);
         font.draw(hudBatch, "PAUSED", Gdx.graphics.getWidth()/2f - 250, Gdx.graphics.getHeight()/2f + 500);
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.ENTER) || ControllerComponent.START_BUTTON.isPressed()) {
             level.paused = false;
+            ControllerComponent.START_BUTTON.release();
         }
 
         if(level.paused) {

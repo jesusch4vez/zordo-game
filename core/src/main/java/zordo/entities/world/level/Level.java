@@ -14,6 +14,7 @@ import zordo.LegendOfZordo;
 import zordo.components.Component;
 import zordo.components.camera.CameraComponent;
 import zordo.components.debug.DebugCollision;
+import zordo.components.gamePad.ControllerComponent;
 import zordo.components.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.components.physics.terrain.surfaces.PlatformComponent;
 import zordo.components.world.levels.LevelComponent;
@@ -158,8 +159,9 @@ public class Level extends LevelComponent implements Screen {
             throw new RuntimeException(e);
         }
 
-        if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if (this.paused || Gdx.input.isKeyPressed(Input.Keys.ESCAPE) || ControllerComponent.START_BUTTON.isPressed()) {
             this.paused = true;
+            ControllerComponent.START_BUTTON.release();
             this.pause();
         }
 

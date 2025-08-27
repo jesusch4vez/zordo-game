@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import zordo.LegendOfZordo;
 import zordo.components.Component;
 import zordo.components.camera.CameraComponent;
+import zordo.components.gamePad.ControllerComponent;
 import zordo.entities.world.level.Level;
 
 import java.util.HashMap;
@@ -67,15 +68,20 @@ public class PauseMenu implements Screen {
         batch.begin();
         batch.draw(backgroundTexture,0,0,1920,1080);
         try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        try {
             if(selection >= 0) {
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                if (ControllerComponent.D_PAD_DOWN.isPressed() || ControllerComponent.D_PAD_RIGHT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     selection += 1;
                     if(selection >= 3) {
                         selection = 2;
                     }
                 }
-                else if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                else if (ControllerComponent.D_PAD_UP.isPressed() || ControllerComponent.D_PAD_LEFT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     selection -= 1;
                     if(selection <= 0) {
@@ -97,7 +103,7 @@ public class PauseMenu implements Screen {
             font.draw(batch, " > Back to Level", listX, listY);
         }
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        if(ControllerComponent.START_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.ENTER) || ControllerComponent.A_BUTTON.isPressed()) {
             if (selection == 0) {
                 Gdx.app.exit();
             } else if (selection == 1) {
@@ -106,6 +112,7 @@ public class PauseMenu implements Screen {
                 level.paused = false;
                 game.setScreen(level);
             }
+            ControllerComponent.START_BUTTON.release();
         }
         batch.end();
         camera.update();

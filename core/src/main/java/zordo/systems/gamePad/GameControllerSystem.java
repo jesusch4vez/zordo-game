@@ -74,82 +74,14 @@ public class GameControllerSystem implements ControllerListener {
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON DOWN", this.game.isOnLevel + " | Button Down: " + buttonCode);
-        if (this.game.isOnTitleMenu) {
-            handleGameStart(buttonCode);
-        }
-        else if(this.game.isOnLevelMenu) {
-            Gdx.app.log("Controller", "Selected level: " + this.game.levelMenu.selectedLevel);
-            if (this.game.levelMenu.selectedLevel >= 1 && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size()) {
-                if ((buttonCode == ControllerComponent.D_PAD_DOWN.getButtonCode() || buttonCode == ControllerComponent.D_PAD_RIGHT.getButtonCode()) && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size() - 1) {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(false);
-                    this.game.levelMenu.selectedLevel += 1;
-                    this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(true);
-                    this.game.levelMenu.loadLevel = this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel);
-                } else if ((buttonCode == ControllerComponent.D_PAD_UP.getButtonCode() || buttonCode == ControllerComponent.D_PAD_LEFT.getButtonCode()) && this.game.levelMenu.selectedLevel > 0) {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(false);
-                    this.game.levelMenu.selectedLevel -= 1;
-                    if (this.game.levelMenu.selectedLevel <= 1) {
-                        this.game.levelMenu.selectedLevel = 1;
-                    }
-                    this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(true);
-                    this.game.levelMenu.loadLevel = this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel);
-                }
-            }
-            if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
-                MenuSystem.debugModeMenu(this.game, this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel));
-            }
-        } else if (this.game.isOnDebugMenu) {
-            if (this.game.debugModeMenu.debug >= 0 && this.game.debugModeMenu.debug < 2) {
-                if ((buttonCode == ControllerComponent.D_PAD_DOWN.getButtonCode() || buttonCode == ControllerComponent.D_PAD_RIGHT.getButtonCode()) && this.game.debugModeMenu.debug < 2) {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    this.game.debugModeMenu.debug += 1;
-                    if (this.game.debugModeMenu.debug >= 2) {
-                        this.game.debugModeMenu.debug = 1;
-                    }
-                } else if ((buttonCode == ControllerComponent.D_PAD_UP.getButtonCode() || buttonCode == ControllerComponent.D_PAD_LEFT.getButtonCode()) && this.game.debugModeMenu.debug >= 0) {
-                    try {
-                        TimeUnit.MILLISECONDS.sleep(100);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                    this.game.debugModeMenu.debug -= 1;
-                    if (this.game.debugModeMenu.debug <= 0) {
-                        this.game.debugModeMenu.debug = 0;
-                    }
-                }
-            }
-
-            if (buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
-                this.game.debugModeMenu.selectedLevel.setDebugMode(this.game.debugModeMenu.debug == 1);
-                MenuSystem.activateLevel(this.game, this.game.debugModeMenu.selectedLevel);
-            }
-        }
-        else if(this.game.isOnLevel) {
-            handleButton(buttonCode);
-        }
+        handleButton(buttonCode);
         return false;
     }
 
     @Override
     public boolean buttonUp(Controller controller, int buttonCode) {
         Gdx.app.log("BUTTON UP", controller.getName() + " | Button Up: " + buttonCode);
-        if(this.game.isOnLevel) {
-            handleButtonUp(buttonCode);
-        }
+        handleButtonUp(buttonCode);
         return false;
     }
 
@@ -168,15 +100,16 @@ public class GameControllerSystem implements ControllerListener {
 
     public void handleInput(float deltaTime, LegendOfZordo game) throws InterruptedException {
         this.game = game;
-        if(this.game.isOnLevelMenu && Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+        if(this.game.isOnTitleMenu && (Gdx.input.isKeyPressed(Input.Keys.ENTER) || ControllerComponent.A_BUTTON.isPressed() || ControllerComponent.START_BUTTON.isPressed())) {
             ScreenUtils.clear(0, 0, 0.2f, 1);
+            ControllerComponent.START_BUTTON.release();
             this.game.setScreen(new LevelMenu(game));
         }
         else if(this.game.isOnLevelMenu) {
             this.game.levelMenu = game.levelMenu;
 
             if (this.game.levelMenu.selectedLevel >= 1 && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size()) {
-                if ((Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size() - 1) {
+                if ((ControllerComponent.D_PAD_DOWN.isPressed()) || (ControllerComponent.D_PAD_RIGHT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size() - 1) {
                     try {
                         TimeUnit.MILLISECONDS.sleep(100);
                     } catch (InterruptedException e) {
@@ -186,7 +119,7 @@ public class GameControllerSystem implements ControllerListener {
                     this.game.levelMenu.selectedLevel += 1;
                     this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(true);
                     this.game.levelMenu.loadLevel = this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel);
-                } else if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && this.game.levelMenu.selectedLevel > 0) {
+                } else if ((ControllerComponent.D_PAD_UP.isPressed()) || (ControllerComponent.D_PAD_LEFT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && this.game.levelMenu.selectedLevel > 0) {
                     try {
                         TimeUnit.MILLISECONDS.sleep(100);
                     } catch (InterruptedException e) {
@@ -202,19 +135,19 @@ public class GameControllerSystem implements ControllerListener {
                 }
             }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            if( ControllerComponent.START_BUTTON.isPressed() || (ControllerComponent.A_BUTTON.isPressed()) || Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
                 MenuSystem.debugModeMenu(this.game, this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel));
             }
         } else if(this.game.isOnDebugMenu) {
             if( this.game.debugModeMenu.debug >= 0 &&  this.game.debugModeMenu.debug < 2 ) {
-                if (( Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT) ) &&  this.game.debugModeMenu.debug < 2) {
+                if ( ControllerComponent.D_PAD_DOWN.isPressed() || ControllerComponent.D_PAD_RIGHT.isPressed() || (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) &&  this.game.debugModeMenu.debug < 2) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     this.game.debugModeMenu.debug += 1;
                     if( this.game.debugModeMenu.debug >= 2) {
                         this.game.debugModeMenu.debug = 1;
                     }
                 }
-                else if ( ( Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT) ) &&  this.game.debugModeMenu.debug >= 0) {
+                else if ( ControllerComponent.D_PAD_UP.isPressed() || ControllerComponent.D_PAD_LEFT.isPressed() || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) &&  this.game.debugModeMenu.debug >= 0) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     this.game.debugModeMenu.debug -= 1;
                     if( this.game.debugModeMenu.debug <= 0) {
@@ -223,8 +156,9 @@ public class GameControllerSystem implements ControllerListener {
                 }
             }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.ENTER)) {
+            if(Gdx.input.isKeyPressed(Input.Keys.ENTER) || ControllerComponent.A_BUTTON.isPressed() || ControllerComponent.START_BUTTON.isPressed()) {
                 this.game.debugModeMenu.selectedLevel.setDebugMode( this.game.debugModeMenu.debug == 1);
+                ControllerComponent.START_BUTTON.release();
                 MenuSystem.activateLevel(this.game,  this.game.debugModeMenu.selectedLevel);
             }
         }
@@ -246,19 +180,9 @@ public class GameControllerSystem implements ControllerListener {
         this.game.level = game.level;
         this.game.level.batch = batch;
         this.game.level.player = player;
-        if(this.game.isOnLevel) {
-            PlayerMovementSystem.move(player, batch, this.game.level);
-        }
-    }
 
-    public void handleGameStart(int buttonCode) {
-        Gdx.app.log("GameStart", "Starting Game");
-        if(buttonCode == ControllerComponent.START_BUTTON.getButtonCode()) {
-            Gdx.app.log("GameStart2", "Starting Game");
-            ScreenUtils.clear(0, 0, 0.2f, 1);
-            this.game.isOnTitleMenu = false;
-            this.game.isOnLevelMenu = true;
-            this.game.setScreen(new LevelMenu(game));
+        if (this.game.isOnLevel) {
+            PlayerMovementSystem.move(player, batch, this.game.level);
         }
     }
 

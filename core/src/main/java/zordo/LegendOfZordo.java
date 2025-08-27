@@ -37,7 +37,7 @@ public class LegendOfZordo extends Game {
 
     @Override
 	public void create () {
-        this.isOnTitleMenu = false;
+        this.isOnTitleMenu = true;
         this.isOnLevelMenu = false;
         this.isOnPauseMenu = false;
         this.isOnLevel = false;
