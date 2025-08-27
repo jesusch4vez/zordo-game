@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
 import zordo.components.world.levels.LevelComponent;
 import zordo.components.world.levels.LevelSize;
@@ -70,6 +71,7 @@ public class LegendOfZordo extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+//        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		this.setScreen(new TitleMenu(this));
 	}
 

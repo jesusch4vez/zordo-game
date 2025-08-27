@@ -73,6 +73,8 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
                     if(!character.getCharacterComponent().getIsAirborne()) {
                         character.getCharacterComponent().setIsColliding(true);
+                        character.getCharacterComponent().setIsRunning(true);
+                        character.getCharacterComponent().setIsStepping(false);
                         AnimationSystem.runRender(character);
                     } else {
                         character.getCharacterComponent().setIsRunning(false);
@@ -113,9 +115,9 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     character.getCharacterComponent().setIsFlippedRight(false);
 
                     if(!character.getCharacterComponent().getIsAirborne()) {
-                        character.getCharacterComponent().setIsStepping(true);
+                        character.getCharacterComponent().setIsStepping(false);
                         character.getCharacterComponent().setIsFlippedRight(false);
-                        character.getCharacterComponent().setIsRunning(false);
+                        character.getCharacterComponent().setIsRunning(true);
                         character.getCharacterComponent().setIsColliding(true);
                         AnimationSystem.runRender(character);
                     } else {
@@ -134,6 +136,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsAscending(true);
                 character.getCharacterComponent().setIsDescending(false);
                 character.getCharacterComponent().setIsColliding(false);
+                character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.jumpRender(character);
                 character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(level.platforms, character, level);
