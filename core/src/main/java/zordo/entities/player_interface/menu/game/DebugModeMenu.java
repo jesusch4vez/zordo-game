@@ -1,7 +1,6 @@
 package zordo.entities.player_interface.menu.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,10 +12,8 @@ import zordo.LegendOfZordo;
 import zordo.components.Component;
 import zordo.components.camera.CameraComponent;
 import zordo.components.world.levels.LevelComponent;
-import zordo.systems.menu.MenuSystem;
 
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 public class DebugModeMenu implements Screen {
     final LegendOfZordo game;

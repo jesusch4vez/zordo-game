@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.components.gamePad.ControllerComponent;
-import zordo.entities.characters.Character;
 import zordo.entities.characters.player.Player;
 import zordo.entities.player_interface.menu.game.LevelMenu;
 import zordo.systems.character.movement.PlayerMovementSystem;

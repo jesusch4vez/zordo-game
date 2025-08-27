@@ -1,7 +1,6 @@
 package zordo.entities.player_interface.menu.title;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +9,6 @@ import com.badlogic.gdx.Screen;
 import zordo.LegendOfZordo;
 import zordo.components.camera.CameraComponent;
 import zordo.components.Component;
-import zordo.systems.gamePad.GameControllerSystem;
 import zordo.systems.utilities.GifDecoder;
 
 import java.util.HashMap;

@@ -1,9 +1,7 @@
 package zordo.entities.player_interface.menu.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,14 +11,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 
-import java.util.concurrent.TimeUnit;
-
 import zordo.components.Component;
 import zordo.components.camera.CameraComponent;
 import zordo.components.menu.LevelItem;
 import zordo.components.world.levels.LevelComponent;
-import zordo.systems.gamePad.GameControllerSystem;
-import zordo.systems.menu.MenuSystem;
 
 import java.util.HashMap;
 

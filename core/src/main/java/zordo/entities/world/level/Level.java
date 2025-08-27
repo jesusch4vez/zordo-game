@@ -3,7 +3,6 @@ package zordo.entities.world.level;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -22,7 +21,6 @@ import zordo.entities.characters.player.Player;
 import zordo.systems.camera.CameraSystem;
 import zordo.systems.camera.DebugHudSystem;
 import zordo.systems.camera.HudSystem;
-import zordo.systems.character.movement.PlayerMovementSystem;
 import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 import java.util.ArrayList;
