@@ -118,7 +118,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                         character.getCharacterComponent().setIsFlippedRight(false);
                         character.getCharacterComponent().setIsRunning(false);
                         character.getCharacterComponent().setIsColliding(true);
-                        AnimationSystem.walkRender(character);
+                        AnimationSystem.runRender(character);
                     } else {
                         character.getCharacterComponent().setIsStepping(false);
                         character.getCharacterComponent().setIsFlippedRight(false);
