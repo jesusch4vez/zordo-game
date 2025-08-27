@@ -37,8 +37,6 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
             float axis = ControllerComponent.LEFT_STICK_X.getAxisValue();
 
-            character.getCharacterComponent().setIsFlippedRight(!(axis < 0));
-
             if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || (axis > 0) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 if(axis > 0) {
                     character.getCharacterComponent().getCollider().x += 100 * (axis) * Gdx.graphics.getDeltaTime();
