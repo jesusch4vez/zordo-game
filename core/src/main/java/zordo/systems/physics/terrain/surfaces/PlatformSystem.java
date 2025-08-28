@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import zordo.components.debug.DebugCollision;
+import zordo.components.gamePad.ControllerComponent;
 import zordo.components.physics.terrain.surfaces.PlatformComponent;
 import zordo.entities.characters.Character;
+import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
+import zordo.systems.character.movement.PlayerMovementSystem;
 
 import java.util.ArrayList;
 
@@ -35,6 +38,7 @@ public class PlatformSystem {
 
                     platform.setCharacterRelativePosition("Character is below");
                     character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight());
+                    PlayerMovementSystem.handleLeftRight((Player)character,level);
                     break;
                 } else if (platformisOnLeft(character,platform)) {
                     platform.setCharacterRelativePosition("Character is right");
