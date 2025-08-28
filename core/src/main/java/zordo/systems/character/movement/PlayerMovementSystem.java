@@ -63,7 +63,6 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     } else {
                         character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
                     }
-                    character.getCharacterComponent().getCollider().x += 125 * (axis) * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(level.platforms, character, level);
                     character.getCharacterComponent().setIsStepping(false);
                     character.getCharacterComponent().setIsFlippedRight(true);
