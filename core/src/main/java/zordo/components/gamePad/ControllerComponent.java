@@ -35,6 +35,9 @@ public class ControllerComponent extends Component {
             case 6:
                 START_BUTTON.press();
                 break;
+            case 4:
+                SELECT_BUTTON.press();
+                break;
             case 11:
                 D_PAD_UP.press();
                 break;
@@ -80,6 +83,9 @@ public class ControllerComponent extends Component {
         switch (buttonCode) {
             case 6:
                 START_BUTTON.release();
+                break;
+            case 4:
+                SELECT_BUTTON.release();
                 break;
             case 11:
                 D_PAD_UP.release();
