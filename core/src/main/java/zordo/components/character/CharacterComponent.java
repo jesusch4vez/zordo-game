@@ -21,6 +21,8 @@ public class CharacterComponent {
     Boolean isAscending;
     Boolean isDescending;
 
+    Boolean isDucking;
+
     int jumps;
 
     Rectangle collider;
@@ -56,6 +58,7 @@ public class CharacterComponent {
         isDescending = false;
         isStanding = true;
         onSurface = false;
+        isDucking = false;
 
         health = 8;
 
@@ -204,11 +207,9 @@ public class CharacterComponent {
         this.isDescending = isDescending;
     }
 
-    public void setOnSurface(Boolean isOnSurface) {
-        this.onSurface = isOnSurface;
-    }
+    public Boolean getIsDucking() { return  isDucking; }
 
-    public Boolean getOnSurface() {
-        return this.onSurface;
+    public void setIsDucking(Boolean isDucking) {
+        this.isDucking = isDucking;
     }
 }

@@ -43,6 +43,14 @@ public class AnimationSystem {
         }
     }
 
+    public static void duckRender(Character character) {
+        if (character.getCharacterComponent().getIsFlippedRight()) {
+            animation = character.getCharacterComponent().getAnimation().getDuckingRightAnimation();
+        } else  {
+            animation = character.getCharacterComponent().getAnimation().getDuckingLeftAnimation();
+        }
+    }
+
     public static void animate(Character character, SpriteBatch batch, float elapsed, Level level) {
         if(!level.paused) {
             nextFrame = animation.getKeyFrame(elapsed, true);

@@ -15,6 +15,8 @@ public class AnimationComponent extends Component {
     Animation<Sprite> standingLeftAnimation;
     Animation<Sprite> jumpingRightAnimation;
     Animation<Sprite> jumpingLeftAnimation;
+    Animation<Sprite> duckingRightAnimation;
+    Animation<Sprite> duckingLeftAnimation;
 
     Animation<Sprite> animation;
 
@@ -27,11 +29,16 @@ public class AnimationComponent extends Component {
     Sprite[] jumpingRightFrames;
     Sprite[] jumpingLeftFrames;
 
+    Sprite [] duckingRightFrames;
+    Sprite[] duckingLeftFrames;
+
 
     // accessing sprite assets from the directory files
     String standuri = "character/player/link-standing-sprites/";
     String runuri = "character/player/link-running-sprites/";
     String jumpuri = "character/player/link-jumping-sprites/";
+
+    String duckinguri = "character/player/link-ducking-sprites/";
 
     public AnimationComponent() {
         // animation objects
@@ -45,13 +52,19 @@ public class AnimationComponent extends Component {
         jumpingRightFrames = new Sprite[1];
         jumpingLeftFrames = new Sprite[1];
 
+        duckingRightFrames = new Sprite[1];
+        duckingLeftFrames = new Sprite[1];
+
         // standing and jumping sprite creation
         standingRightFrames[0] = new Sprite(new Texture(standuri + "link-standing-0.png"));
         standingLeftFrames[0] = new Sprite(standingRightFrames[0]);
         jumpingRightFrames[0] = new Sprite(new Texture(jumpuri + "link-jumping-0.png"));
         jumpingLeftFrames[0] = new Sprite(jumpingRightFrames[0]);
+        duckingRightFrames[0] = new Sprite(new Texture(duckinguri + "link-ducking.png"));
+        duckingLeftFrames[0] = new Sprite(duckingRightFrames[0]);
         standingLeftFrames[0].flip(true, false);
         jumpingLeftFrames[0].flip(true, false);
+        duckingLeftFrames[0].flip(true, false);
 
 
         // running animation construction
@@ -78,6 +91,9 @@ public class AnimationComponent extends Component {
         standingLeftAnimation = new Animation<>(1f / 6f, standingLeftFrames);
         jumpingRightAnimation = new Animation<>(1f / 6f, jumpingRightFrames);
         jumpingLeftAnimation = new Animation<>(1f / 6f, jumpingLeftFrames);
+
+        duckingRightAnimation = new Animation<>(1f / 3f, duckingRightFrames);
+        duckingLeftAnimation = new Animation<>(1f / 3f, duckingLeftFrames);
 
         animation = walkingRightAnimation;
     }
@@ -144,5 +160,20 @@ public class AnimationComponent extends Component {
 
     public Animation<Sprite> getStandingLeftAnimation() {
         return this.standingLeftAnimation;
+    }
+
+    public Animation<Sprite> getDuckingRightAnimation() {
+        return this.duckingRightAnimation;
+    }
+
+    public void setDuckingRightAnimation(Animation<Sprite> duckingRightAnimation) {
+        this.duckingRightAnimation = duckingRightAnimation;
+    }
+
+    public Animation<Sprite> getDuckingLeftAnimation() {
+        return this.duckingLeftAnimation;
+    }
+    public void setDuckingLeftAnimation(Animation<Sprite> duckingLeftAnimation) {
+        this.duckingLeftAnimation = duckingLeftAnimation;
     }
 }

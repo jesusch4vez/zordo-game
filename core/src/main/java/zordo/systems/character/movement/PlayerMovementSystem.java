@@ -36,6 +36,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             PlatformSystem.solidPlatform(level.platforms, character, level);
 
             handleLeftRight(character, level);
+            handleCrouch(character, level);
             if (ControllerComponent.A_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsJumping(true);
@@ -155,6 +156,19 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     AnimationSystem.jumpRender(character);
                 }
             }
+        }
+    }
+
+    public static void handleCrouch(Player character, Level level) {
+        float axisY = ControllerComponent.LEFT_STICK_Y.getAxisValue();
+        float axisX = ControllerComponent.LEFT_STICK_X.getAxisValue();
+        if((ControllerComponent.D_PAD_DOWN.isPressed() || (axisY > 0))
+            && (Math.abs(axisX) == 0)
+            && (!ControllerComponent.D_PAD_LEFT.isPressed()
+            && !ControllerComponent.D_PAD_RIGHT.isPressed())) {
+                character.getCharacterComponent().setIsDucking(true);
+                AnimationSystem.duckRender(character);
+                PlatformSystem.solidPlatform(level.platforms, character, level);
         }
     }
 }
