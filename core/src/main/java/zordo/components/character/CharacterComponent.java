@@ -106,7 +106,6 @@ public class CharacterComponent {
     public void setX(float x) {
         this.position.x = x;
         this.getCollider().setX(x);
-//        this.collider.x = x;
     }
 
     public void setY(float y) {
