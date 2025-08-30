@@ -102,6 +102,12 @@ public class PlatformSystem {
             font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
             batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
         }
+        long intersectWidthCoordinate = (long) intersection.getX() + (long) intersection.getWidth();
+        long intersectHeightCoordinate = (long) intersection.getY() + (long) intersection.getHeight();
+
+        font.draw(batch, intersection.getX() + ", " + intersection.getY(), intersection.getX(), intersection.getY());
+        font.draw(batch, intersectWidthCoordinate + ", " + intersectHeightCoordinate, intersection.getX() + intersection.getWidth(), intersection.getY() + intersection.getHeight() + 25);
+
         batch.draw(intersection.getPlatformTexture(), intersection.getX(), intersection.getY(), intersection.getPlatform().getWidth(), intersection.getPlatform().getHeight());
     }
 }
