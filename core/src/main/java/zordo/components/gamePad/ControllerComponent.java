@@ -32,32 +32,32 @@ public class ControllerComponent extends Component {
         movedAxes.remove(axisName);
     }
 
-    public static ButtonComponent START_BUTTON = new ButtonComponent(6, "debug_assets/controller/x.png");
-    public static ButtonComponent SELECT_BUTTON = new ButtonComponent(4, "debug_assets/controller/x.png");
+    public static ButtonComponent START_BUTTON = new ButtonComponent(6, "debug_assets/controller/xbox/button/xbox_button_menu.png");
+    public static ButtonComponent SELECT_BUTTON = new ButtonComponent(4, "debug_assets/controller/xbox/button/xbox_button_view_outline.png");
 
-    public static ButtonComponent D_PAD_UP = new ButtonComponent(11, "debug_assets/controller/x.png");
-    public static ButtonComponent D_PAD_DOWN = new ButtonComponent(12, "debug_assets/controller/x.png");
-    public static ButtonComponent D_PAD_LEFT = new ButtonComponent(13, "debug_assets/controller/x.png");
-    public static ButtonComponent D_PAD_RIGHT = new ButtonComponent(14, "debug_assets/controller/x.png");
+    public static ButtonComponent D_PAD_UP = new ButtonComponent(11, "debug_assets/controller/xbox/button/xbox_dpad_up.png");
+    public static ButtonComponent D_PAD_DOWN = new ButtonComponent(12, "debug_assets/controller/xbox/button/xbox_dpad_down.png");
+    public static ButtonComponent D_PAD_LEFT = new ButtonComponent(13, "debug_assets/controller/xbox/button/xbox_dpad_left.png");
+    public static ButtonComponent D_PAD_RIGHT = new ButtonComponent(14, "debug_assets/controller/xbox/button/xbox_dpad_right.png");
 
-    public static ButtonComponent A_BUTTON = new ButtonComponent(0, "debug_assets/controller/x.png");
-    public static ButtonComponent B_BUTTON = new ButtonComponent(1, "debug_assets/controller/x.png");
-    public static ButtonComponent X_BUTTON = new ButtonComponent(2, "debug_assets/controller/x.png");
-    public static ButtonComponent Y_BUTTON = new ButtonComponent(3, "debug_assets/controller/x.png");
+    public static ButtonComponent A_BUTTON = new ButtonComponent(0, "debug_assets/controller/xbox/button/xbox_button_color_a.png");
+    public static ButtonComponent B_BUTTON = new ButtonComponent(1, "debug_assets/controller/xbox/button/xbox_button_color_b.png");
+    public static ButtonComponent X_BUTTON = new ButtonComponent(2, "debug_assets/controller/xbox/button/xbox_button_color_x.png");
+    public static ButtonComponent Y_BUTTON = new ButtonComponent(3, "debug_assets/controller/xbox/button/xbox_button_color_y.png");
 
-    public static ButtonComponent LEFT_STICK = new ButtonComponent(7, "debug_assets/controller/x.png");
-    public static ButtonComponent RIGHT_STICK = new ButtonComponent(8, "debug_assets/controller/x.png");
+    public static ButtonComponent LEFT_STICK = new ButtonComponent(7, "debug_assets/controller/xbox/button/xbox_ls.png");
+    public static ButtonComponent RIGHT_STICK = new ButtonComponent(8, "debug_assets/controller/xbox/button/xbox_rs.png");
 
-    public static ButtonComponent LEFT_BUMPER = new ButtonComponent(9, "debug_assets/controller/x.png");
-    public static ButtonComponent RIGHT_BUMPER = new ButtonComponent(10, "debug_assets/controller/x.png");
+    public static ButtonComponent LEFT_BUMPER = new ButtonComponent(9, "debug_assets/controller/xbox/button/xbox_rb.png");
+    public static ButtonComponent RIGHT_BUMPER = new ButtonComponent(10, "debug_assets/controller/xbox/button/xbox_lb.png");
 
-    public static AxisComponent LEFT_STICK_X = new AxisComponent(0,0, "debug_assets/controller/y.png");
-    public static AxisComponent LEFT_STICK_Y = new AxisComponent(1,0, "debug_assets/controller/y.png");
-    public static AxisComponent RIGHT_STICK_X = new AxisComponent(2,0, "debug_assets/controller/y.png");
-    public static AxisComponent RIGHT_STICK_Y = new AxisComponent(3,0, "debug_assets/controller/y.png");
+    public static AxisComponent LEFT_STICK_X = new AxisComponent(0,0, "debug_assets/controller/xbox/axes/xbox_stick_l_horizontal.png");
+    public static AxisComponent LEFT_STICK_Y = new AxisComponent(1,0, "debug_assets/controller/xbox/axes/xbox_stick_l_vertical.png");
+    public static AxisComponent RIGHT_STICK_X = new AxisComponent(2,0, "debug_assets/controller/xbox/axes/xbox_stick_r_horizontal.png");
+    public static AxisComponent RIGHT_STICK_Y = new AxisComponent(3,0, "debug_assets/controller/xbox/axes/xbox_stick_r_vertical.png");
 
-    public static AxisComponent RIGHT_TRIGGER = new AxisComponent(4,0, "debug_assets/controller/y.png");
-    public static AxisComponent LEFT_TRIGGER = new AxisComponent(5,0, "debug_assets/controller/y.png");
+    public static AxisComponent LEFT_TRIGGER = new AxisComponent(4,0, "debug_assets/controller/xbox/axes/xbox_lt.png");
+    public static AxisComponent RIGHT_TRIGGER = new AxisComponent(5,0, "debug_assets/controller/xbox/axes/xbox_rt.png");
 
     public void pressButton(int buttonCode) {
         switch (buttonCode) {
@@ -233,19 +233,19 @@ public class ControllerComponent extends Component {
                 }
                 break;
             case 4:
-                RIGHT_TRIGGER.tilt(value);
-                if(Math.abs(value)>0) {
-                    addMovedAxis("RIGHT_TRIGGER", RIGHT_TRIGGER);
-                } else {
-                    removeMovedAxes("RIGHT_TRIGGER");
-                }
-                break;
-            case 5:
                 LEFT_TRIGGER.tilt(value);
                 if(Math.abs(value)>0) {
                     addMovedAxis("LEFT_TRIGGER", LEFT_TRIGGER);
                 } else {
                     removeMovedAxes("LEFT_TRIGGER");
+                }
+                break;
+            case 5:
+                RIGHT_TRIGGER.tilt(value);
+                if(Math.abs(value)>0) {
+                    addMovedAxis("RIGHT_TRIGGER", RIGHT_TRIGGER);
+                } else {
+                    removeMovedAxes("RIGHT_TRIGGER");
                 }
                 break;
             default:
