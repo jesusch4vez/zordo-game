@@ -1,5 +1,6 @@
 package zordo.components.gamePad;
 
+import com.badlogic.gdx.graphics.Texture;
 import zordo.components.Component;
 
 public class ButtonComponent extends Component {
@@ -7,10 +8,13 @@ public class ButtonComponent extends Component {
     private boolean released;
     private final int buttonCode;
 
-    public ButtonComponent(int buttonCode) {
+    private Texture texture;
+
+    public ButtonComponent(int buttonCode, String texturePath) {
         pressed = false;
         released = true;
         this.buttonCode = buttonCode;
+        this.texture = new Texture(texturePath);
     }
 
     public int getButtonCode() {
@@ -30,5 +34,13 @@ public class ButtonComponent extends Component {
     public void release() {
         this.released = true;
         this.pressed = false;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public Texture getTexture() {
+        return texture;
     }
 }
