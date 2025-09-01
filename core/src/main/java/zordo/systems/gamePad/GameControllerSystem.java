@@ -113,6 +113,9 @@ public class GameControllerSystem implements ControllerListener {
                     }
                     this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(false);
                     this.game.levelMenu.selectedLevel += 1;
+                    if (this.game.levelMenu.selectedLevel >= this.game.levelMenu.levels.size()) {
+                        this.game.levelMenu.selectedLevel = this.game.levelMenu.levels.size()-1;
+                    }
                     this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(true);
                     this.game.levelMenu.loadLevel = this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel);
                 } else if ((ControllerComponent.D_PAD_UP.isPressed()) || (ControllerComponent.D_PAD_LEFT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && this.game.levelMenu.selectedLevel > 0) {

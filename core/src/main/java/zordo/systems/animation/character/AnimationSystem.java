@@ -1,4 +1,4 @@
-package zordo.systems.character.animation;
+package zordo.systems.animation.character;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;

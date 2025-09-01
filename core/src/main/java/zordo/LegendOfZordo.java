@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controllers;
 import zordo.components.world.levels.LevelComponent;
 import zordo.components.world.levels.LevelSize;

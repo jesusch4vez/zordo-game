@@ -41,10 +41,6 @@ public class PauseMenu implements Screen {
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
 
-        CameraComponent tempCam = (CameraComponent) components.get("Camera");
-        this.camera = tempCam.getCamera();
-        this.camera.setToOrtho(false, 800,400);
-
         selection = 0;
         this.level = level;
 
@@ -63,10 +59,13 @@ public class PauseMenu implements Screen {
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        CameraComponent tempCam = (CameraComponent) components.get("Camera");
+        this.camera = tempCam.getCamera();
+
         batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(backgroundTexture,0,0,1920,1080);
+        batch.draw(backgroundTexture,0,0,camera.viewportWidth,camera.viewportHeight);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -94,7 +93,8 @@ public class PauseMenu implements Screen {
         }
 
         int listX = 100;
-        int listY = 350;
+        int listY = (int) camera.viewportHeight - 100;
+        font.getData().setScale(2);
         if (selection == 0) {
             font.draw(batch, " > Exit Game", listX, listY);
         } else if (selection == 1) {

@@ -42,9 +42,6 @@ public class DebugModeMenu implements Screen {
         background.setTexture(backgroundTexture);
 
         debug = 0;
-        CameraComponent tempCam = (CameraComponent) components.get("Camera");
-        this.camera = tempCam.getCamera();
-        this.camera.setToOrtho(false, 800,400);
     }
 
     @Override
@@ -63,10 +60,13 @@ public class DebugModeMenu implements Screen {
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        CameraComponent tempCam = (CameraComponent) components.get("Camera");
+        this.camera = tempCam.getCamera();
+
         SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(backgroundTexture,0,0,1920,1080);
+        batch.draw(backgroundTexture,0,0, camera.viewportWidth,camera.viewportHeight);
 
 
         try {
@@ -77,7 +77,8 @@ public class DebugModeMenu implements Screen {
         }
 
         int listX = 100;
-        int listY = 350;
+        float listY = camera.viewportHeight - 100;
+        font.getData().setScale(2);
         if (debug == 0) {
             font.draw(batch, " > DebugMode - OFF", listX, listY);
         } else {

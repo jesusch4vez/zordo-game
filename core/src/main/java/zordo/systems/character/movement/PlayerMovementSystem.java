@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import zordo.components.gamePad.ControllerComponent;
 import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
-import zordo.systems.character.animation.AnimationSystem;
+import zordo.systems.animation.character.AnimationSystem;
 import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 public class PlayerMovementSystem extends CharacterMovementSystem {
