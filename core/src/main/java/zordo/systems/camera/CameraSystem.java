@@ -16,17 +16,5 @@ public class CameraSystem {
             camera.zoom -= 0.02F;
             //If the Q Key is pressed, subtract 0.02 from the Camera's Zoom
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-100 * Gdx.graphics.getDeltaTime(), 0, 0);
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                camera.translate(-50 * Gdx.graphics.getDeltaTime(), 0, 0);
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(100 * Gdx.graphics.getDeltaTime(), 0, 0);
-            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                camera.translate(50 * Gdx.graphics.getDeltaTime(), 0, 0);
-            }
-        }
     }
 }

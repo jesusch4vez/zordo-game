@@ -66,7 +66,7 @@ public class DebugModeMenu implements Screen {
         SpriteBatch batch = new SpriteBatch();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(backgroundTexture,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        batch.draw(backgroundTexture,0,0, camera.viewportWidth,camera.viewportHeight);
 
 
         try {
@@ -77,8 +77,8 @@ public class DebugModeMenu implements Screen {
         }
 
         int listX = 100;
-        int listY = Gdx.graphics.getHeight() - 100;
-        font.getData().setScale(5);
+        float listY = camera.viewportHeight - 100;
+        font.getData().setScale(2);
         if (debug == 0) {
             font.draw(batch, " > DebugMode - OFF", listX, listY);
         } else {

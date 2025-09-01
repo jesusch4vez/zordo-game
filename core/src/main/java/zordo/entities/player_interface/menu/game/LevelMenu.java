@@ -91,7 +91,7 @@ public class LevelMenu implements Screen {
         camera = cam.getCamera();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(backgroundTexture, 0, 0, camera.viewportWidth,camera.viewportHeight);
 
         try {
             this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), this.game);
@@ -100,16 +100,16 @@ public class LevelMenu implements Screen {
         }
 
         int listX = 100;
-        int listY = Gdx.graphics.getHeight() - 100;
+        int listY = (int) camera.viewportHeight - 100;
         for (int i = 1; i < levels.size(); i ++) {
-            font.getData().setScale(5);
+            font.getData().setScale(2);
             LevelItem levelItem = levels.get("Level " + i);
             if (levelItem.getIsSelected()) {
                 font.draw(batch, " > " + levelItem.getName(), listX, listY);
             } else {
                 font.draw(batch, levelItem.getName(), listX, listY);
             }
-            listY -= 100;
+            listY -= 50;
         }
 
 

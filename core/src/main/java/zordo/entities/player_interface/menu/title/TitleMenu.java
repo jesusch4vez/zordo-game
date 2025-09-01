@@ -4,29 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Screen;
 import zordo.LegendOfZordo;
+import zordo.components.animation.title.TitleAnimation;
 import zordo.components.camera.CameraComponent;
 import zordo.components.Component;
-import zordo.systems.utilities.GifDecoder;
+import zordo.systems.animation.title.TitleAnimationSystem;
 
 import java.util.HashMap;
 
 public class TitleMenu implements Screen {
 	final LegendOfZordo game;
     public SpriteBatch batch;
-    public Animation<TextureRegion> animation;
+    public Animation<Sprite> animation;
     OrthographicCamera camera;
     float elapsed;
+    TitleAnimation titleAnimation;
 
 	HashMap<String, Component> components;
 
     public TitleMenu(final LegendOfZordo game) {
     	this.game = game;
         this.game.isOnTitleMenu = true;
-    	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle-2.gif").read());
+        titleAnimation = new TitleAnimation();
 
 		components = new HashMap<>();
 		components.put("Camera", new CameraComponent());
@@ -53,7 +55,8 @@ public class TitleMenu implements Screen {
         elapsed += Gdx.graphics.getDeltaTime();
 
         batch.begin();
-        batch.draw(animation.getKeyFrame(elapsed), 0, 0);
+        TitleAnimationSystem.renderTitle(titleAnimation);
+        TitleAnimationSystem.animate(batch, elapsed);
         batch.end();
 
         try {
