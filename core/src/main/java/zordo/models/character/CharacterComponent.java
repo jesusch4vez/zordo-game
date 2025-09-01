@@ -94,12 +94,12 @@ public class CharacterComponent {
         characterFixtureDef = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 2f;
-        characterFixtureDef.friction = 0.2f;
-        characterFixtureDef.restitution = 0.01f;
+        characterFixtureDef.density = 1f;
+        characterFixtureDef.friction = 2f;
+        characterFixtureDef.restitution = 0.11f;
 
         characterBody.createFixture(characterFixtureDef);
-        characterBody.setLinearVelocity(1.0f, 0.0f);
+        characterBody.setLinearVelocity(0.15f, 0.05f);
         characterBody.setUserData(this);
     }
 

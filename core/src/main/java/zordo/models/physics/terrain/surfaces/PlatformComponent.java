@@ -2,7 +2,13 @@ package zordo.models.physics.terrain.surfaces;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import zordo.models.Component;
+import zordo.models.physics.world.WorldComponent;
 
 public class PlatformComponent extends Component {
 
@@ -12,7 +18,11 @@ public class PlatformComponent extends Component {
     private Boolean isJumpable;
     private String characterRelativePosition;
 
-    public PlatformComponent() {
+    BodyDef platformBodyDef;
+    PolygonShape platformBox;
+    Body platformBody;
+
+    public PlatformComponent(World world) {
         super();
         this.platform = new Rectangle();
         platform.setWidth(100);
@@ -21,9 +31,29 @@ public class PlatformComponent extends Component {
         holdsCharacter = false;
         isJumpable = false;
         characterRelativePosition = "";
+
+        // Create our body definition
+        platformBodyDef = new BodyDef();
+// Set its world position
+        platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
+
+// Create a body from the definition and add it to the world
+        platformBody = world.createBody(platformBodyDef);
+
+// Create a polygon shape
+        platformBox = new PolygonShape();
+// Set the polygon shape as a box which is twice the size of our view port and 20 high
+// (setAsBox takes half-width and half-height as arguments)
+        platformBox.setAsBox(platform.getWidth(), platform.getHeight());
+// Create a fixture from our polygon shape and add it to our ground body
+        platformBody.createFixture(platformBox, 0.0f);
+// Clean up after ourselves
+        platformBox.dispose();
+
+        platformBody.setUserData(this);
     }
 
-    public PlatformComponent(int height, int width) {
+    public PlatformComponent(float height, float width, WorldComponent world) {
         super();
         this.platform = new Rectangle();
         platform.setWidth(width);
@@ -32,11 +62,30 @@ public class PlatformComponent extends Component {
         holdsCharacter = false;
         isJumpable = false;
         characterRelativePosition = "";
+
+        // Create our body definition
+        platformBodyDef = new BodyDef();
+// Set its world position
+        platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
+
+// Create a body from the definition and add it to the world
+        platformBody = world.getWorld().createBody(platformBodyDef);
+
+// Create a polygon shape
+        platformBox = new PolygonShape();
+// Set the polygon shape as a box which is twice the size of our view port and 20 high
+// (setAsBox takes half-width and half-height as arguments)
+        platformBox.setAsBox(platform.getWidth(), platform.getHeight());
+// Create a fixture from our polygon shape and add it to our ground body
+        platformBody.createFixture(platformBox, 0.0f);
+// Clean up after ourselves
+        platformBox.dispose();
     }
 
-    public void setCoordinates(int x, int y) {
+    public void setCoordinates(float x, float y) {
         platform.setX(x);
         platform.setY(y);
+        this.platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
     }
 
     public float getX() {
@@ -71,6 +120,7 @@ public class PlatformComponent extends Component {
 
     public void setWidth(int width) {
         platform.setWidth(width);
+        platformBox.setAsBox(width,  this.platform.getHeight());
     }
 
     public float getWidth() {
@@ -79,6 +129,7 @@ public class PlatformComponent extends Component {
 
     public void setHeight(int height) {
         platform.setHeight(height);
+        platformBox.setAsBox(this.platform.getWidth(),  height);
     }
 
     public float getHeight() {
@@ -98,5 +149,29 @@ public class PlatformComponent extends Component {
     }
     public String getCharacterRelativePosition() {
         return characterRelativePosition;
+    }
+
+    public Body getPlatformBody() {
+        return platformBody;
+    }
+
+    public void setPlatformBody(Body platformBody) {
+        this.platformBody = platformBody;
+    }
+
+    public BodyDef getPlatformBodyDef() {
+        return platformBodyDef;
+    }
+
+    public void setPlatformBodyDef(BodyDef platformBodyDef) {
+        this.platformBodyDef = platformBodyDef;
+    }
+
+    public PolygonShape getPlatformBox() {
+        return platformBox;
+    }
+
+    public void setPlatformBox(PolygonShape platformBox) {
+        this.platformBox = platformBox;
     }
 }
