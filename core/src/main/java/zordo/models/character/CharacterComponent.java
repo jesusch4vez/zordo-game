@@ -41,8 +41,8 @@ public class CharacterComponent {
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
         position = new Vector3();
-        position.x = 500;
-        position.y = 500;
+        position.x = 100;
+        position.y = 100;
         dimensions = new Vector2(32, 55);
 
         isFlippedRight = true;
@@ -63,7 +63,7 @@ public class CharacterComponent {
 
         characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;
-        characterBodyDef.position.set(this.getPosition().x/2, this.getPosition().y/2);
+        characterBodyDef.position.set(this.getPosition().x - 100, this.getPosition().y -100);
         characterBodyDef.fixedRotation = true;
 
         characterBody = world.getWorld().createBody(characterBodyDef);

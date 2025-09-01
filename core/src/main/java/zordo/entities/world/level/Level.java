@@ -17,6 +17,8 @@ import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
 import zordo.models.character.CharacterComponent;
 import zordo.models.gamePad.ControllerComponent;
+import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
+import zordo.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
 import zordo.entities.characters.player.Player;
@@ -71,6 +73,8 @@ public class Level extends LevelComponent implements Screen {
         // (better don't create a new one every time though)
 
         bodies = new Array<>();
+
+//        world.getWorld().getBodies(bodies);
     }
 
     @Override
@@ -95,28 +99,41 @@ public class Level extends LevelComponent implements Screen {
 
         try {
             bodies.add(player.getCharacterComponent().characterBody);
+            bodies.add(world.floor.getPlatformBody());
+            bodies.add(world.leftWall.getPlatformBody());
+            bodies.add(world.rightWall.getPlatformBody());
+            bodies.add(world.ceiling.getPlatformBody());
+// Now fill the array with all bodies
 //            bodies.add(world.floor.getPlatformBody());
 // Now fill the array with all bodies
             world.getWorld().getBodies(bodies);
-
-            for (Body b : bodies) {
-//                 Get the body's user data - in this example, our user
-                // data is an instance of the Entity class
-                if(b.getUserData() instanceof CharacterComponent) {
-                    CharacterComponent e = (CharacterComponent) b.getUserData();
-                    b.getPosition().x = e.getPosition().x/2;
-                    b.getPosition().y = e.getPosition().y/2;
-                    e.setPosition(b.getPosition().x*2, b.getPosition().y*2);
-                }
-            }
-
             batch = new SpriteBatch();
             CameraComponent cam = (CameraComponent) components.get("Camera");
             camera = cam.getCamera();
 
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
+
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
+
+            for (Body b : bodies) {
+//                 Get the body's user data - in this example, our user
+                // data is an instance of the Entity class
+                if(b.getUserData() instanceof CharacterComponent) {
+                    CharacterComponent e = (CharacterComponent) b.getUserData();
+                    e.setPosition(b.getPosition().x + 100, b.getPosition().y + 100);
+                } else {
+                    if(b.getUserData() instanceof LevelBoundaryComponent) {
+                        LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();
+                        p.setHeight((int) ((LevelBoundaryComponent) b.getUserData()).getHeight());
+                        p.setWidth((int) ((LevelBoundaryComponent) b.getUserData()).getWidth());
+                        p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
+                        p.getPlatform().setSize(((LevelBoundaryComponent) b.getUserData()).getWidth(),((LevelBoundaryComponent) b.getUserData()).getHeight());
+                        p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
+                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX(), p.getPlatform().getY(), p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                    }
+                }
+            }
 
             this.game.controllerListener.handleInput(player, batch, elapsed, this.game, this.world);
 

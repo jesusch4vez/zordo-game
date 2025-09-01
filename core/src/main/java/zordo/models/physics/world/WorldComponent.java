@@ -53,6 +53,7 @@ public class WorldComponent {
         boundaryBox = new PolygonShape();
         boundaryBox.setAsBox(floor.getWidth(), floor.getHeight());
         boundaryBody.createFixture(boundaryBox,0);
+        boundaryBody.setUserData(floor);
         floor.setPlatformBodyDef(boundaryBodyDef);
 
         boundaryBox.dispose();
@@ -80,6 +81,7 @@ public class WorldComponent {
 // Clean up after ourselves
         boundaryBox.dispose();
         ceiling.setPlatformBodyDef(boundaryBodyDef);
+        boundaryBody.setUserData(ceiling);
 
         leftWall = new LevelBoundaryComponent(true,false,false,this);
         leftWall.setHeight(5000);
@@ -96,6 +98,7 @@ public class WorldComponent {
         boundaryBody.createFixture(boundaryBox, 0.0f);
         boundaryBox.dispose();
         leftWall.setPlatformBodyDef(boundaryBodyDef);
+        boundaryBody.setUserData(leftWall);
 
         rightWall = new LevelBoundaryComponent(true,false,false,this);
         rightWall.setHeight(5000);
@@ -110,6 +113,7 @@ public class WorldComponent {
         boundaryBody.createFixture(boundaryBox, 0.0f);
         boundaryBox.dispose();
         rightWall.setPlatformBodyDef(boundaryBodyDef);
+        boundaryBody.setUserData(rightWall);
 
     }
 
