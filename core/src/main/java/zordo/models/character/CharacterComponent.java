@@ -21,20 +21,13 @@ public class CharacterComponent {
     Boolean isAirborne;
     Boolean isStanding;
 
-    Boolean isColliding;
-    Boolean onSurface;
-
-    Boolean isAscending;
-    Boolean isDescending;
+    Vector2 dimensions;
 
     Boolean isDucking;
 
     int jumps;
 
-    Rectangle collider;
     Vector3 position;
-
-    Vector3 previousPosition;
 
     public ArrayList<HeartComponent> hearts;
     public int health;
@@ -48,27 +41,16 @@ public class CharacterComponent {
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
         position = new Vector3();
-        previousPosition = new Vector3();
-        collider = new Rectangle();
-        collider.x = 500;
-        collider.y = 500;
-        collider.height = 55;
-        collider.width = 32;
         position.x = 500;
         position.y = 500;
-        previousPosition.x = 500;
-        previousPosition.y = 500;
+        dimensions = new Vector2(32, 55);
 
         isFlippedRight = true;
         isJumping = false;
         isStepping = false;
         isRunning = false;
         isAirborne = false;
-        isColliding = false;
-        isAscending = false;
-        isDescending = false;
         isStanding = true;
-        onSurface = false;
         isDucking = false;
 
         health = 8;
@@ -81,14 +63,14 @@ public class CharacterComponent {
 
         characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;
-        characterBodyDef.position.set(100, 200);
+        characterBodyDef.position.set(this.getPosition().x/2, this.getPosition().y/2);
         characterBodyDef.fixedRotation = true;
 
         characterBody = world.getWorld().createBody(characterBodyDef);
 
         characterShape = new PolygonShape();
 //        characterShape.setAsBox(5, 5.0f);
-        Vector2 [] vertices = { new Vector2(collider.x, collider.y), new Vector2(collider.x, collider.y+collider.height), new Vector2(collider.x + collider.width, collider.y), new Vector2(collider.x+collider.width, collider.y + collider.height)};
+        Vector2 [] vertices = { new Vector2(this.position.x, this.position.y), new Vector2(this.position.x + dimensions.x, this.position.y), new Vector2(this.position.x, this.position.y + dimensions.y), new Vector2(this.position.x + dimensions.x, this.position.y + dimensions.y) };
         characterShape.set(vertices);
 
         characterFixtureDef = new FixtureDef();
@@ -99,7 +81,8 @@ public class CharacterComponent {
         characterFixtureDef.restitution = 0.11f;
 
         characterBody.createFixture(characterFixtureDef);
-        characterBody.setLinearVelocity(0.15f, 0.05f);
+        characterBody.setLinearVelocity(1.15f, 1.05f);
+        characterBody.isFixedRotation();
         characterBody.setUserData(this);
     }
 
@@ -107,52 +90,30 @@ public class CharacterComponent {
         return this.health;
     }
 
-    public void setCollider(Rectangle collider) {
-        this.collider = collider;
-    }
-
-    public Rectangle getCollider() {
-        return this.collider;
-    }
-
     public Vector3 getPosition() {
         return this.position;
     }
 
     public void setPosition(Vector3 position) {
-        this.collider.x = position.x;
-        this.collider.y = position.y;
-        this.position.x = collider.x;
-        this.position.y = collider.y;
+        this.position.x = position.x;
+        this.position.y = position.y;
         this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
-        this.collider.x = position.x;
-        this.collider.y = position.y;
         this.characterBody.getPosition().set(position.x, position.y);
-    }
-
-    public Vector3 getPreviousPosition() {
-        return this.previousPosition;
     }
 
     public void setX(float x) {
         this.position.x = x;
-        this.getCollider().setX(x);
         this.characterBody.getPosition().x = x;
     }
 
     public void setY(float y) {
         this.position.y = y;
-        this.getCollider().setY(y);
         this.characterBody.getPosition().y = y;
-    }
-
-    public void setPreviousPosition(Vector3 previousPosition) {
-        this.previousPosition = previousPosition;
     }
 
     public void setIsFlippedRight(Boolean flip) {
@@ -215,33 +176,12 @@ public class CharacterComponent {
         return this.isAirborne;
     }
 
-    public void setIsColliding(Boolean isColliding) {
-        this.isColliding = isColliding;
-    }
-
-    public Boolean getIsColliding() {
-        return this.isColliding;
-    }
-
     public void setIsStanding(Boolean isStanding) {
         this.isStanding = isStanding;
     }
 
     public Boolean getIsStanding() {
         return this.isStanding;
-    }
-
-    public Boolean getIsAscending() {
-        return isAscending;
-    }
-    public void setIsAscending(Boolean isAscending) {
-        this.isAscending = isAscending;
-    }
-    public Boolean getIsDescending() {
-        return isDescending;
-    }
-    public void setIsDescending(Boolean isDescending) {
-        this.isDescending = isDescending;
     }
 
     public Boolean getIsDucking() { return  isDucking; }

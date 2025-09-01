@@ -17,14 +17,12 @@ import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
 import zordo.models.character.CharacterComponent;
 import zordo.models.gamePad.ControllerComponent;
-import zordo.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
 import zordo.entities.characters.player.Player;
 import zordo.systems.camera.CameraSystem;
 import zordo.systems.camera.DebugHudSystem;
 import zordo.systems.camera.HudSystem;
-import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 import java.util.HashMap;
 
@@ -96,23 +94,21 @@ public class Level extends LevelComponent implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         try {
-//            bodies.add(player.getCharacterComponent().characterBody);
+            bodies.add(player.getCharacterComponent().characterBody);
 //            bodies.add(world.floor.getPlatformBody());
 // Now fill the array with all bodies
-//            world.getWorld().getBodies(bodies);
+            world.getWorld().getBodies(bodies);
 
-//            for (Body b : bodies) {
-                // Get the body's user data - in this example, our user
+            for (Body b : bodies) {
+//                 Get the body's user data - in this example, our user
                 // data is an instance of the Entity class
-//                CharacterComponent e = (CharacterComponent) b.getUserData();
-
-//                if (e != null) {
-                    // Update the entities/sprites position and angle
-//                    e.setPosition(b.getPosition().x, b.getPosition().y);
-                    // We need to convert our angle from radians to degrees
-//                    e.setRotation(MathUtils.radiansToDegrees * b.getAngle());
-//                }
-//            }
+                if(b.getUserData() instanceof CharacterComponent) {
+                    CharacterComponent e = (CharacterComponent) b.getUserData();
+                    b.getPosition().x = e.getPosition().x/2;
+                    b.getPosition().y = e.getPosition().y/2;
+                    e.setPosition(b.getPosition().x*2, b.getPosition().y*2);
+                }
+            }
 
             batch = new SpriteBatch();
             CameraComponent cam = (CameraComponent) components.get("Camera");
@@ -124,11 +120,6 @@ public class Level extends LevelComponent implements Screen {
 
             this.game.controllerListener.handleInput(player, batch, elapsed, this.game, this.world);
 
-            PlatformSystem.render(world.platforms, batch);
-
-            if(this.getDebugMode()) {
-                PlatformSystem.renderCollisionDebugPlatform(world.platformIntersection, world.platforms, batch);
-            }
             batch.end();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
