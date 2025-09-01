@@ -3,7 +3,7 @@ package zordo.systems.character.movement;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
@@ -66,8 +66,13 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
     public static void handleLeftRight(Player character, Level level, WorldComponent world) {
         float axis = ControllerComponent.LEFT_STICK_X.getAxisValue();
+        Vector2 vel = character.getCharacterComponent().characterBody.getLinearVelocity();
+        Vector2 pos = character.getCharacterComponent().characterBody.getPosition();
 
         if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || (axis > 0) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            if( vel.x > -1000 ) {
+                character.getCharacterComponent().characterBody.applyLinearImpulse(100f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+            }
             if(axis > 0) {
                 character.getCharacterComponent().getCollider().x += 100 * (axis) * Gdx.graphics.getDeltaTime();
             } else {
@@ -89,6 +94,9 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
 
             if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                if( vel.x > -1000 ) {
+                    character.getCharacterComponent().characterBody.applyLinearImpulse(200f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+                }
                 if(axis > 0) {
                     character.getCharacterComponent().getCollider().x += 125 * (axis) * Gdx.graphics.getDeltaTime();
                 } else {
@@ -113,6 +121,9 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
         }
         if (ControllerComponent.D_PAD_LEFT.isPressed() || (axis < 0) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            if( vel.x < 1000 ) {
+                character.getCharacterComponent().characterBody.applyLinearImpulse(-100f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+            }
             if(axis < 0) {
                 character.getCharacterComponent().getCollider().x -= 100 * (-axis) * Gdx.graphics.getDeltaTime();
             } else {
@@ -134,6 +145,9 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
 
             if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+                if( vel.x < 1000 ) {
+                    character.getCharacterComponent().characterBody.applyLinearImpulse(-200f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+                }
                 character.getCharacterComponent().setIsRunning(true);
                 if(axis < 0) {
                     character.getCharacterComponent().getCollider().x -= 125 * (-axis) * Gdx.graphics.getDeltaTime();

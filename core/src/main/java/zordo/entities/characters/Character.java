@@ -1,11 +1,12 @@
 package zordo.entities.characters;
 
 import zordo.models.character.CharacterComponent;
+import zordo.models.physics.world.WorldComponent;
 
 public class Character {
     CharacterComponent characterComponent;
-    public Character() {
-        characterComponent = new CharacterComponent();
+    public Character(WorldComponent world) {
+        characterComponent = new CharacterComponent(world);
     }
 
     public CharacterComponent getCharacterComponent() {

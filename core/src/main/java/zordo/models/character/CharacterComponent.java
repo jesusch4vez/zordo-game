@@ -1,9 +1,15 @@
 package zordo.models.character;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import zordo.models.animation.character.AnimationComponent;
 import zordo.models.health.HeartComponent;
+import zordo.models.physics.world.WorldComponent;
 
 import java.util.ArrayList;
 
@@ -34,7 +40,12 @@ public class CharacterComponent {
     public int health;
     AnimationComponent animation;
 
-    public CharacterComponent() {
+    public BodyDef characterBodyDef;
+    public Body characterBody;
+    public PolygonShape characterShape;
+    public FixtureDef characterFixtureDef;
+
+    public CharacterComponent(WorldComponent world) {
         jumps = 0;
         position = new Vector3();
         previousPosition = new Vector3();
@@ -67,6 +78,29 @@ public class CharacterComponent {
             hearts.add(new HeartComponent());
         }
         animation = new AnimationComponent();
+
+        characterBodyDef = new BodyDef();
+        characterBodyDef.type = BodyDef.BodyType.DynamicBody;
+        characterBodyDef.position.set(100, 200);
+        characterBodyDef.fixedRotation = true;
+
+        characterBody = world.getWorld().createBody(characterBodyDef);
+
+        characterShape = new PolygonShape();
+//        characterShape.setAsBox(5, 5.0f);
+        Vector2 [] vertices = { new Vector2(collider.x, collider.y), new Vector2(collider.x, collider.y+collider.height), new Vector2(collider.x + collider.width, collider.y), new Vector2(collider.x+collider.width, collider.y + collider.height)};
+        characterShape.set(vertices);
+
+        characterFixtureDef = new FixtureDef();
+
+        characterFixtureDef.shape = characterShape;
+        characterFixtureDef.density = 2f;
+        characterFixtureDef.friction = 0.2f;
+        characterFixtureDef.restitution = 0.01f;
+
+        characterBody.createFixture(characterFixtureDef);
+        characterBody.setLinearVelocity(1.0f, 0.0f);
+        characterBody.setUserData(this);
     }
 
     public int getHealth() {
@@ -90,6 +124,7 @@ public class CharacterComponent {
         this.collider.y = position.y;
         this.position.x = collider.x;
         this.position.y = collider.y;
+        this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setPosition(float x, float y) {
@@ -97,6 +132,7 @@ public class CharacterComponent {
         this.position.y = y;
         this.collider.x = position.x;
         this.collider.y = position.y;
+        this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public Vector3 getPreviousPosition() {
@@ -106,11 +142,13 @@ public class CharacterComponent {
     public void setX(float x) {
         this.position.x = x;
         this.getCollider().setX(x);
+        this.characterBody.getPosition().x = x;
     }
 
     public void setY(float y) {
         this.position.y = y;
         this.getCollider().setY(y);
+        this.characterBody.getPosition().y = y;
     }
 
     public void setPreviousPosition(Vector3 previousPosition) {

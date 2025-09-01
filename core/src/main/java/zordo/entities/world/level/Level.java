@@ -8,14 +8,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
-import zordo.models.debug.DebugCollision;
+import zordo.models.character.CharacterComponent;
 import zordo.models.gamePad.ControllerComponent;
-import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
@@ -25,9 +26,7 @@ import zordo.systems.camera.DebugHudSystem;
 import zordo.systems.camera.HudSystem;
 import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 public class Level extends LevelComponent implements Screen {
     public final LegendOfZordo game;
@@ -43,6 +42,7 @@ public class Level extends LevelComponent implements Screen {
     float elapsed;
 
     public HashMap<String, Component> components;
+    Array<Body> bodies;
 
     PlatformComponent platform;
     WorldComponent world;
@@ -59,6 +59,7 @@ public class Level extends LevelComponent implements Screen {
         this.game.isOnLevel = true;
         this.world = new WorldComponent();
         this.debugRenderer = new Box2DDebugRenderer();
+//        bodies = new Array<>();
 
         elapsed = 0.0f;
 
@@ -66,7 +67,12 @@ public class Level extends LevelComponent implements Screen {
         components.put("Camera", new CameraComponent());
 
         ScreenUtils.clear(0, 0, 0.2f, 1);
-        player = new Player();
+        player = new Player(world);
+
+        // Create an array to be filled with the bodies
+        // (better don't create a new one every time though)
+
+        bodies = new Array<>();
     }
 
     @Override
@@ -111,6 +117,24 @@ public class Level extends LevelComponent implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         try {
+            bodies.add(player.getCharacterComponent().characterBody);
+            bodies.add(world.groundBody);
+// Now fill the array with all bodies
+            world.getWorld().getBodies(bodies);
+
+            for (Body b : bodies) {
+                // Get the body's user data - in this example, our user
+                // data is an instance of the Entity class
+                CharacterComponent e = (CharacterComponent) b.getUserData();
+
+                if (e != null) {
+                    // Update the entities/sprites position and angle
+                    e.setPosition(b.getPosition().x, b.getPosition().y);
+                    // We need to convert our angle from radians to degrees
+//                    e.setRotation(MathUtils.radiansToDegrees * b.getAngle());
+                }
+            }
+
             batch = new SpriteBatch();
             CameraComponent cam = (CameraComponent) components.get("Camera");
             camera = cam.getCamera();

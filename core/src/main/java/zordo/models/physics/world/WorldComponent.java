@@ -22,8 +22,19 @@ public class WorldComponent {
 
     private World world;
 
-    BodyDef bodyDef;
-    Body body;
+//    BodyDef bodyDef;
+//    Body body;
+//    CircleShape circle;
+//    FixtureDef fixtureDef;
+
+    BodyDef groundBodyDef;
+    PolygonShape groundBox;
+    public Body groundBody;
+
+//    BodyDef characterBodyDef;
+//    Body characterBody;
+//    PolygonShape characterShape;
+//    FixtureDef characterFixtureDef;
 
     private ArrayList<DebugCollision> debugCollisions;
 
@@ -58,33 +69,51 @@ public class WorldComponent {
         rightWall = new LevelBoundaryComponent(true,false,false);
 
         // First we create a body definition
-        bodyDef = new BodyDef();
+//        bodyDef = new BodyDef();
 // We set our body to dynamic, for something like ground which doesn't move we would set it to StaticBody
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+//        bodyDef.type = BodyDef.BodyType.DynamicBody;
 // Set our body's starting position in the world
-        bodyDef.position.set(5, 10);
+//        bodyDef.position.set(100, 100);
 
 // Create our body in the world using our body definition
-        body = world.createBody(bodyDef);
+//        body = world.createBody(bodyDef);
 
 // Create a circle shape and set its radius to 6
-        CircleShape circle = new CircleShape();
-        circle.setRadius(6f);
+//        circle = new CircleShape();
+//        circle.setRadius(6f);
 
 // Create a fixture definition to apply our shape to
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
+//        fixtureDef = new FixtureDef();
+//        fixtureDef.shape = circle;
+//        fixtureDef.density = 0.5f;
+//        fixtureDef.friction = 0.4f;
+//        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
 
 // Create our fixture and attach it to the body
-        Fixture fixture = body.createFixture(fixtureDef);
+//        Fixture fixture = body.createFixture(fixtureDef);
 
 // Remember to dispose of any shapes after you're done with them!
 // BodyDef and FixtureDef don't need disposing, but shapes do.
 //        circle.dispose();
 
+
+        // Create our body definition
+        groundBodyDef = new BodyDef();
+// Set its world position
+        groundBodyDef.position.set(new Vector2(0, 0));
+
+// Create a body from the definition and add it to the world
+        groundBody = world.createBody(groundBodyDef);
+
+// Create a polygon shape
+        groundBox = new PolygonShape();
+// Set the polygon shape as a box which is twice the size of our view port and 20 high
+// (setAsBox takes half-width and half-height as arguments)
+        groundBox.setAsBox(1920/2f, 10.0f);
+// Create a fixture from our polygon shape and add it to our ground body
+        groundBody.createFixture(groundBox, 0.0f);
+// Clean up after ourselves
+        groundBox.dispose();
     }
 
     public WorldComponent(World world) {
