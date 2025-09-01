@@ -2,6 +2,7 @@ package zordo.entities.player_interface.menu.title;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,6 +18,7 @@ public class TitleMenu implements Screen {
 	final LegendOfZordo game;
     public SpriteBatch batch;
     public Animation<TextureRegion> animation;
+    OrthographicCamera camera;
     float elapsed;
 
 	HashMap<String, Component> components;
@@ -43,8 +45,10 @@ public class TitleMenu implements Screen {
     	Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 	    batch = new SpriteBatch();
-		CameraComponent camera = (CameraComponent) components.get("Camera");
-	    batch.setProjectionMatrix(camera.getCamera().combined);
+        CameraComponent cam = (CameraComponent) components.get("Camera");
+        camera = cam.getCamera();
+
+        batch.setProjectionMatrix(camera.combined);
 
         elapsed += Gdx.graphics.getDeltaTime();
 

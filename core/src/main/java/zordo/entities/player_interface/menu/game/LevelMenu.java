@@ -25,6 +25,8 @@ public class LevelMenu implements Screen {
     private final Texture backgroundTexture;
     OrthographicCamera camera;
 
+    SpriteBatch batch;
+
     HashMap<String, Component> components;
     public HashMap<String, LevelComponent> levels;
     public int selectedLevel = 1;
@@ -67,10 +69,6 @@ public class LevelMenu implements Screen {
         TextureRegion background = new TextureRegion();
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
-
-        CameraComponent tempCam = (CameraComponent) components.get("Camera");
-        this.camera = tempCam.getCamera();
-        this.camera.setToOrtho(false, 800,400);
     }
 
     @Override
@@ -88,10 +86,12 @@ public class LevelMenu implements Screen {
         Gdx.gl20.glClearColor(0, 0, 0.2f, 0.0f);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        SpriteBatch batch = new SpriteBatch();
+        batch = new SpriteBatch();
+        CameraComponent cam = (CameraComponent) components.get("Camera");
+        camera = cam.getCamera();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(backgroundTexture,0,0,1920,1080);
+        batch.draw(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         try {
             this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), this.game);
@@ -100,15 +100,16 @@ public class LevelMenu implements Screen {
         }
 
         int listX = 100;
-        int listY = 350;
+        int listY = Gdx.graphics.getHeight() - 100;
         for (int i = 1; i < levels.size(); i ++) {
+            font.getData().setScale(5);
             LevelItem levelItem = levels.get("Level " + i);
             if (levelItem.getIsSelected()) {
                 font.draw(batch, " > " + levelItem.getName(), listX, listY);
             } else {
                 font.draw(batch, levelItem.getName(), listX, listY);
             }
-            listY -= 20;
+            listY -= 100;
         }
 
 

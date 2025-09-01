@@ -141,10 +141,11 @@ public class Level extends LevelComponent implements Screen {
             batch = new SpriteBatch();
             CameraComponent cam = (CameraComponent) components.get("Camera");
             camera = cam.getCamera();
-            batch.setProjectionMatrix(camera.combined);
 
+            batch.setProjectionMatrix(camera.combined);
             batch.begin();
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
+
             this.game.controllerListener.handleInput(player, batch, elapsed, this.game);
 
             PlatformSystem.render(platforms, batch);
