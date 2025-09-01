@@ -1,7 +1,7 @@
-package zordo.components.gamePad;
+package zordo.models.gamePad;
 
 import com.badlogic.gdx.graphics.Texture;
-import zordo.components.Component;
+import zordo.models.Component;
 
 public class ButtonComponent extends Component {
     private boolean pressed;

@@ -1,6 +1,6 @@
-package zordo.components.menu;
+package zordo.models.menu;
 
-import zordo.components.Component;
+import zordo.models.Component;
 
 public class MenuItem extends Component {
     boolean isSelectable;

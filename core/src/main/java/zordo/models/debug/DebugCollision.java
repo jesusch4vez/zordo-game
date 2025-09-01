@@ -1,7 +1,7 @@
-package zordo.components.debug;
+package zordo.models.debug;
 
 import com.badlogic.gdx.graphics.Texture;
-import zordo.components.physics.terrain.surfaces.PlatformComponent;
+import zordo.models.physics.terrain.surfaces.PlatformComponent;
 
 public class DebugCollision extends PlatformComponent {
 

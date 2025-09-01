@@ -1,3 +1,3 @@
-package zordo.components;
+package zordo.models;
 
 public class Component { }

@@ -1,9 +1,9 @@
-package zordo.components.health;
+package zordo.models.health;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Disposable;
-import zordo.components.Component;
+import zordo.models.Component;
 
 public class HeartComponent extends Component implements Disposable {
     String heartsuri = "character/player/hearts/";

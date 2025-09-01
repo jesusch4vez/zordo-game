@@ -1,4 +1,4 @@
-package zordo.components.menu;
+package zordo.models.menu;
 
 public class LevelItem extends MenuItem {
     public LevelItem() {

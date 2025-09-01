@@ -1,7 +1,7 @@
 package zordo.systems.menu;
 
 import zordo.LegendOfZordo;
-import zordo.components.world.levels.LevelComponent;
+import zordo.models.world.levels.LevelComponent;
 import zordo.entities.player_interface.menu.game.DebugModeMenu;
 import zordo.entities.player_interface.menu.game.PauseMenu;
 import zordo.entities.world.level.Level;

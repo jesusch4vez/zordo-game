@@ -2,7 +2,7 @@ package zordo.systems.health;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import zordo.components.health.HeartComponent;
+import zordo.models.health.HeartComponent;
 import zordo.entities.characters.Character;
 
 import java.util.ArrayList;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import zordo.components.gamePad.ControllerComponent;
+import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.entities.world.level.Level;
 

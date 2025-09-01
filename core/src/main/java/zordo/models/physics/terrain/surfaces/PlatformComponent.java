@@ -1,8 +1,8 @@
-package zordo.components.physics.terrain.surfaces;
+package zordo.models.physics.terrain.surfaces;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import zordo.components.Component;
+import zordo.models.Component;
 
 public class PlatformComponent extends Component {
 

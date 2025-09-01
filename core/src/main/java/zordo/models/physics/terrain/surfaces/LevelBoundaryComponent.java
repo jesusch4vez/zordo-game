@@ -1,4 +1,4 @@
-package zordo.components.physics.terrain.surfaces;
+package zordo.models.physics.terrain.surfaces;
 
 public class LevelBoundaryComponent extends PlatformComponent {
     Boolean isWall;

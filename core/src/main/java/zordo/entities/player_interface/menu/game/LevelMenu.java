@@ -11,10 +11,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 
-import zordo.components.Component;
-import zordo.components.camera.CameraComponent;
-import zordo.components.menu.LevelItem;
-import zordo.components.world.levels.LevelComponent;
+import zordo.models.Component;
+import zordo.models.camera.CameraComponent;
+import zordo.models.menu.LevelItem;
+import zordo.models.world.levels.LevelComponent;
 
 import java.util.HashMap;
 

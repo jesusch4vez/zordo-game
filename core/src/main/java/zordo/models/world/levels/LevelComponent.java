@@ -1,6 +1,6 @@
-package zordo.components.world.levels;
+package zordo.models.world.levels;
 
-import zordo.components.menu.LevelItem;
+import zordo.models.menu.LevelItem;
 
 public class LevelComponent extends LevelItem {
     LevelSize levelSize;

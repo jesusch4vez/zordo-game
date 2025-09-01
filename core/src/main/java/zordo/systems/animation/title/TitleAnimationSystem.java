@@ -3,7 +3,7 @@ package zordo.systems.animation.title;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import zordo.components.animation.title.TitleAnimation;
+import zordo.models.animation.title.TitleAnimation;
 
 public class TitleAnimationSystem {
     static Animation<Sprite> animation;

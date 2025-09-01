@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import zordo.LegendOfZordo;
-import zordo.components.gamePad.ControllerComponent;
+import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.entities.world.level.Level;
 import zordo.systems.health.HealthSystem;

@@ -1,9 +1,9 @@
-package zordo.components.character;
+package zordo.models.character;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import zordo.components.animation.character.AnimationComponent;
-import zordo.components.health.HeartComponent;
+import zordo.models.animation.character.AnimationComponent;
+import zordo.models.health.HeartComponent;
 
 import java.util.ArrayList;
 

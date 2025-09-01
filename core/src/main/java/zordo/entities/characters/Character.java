@@ -1,6 +1,6 @@
 package zordo.entities.characters;
 
-import zordo.components.character.CharacterComponent;
+import zordo.models.character.CharacterComponent;
 
 public class Character {
     CharacterComponent characterComponent;

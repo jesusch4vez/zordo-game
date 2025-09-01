@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import zordo.LegendOfZordo;
-import zordo.components.Component;
-import zordo.components.camera.CameraComponent;
-import zordo.components.world.levels.LevelComponent;
+import zordo.models.Component;
+import zordo.models.camera.CameraComponent;
+import zordo.models.world.levels.LevelComponent;
 
 import java.util.HashMap;
 

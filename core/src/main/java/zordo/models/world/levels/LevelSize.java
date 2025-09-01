@@ -1,4 +1,4 @@
-package zordo.components.world.levels;
+package zordo.models.world.levels;
 
 public class LevelSize {
     private int width;

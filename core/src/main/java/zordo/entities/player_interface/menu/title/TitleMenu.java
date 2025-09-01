@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.Screen;
 import zordo.LegendOfZordo;
-import zordo.components.animation.title.TitleAnimation;
-import zordo.components.camera.CameraComponent;
-import zordo.components.Component;
+import zordo.models.animation.title.TitleAnimation;
+import zordo.models.camera.CameraComponent;
+import zordo.models.Component;
 import zordo.systems.animation.title.TitleAnimationSystem;
 
 import java.util.HashMap;

@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.badlogic.gdx.controllers.Controllers;
-import zordo.components.world.levels.LevelComponent;
-import zordo.components.world.levels.LevelSize;
+import zordo.models.world.levels.LevelComponent;
+import zordo.models.world.levels.LevelSize;
 import zordo.entities.player_interface.menu.game.DebugModeMenu;
 import zordo.entities.player_interface.menu.game.LevelMenu;
 import zordo.entities.player_interface.menu.game.PauseMenu;

@@ -1,6 +1,6 @@
-package zordo.components.gamePad;
+package zordo.models.gamePad;
 
-import zordo.components.Component;
+import zordo.models.Component;
 
 import java.util.HashMap;
 

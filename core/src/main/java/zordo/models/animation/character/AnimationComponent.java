@@ -1,9 +1,9 @@
-package zordo.components.animation.character;
+package zordo.models.animation.character;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import zordo.components.Component;
+import zordo.models.Component;
 
 public class AnimationComponent extends Component {
 
