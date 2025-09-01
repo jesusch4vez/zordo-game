@@ -1,5 +1,6 @@
 package zordo.models.camera;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import zordo.models.Component;
 
@@ -8,8 +9,7 @@ public class CameraComponent extends Component {
     public CameraComponent() {
         super();
         this.camera = new OrthographicCamera();
-//        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        camera.setToOrtho(false, 1920, 1080);
+        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
     }
 
     public OrthographicCamera getCamera() {

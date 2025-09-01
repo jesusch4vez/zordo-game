@@ -16,8 +16,6 @@ public class TitleAnimation {
         for(int i = 0; i < titleFrames.length; i++) {
             Texture frameTexture = new Texture(titleUri + "lozTitle-frame" + i + ".png");
             Sprite frame = new Sprite(frameTexture);
-//            frame.setRegionHeight(Gdx.graphics.getHeight());
-//            frame.setRegionWidth(Gdx.graphics.getWidth());
             titleFrames[i] = frame;
         }
 
