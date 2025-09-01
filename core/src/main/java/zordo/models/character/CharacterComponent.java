@@ -50,10 +50,10 @@ public class CharacterComponent {
         position = new Vector3();
         previousPosition = new Vector3();
         collider = new Rectangle();
-        collider.x = 10;
-        collider.y = 10;
-        collider.height = 53;
-        collider.width = 23;
+        collider.x = 1;
+        collider.y = 1;
+        collider.height = 5;
+        collider.width = 2;
         position.x = collider.x;
         position.y = collider.y;
         previousPosition.x = collider.x;
