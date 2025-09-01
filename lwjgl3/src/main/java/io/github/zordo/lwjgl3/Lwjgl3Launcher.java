@@ -1,5 +1,6 @@
 package io.github.zordo.lwjgl3;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import zordo.LegendOfZordo;
@@ -28,7 +29,8 @@ public class Lwjgl3Launcher {
         //// useful for testing performance, but can also be very stressful to some hardware.
         //// You may also need to configure GPU drivers to fully disable Vsync; this can cause screen tearing.
 
-        configuration.setWindowedMode(1920, 1080);
+//        configuration.setWindowedMode(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        configuration.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
         configuration.setWindowIcon("environment/triforce.png", "environment/triforce.png", "environment/triforce.png", "environment/triforce.png");

@@ -24,7 +24,7 @@ public class TitleMenu implements Screen {
     public TitleMenu(final LegendOfZordo game) {
     	this.game = game;
         this.game.isOnTitleMenu = true;
-    	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle.gif").read());
+    	animation = GifDecoder.loadGIFAnimation(Animation.PlayMode.LOOP, Gdx.files.internal("environment/lozTitle-2.gif").read());
 
 		components = new HashMap<>();
 		components.put("Camera", new CameraComponent());

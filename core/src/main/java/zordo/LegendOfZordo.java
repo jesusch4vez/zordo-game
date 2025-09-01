@@ -71,7 +71,6 @@ public class LegendOfZordo extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//        Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 		this.setScreen(new TitleMenu(this));
 	}
 
