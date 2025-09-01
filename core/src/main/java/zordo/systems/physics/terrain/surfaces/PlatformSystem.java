@@ -9,19 +9,20 @@ import zordo.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.entities.characters.Character;
 import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
+import zordo.models.physics.world.WorldComponent;
 import zordo.systems.character.movement.PlayerMovementSystem;
 
 import java.util.ArrayList;
 
 public class PlatformSystem {
 
-    public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character, Level level) {
+    public static void solidPlatform(ArrayList<PlatformComponent> platforms, Character character, Level level, WorldComponent world) {
         for (PlatformComponent platform : platforms) {
             Rectangle intersector = new Rectangle();
             if (!character.getCharacterComponent().getIsColliding() && Intersector.intersectRectangles(character.getCharacterComponent().getCollider(), platform.getPlatform(), intersector)) {
                 character.getCharacterComponent().setPosition(character.getCharacterComponent().getPreviousPosition());
                 character.getCharacterComponent().setIsColliding(true);
-                level.platformIntersection.setPlatform(intersector);
+                world.platformIntersection.setPlatform(intersector);
                 if (platformIsBelow(character,platform)) {
                     character.getCharacterComponent().setIsAirborne(false);
                     character.getCharacterComponent().setIsJumping(false);
@@ -37,7 +38,7 @@ public class PlatformSystem {
 
                     platform.setCharacterRelativePosition("Character is below");
                     character.getCharacterComponent().setY(platform.getY() - character.getCharacterComponent().getCollider().getHeight());
-                    PlayerMovementSystem.handleLeftRight((Player)character,level);
+                    PlayerMovementSystem.handleLeftRight((Player)character,level, world);
                     break;
                 } else if (platformisOnLeft(character,platform)) {
                     platform.setCharacterRelativePosition("Character is right");

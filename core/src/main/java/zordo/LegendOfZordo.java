@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.badlogic.gdx.controllers.Controllers;
+import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
 import zordo.models.world.levels.LevelSize;
 import zordo.entities.player_interface.menu.game.DebugModeMenu;
@@ -34,6 +35,7 @@ public class LegendOfZordo extends Game {
     public DebugModeMenu debugModeMenu;
     public PauseMenu pauseMenu;
     public Level level;
+    public WorldComponent world;
 
     @Override
 	public void create () {
@@ -48,6 +50,7 @@ public class LegendOfZordo extends Game {
         debugModeMenu = new DebugModeMenu(this, new LevelComponent());
         pauseMenu = new PauseMenu(this, new Level(this));
         level = new Level(this);
+        world = new WorldComponent();
 
 		Properties properties = new Properties();
 		File propertiesFile = new File("game_config.properties");

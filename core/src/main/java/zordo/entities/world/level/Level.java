@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.models.Component;
@@ -16,6 +17,7 @@ import zordo.models.debug.DebugCollision;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.terrain.surfaces.PlatformComponent;
+import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
 import zordo.entities.characters.player.Player;
 import zordo.systems.camera.CameraSystem;
@@ -41,15 +43,11 @@ public class Level extends LevelComponent implements Screen {
     float elapsed;
 
     public HashMap<String, Component> components;
-    public ArrayList<PlatformComponent> platforms;
-    public DebugCollision platformIntersection;
-
-    LevelBoundaryComponent ceiling;
-    LevelBoundaryComponent floor;
-    LevelBoundaryComponent leftWall;
-    LevelBoundaryComponent rightWall;
 
     PlatformComponent platform;
+    WorldComponent world;
+    Box2DDebugRenderer debugRenderer;
+
     int platformCount;
 
     public Level(final LegendOfZordo game) {
@@ -59,35 +57,10 @@ public class Level extends LevelComponent implements Screen {
         this.game.isOnDebugMenu = false;
         this.game.isOnTitleMenu = false;
         this.game.isOnLevel = true;
+        this.world = new WorldComponent();
+        this.debugRenderer = new Box2DDebugRenderer();
 
         elapsed = 0.0f;
-        platforms = new ArrayList<>();
-        platformIntersection = new DebugCollision();
-        platformCount = 100;
-
-        for(int i = 1; i <= platformCount; i++) {
-            Random random = new Random();
-            int min = 1; // Minimum value (inclusive)
-            int max = 1920*3; // Maximum value (inclusive)
-            int randx = random.nextInt(max - min + 1) + min;
-            int randy = random.nextInt(max - min + 1) + min;
-            PlatformComponent platform = new PlatformComponent();
-            if(i % 2 == 0) {
-                platform.setCoordinates(randx, randy);
-                platform.setHeight(200);
-                platform.setWidth(100);
-            } else {
-                platform.setCoordinates(randx, randy);
-                platform.setHeight(100);
-                platform.setWidth(200);
-            }
-            platforms.add(platform);
-        }
-
-        floor = new LevelBoundaryComponent(false, false, true);
-        ceiling = new LevelBoundaryComponent(false,true,false);
-        leftWall = new LevelBoundaryComponent(true,false,false);
-        rightWall = new LevelBoundaryComponent(true,false,false);
 
         components = new HashMap<>();
         components.put("Camera", new CameraComponent());
@@ -101,23 +74,23 @@ public class Level extends LevelComponent implements Screen {
         platform = new PlatformComponent(50,500);
         platform.setCoordinates(500,500);
 
-        platforms.add(platform);
+        world.platforms.add(platform);
 
-        floor.getPlatform().setHeight(800);
-        floor.getPlatform().setWidth(this.getLevelSize().getWidth());
-        floor.setCoordinates(0,-(int)floor.getPlatform().getHeight());
+        world.floor.getPlatform().setHeight(800);
+        world.floor.getPlatform().setWidth(this.getLevelSize().getWidth());
+        world.floor.setCoordinates(0,-(int) world.floor.getPlatform().getHeight());
 
-        ceiling.getPlatform().setHeight(50);
-        ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
-        ceiling.setCoordinates(0,this.getLevelSize().getHeight());
+        world.ceiling.getPlatform().setHeight(50);
+        world.ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
+        world.ceiling.setCoordinates(0,this.getLevelSize().getHeight());
 
-        leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        leftWall.getPlatform().setWidth(50);
-        leftWall.setCoordinates(-(int) leftWall.getWidth(),0);
+        world.leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
+        world.leftWall.getPlatform().setWidth(50);
+        world.leftWall.setCoordinates(-(int) world.leftWall.getWidth(),0);
 
-        rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        rightWall.getPlatform().setWidth(50);
-        rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) rightWall.getWidth(),0);
+        world.rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
+        world.rightWall.getPlatform().setWidth(50);
+        world.rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) world.rightWall.getWidth(),0);
 
         TextureRegion background = new TextureRegion();
         backgroundTexture = new Texture("environment/background_32.png");
@@ -125,10 +98,10 @@ public class Level extends LevelComponent implements Screen {
         background.setRegionWidth(this.getLevelSize().getWidth());
         background.setRegionHeight(this.getLevelSize().getHeight());
 
-        platforms.add(floor);
-        platforms.add(ceiling);
-        platforms.add(leftWall);
-        platforms.add(rightWall);
+        world.platforms.add(world.floor);
+        world.platforms.add(world.ceiling);
+        world.platforms.add(world.leftWall);
+        world.platforms.add(world.rightWall);
     }
 
     @Override
@@ -146,12 +119,12 @@ public class Level extends LevelComponent implements Screen {
             batch.begin();
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
-            this.game.controllerListener.handleInput(player, batch, elapsed, this.game);
+            this.game.controllerListener.handleInput(player, batch, elapsed, this.game, this.world);
 
-            PlatformSystem.render(platforms, batch);
+            PlatformSystem.render(world.platforms, batch);
 
             if(this.getDebugMode()) {
-                PlatformSystem.renderCollisionDebugPlatform(platformIntersection, platforms, batch);
+                PlatformSystem.renderCollisionDebugPlatform(world.platformIntersection, world.platforms, batch);
             }
             batch.end();
         } catch (InterruptedException e) {
@@ -171,7 +144,11 @@ public class Level extends LevelComponent implements Screen {
         if(this.getDebugMode()) {
             DebugHudSystem.renderDebugHud(player, this, camera);
         }
+
+        debugRenderer.render(world.getWorld(), camera.combined);
         camera.update();
+
+        this.world.getWorld().step(1/60f, 6, 2);
     }
 
     @Override

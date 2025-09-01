@@ -11,6 +11,7 @@ import zordo.LegendOfZordo;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.player.Player;
 import zordo.entities.player_interface.menu.game.LevelMenu;
+import zordo.models.physics.world.WorldComponent;
 import zordo.systems.character.movement.PlayerMovementSystem;
 import zordo.systems.menu.MenuSystem;
 
@@ -180,13 +181,14 @@ public class GameControllerSystem implements ControllerListener {
         this.game.level.player.playerController.tiltAxis(axisCode, value);
     }
 
-    public void handleInput(Player player, SpriteBatch batch, float deltaTime, LegendOfZordo game) throws InterruptedException {
+    public void handleInput(Player player, SpriteBatch batch, float deltaTime, LegendOfZordo game, WorldComponent world) throws InterruptedException {
         this.game.level = game.level;
         this.game.level.batch = batch;
         this.game.level.player = player;
+        this.game.world = world;
 
         if (this.game.isOnLevel) {
-            PlayerMovementSystem.move(player, batch, this.game.level);
+            PlayerMovementSystem.move(player, batch, this.game.level, this.game.world);
         }
     }
 }
