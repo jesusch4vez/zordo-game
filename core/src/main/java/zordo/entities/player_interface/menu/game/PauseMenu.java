@@ -72,15 +72,19 @@ public class PauseMenu implements Screen {
             throw new RuntimeException(e);
         }
         try {
+            float x_ls_value = ControllerComponent.LEFT_STICK_X.getAxisValue();
+            float y_ls_value = ControllerComponent.LEFT_STICK_Y.getAxisValue();
+            float x_rs_value = ControllerComponent.RIGHT_STICK_X.getAxisValue();
+            float y_rs_value = ControllerComponent.RIGHT_STICK_Y.getAxisValue();
             if(selection >= 0) {
-                if (ControllerComponent.D_PAD_DOWN.isPressed() || ControllerComponent.D_PAD_RIGHT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                if (y_ls_value > 0 || x_ls_value > 0 || x_rs_value > 0 || y_rs_value > 0 ||ControllerComponent.D_PAD_DOWN.isPressed() || ControllerComponent.D_PAD_RIGHT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     selection += 1;
                     if(selection >= 3) {
                         selection = 2;
                     }
                 }
-                else if (ControllerComponent.D_PAD_UP.isPressed() || ControllerComponent.D_PAD_LEFT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                else if (y_ls_value < 0 || x_ls_value < 0 || x_rs_value < 0 || y_rs_value < 0 ||ControllerComponent.D_PAD_UP.isPressed() || ControllerComponent.D_PAD_LEFT.isPressed() || Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     selection -= 1;
                     if(selection <= 0) {
