@@ -96,6 +96,12 @@ public class GameControllerSystem implements ControllerListener {
 
     public void handleInput(float deltaTime, LegendOfZordo game) throws InterruptedException {
         this.game = game;
+        float x_ls_value = ControllerComponent.LEFT_STICK_X.getAxisValue();
+        float y_ls_value = ControllerComponent.LEFT_STICK_Y.getAxisValue();
+        float x_rs_value = ControllerComponent.RIGHT_STICK_X.getAxisValue();
+        float y_rs_value = ControllerComponent.RIGHT_STICK_Y.getAxisValue();
+
+
         if(this.game.isOnTitleMenu && (Gdx.input.isKeyPressed(Input.Keys.ENTER) || ControllerComponent.A_BUTTON.isPressed() || ControllerComponent.START_BUTTON.isPressed())) {
             ScreenUtils.clear(0, 0, 0.2f, 1);
             ControllerComponent.START_BUTTON.release();
@@ -103,9 +109,8 @@ public class GameControllerSystem implements ControllerListener {
         }
         else if(this.game.isOnLevelMenu) {
             this.game.levelMenu = game.levelMenu;
-
             if (this.game.levelMenu.selectedLevel >= 1 && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size()) {
-                if ((ControllerComponent.D_PAD_DOWN.isPressed()) || (ControllerComponent.D_PAD_RIGHT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size() - 1) {
+                if (y_ls_value > 0 || x_ls_value > 0 || x_rs_value > 0 || y_rs_value > 0 || (ControllerComponent.D_PAD_DOWN.isPressed()) || (ControllerComponent.D_PAD_RIGHT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) && this.game.levelMenu.selectedLevel < this.game.levelMenu.levels.size() - 1) {
                     try {
                         TimeUnit.MILLISECONDS.sleep(100);
                     } catch (InterruptedException e) {
@@ -118,7 +123,7 @@ public class GameControllerSystem implements ControllerListener {
                     }
                     this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel).setIsSelected(true);
                     this.game.levelMenu.loadLevel = this.game.levelMenu.levels.get("Level " + this.game.levelMenu.selectedLevel);
-                } else if ((ControllerComponent.D_PAD_UP.isPressed()) || (ControllerComponent.D_PAD_LEFT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && this.game.levelMenu.selectedLevel > 0) {
+                } else if (y_ls_value < 0 || x_ls_value < 0 || x_rs_value < 0 || y_rs_value < 0 || (ControllerComponent.D_PAD_UP.isPressed()) || (ControllerComponent.D_PAD_LEFT.isPressed()) || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && this.game.levelMenu.selectedLevel > 0) {
                     try {
                         TimeUnit.MILLISECONDS.sleep(100);
                     } catch (InterruptedException e) {
@@ -139,14 +144,14 @@ public class GameControllerSystem implements ControllerListener {
             }
         } else if(this.game.isOnDebugMenu) {
             if( this.game.debugModeMenu.debug >= 0 &&  this.game.debugModeMenu.debug < 2 ) {
-                if ( ControllerComponent.D_PAD_DOWN.isPressed() || ControllerComponent.D_PAD_RIGHT.isPressed() || (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) &&  this.game.debugModeMenu.debug < 2) {
+                if (y_ls_value > 0 || x_ls_value > 0 ||  x_rs_value > 0 || y_rs_value > 0 || ControllerComponent.D_PAD_DOWN.isPressed() || ControllerComponent.D_PAD_RIGHT.isPressed() || (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) &&  this.game.debugModeMenu.debug < 2) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     this.game.debugModeMenu.debug += 1;
                     if( this.game.debugModeMenu.debug >= 2) {
                         this.game.debugModeMenu.debug = 1;
                     }
                 }
-                else if ( ControllerComponent.D_PAD_UP.isPressed() || ControllerComponent.D_PAD_LEFT.isPressed() || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) &&  this.game.debugModeMenu.debug >= 0) {
+                else if ( y_ls_value < 0 || x_ls_value < 0 || x_rs_value < 0 || y_rs_value < 0 ||  ControllerComponent.D_PAD_UP.isPressed() || ControllerComponent.D_PAD_LEFT.isPressed() || (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) &&  this.game.debugModeMenu.debug >= 0) {
                     TimeUnit.MILLISECONDS.sleep(100);
                     this.game.debugModeMenu.debug -= 1;
                     if( this.game.debugModeMenu.debug <= 0) {
