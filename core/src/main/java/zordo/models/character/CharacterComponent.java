@@ -50,14 +50,14 @@ public class CharacterComponent {
         position = new Vector3();
         previousPosition = new Vector3();
         collider = new Rectangle();
-        collider.x = 1;
-        collider.y = 1;
-        collider.height = 5;
-        collider.width = 2;
-        position.x = collider.x;
-        position.y = collider.y;
-        previousPosition.x = collider.x;
-        previousPosition.y = collider.y;
+        collider.x = 500;
+        collider.y = 500;
+        collider.height = 55;
+        collider.width = 32;
+        position.x = 500;
+        position.y = 500;
+        previousPosition.x = 500;
+        previousPosition.y = 500;
 
         isFlippedRight = true;
         isJumping = false;

@@ -90,14 +90,14 @@ public class PlatformSystem {
     public static void renderCollisionDebugPlatform(DebugCollision intersection, ArrayList<PlatformComponent> platforms, SpriteBatch batch) {
         BitmapFont font = new BitmapFont();
 
-        font.getData().setScale(2);
+        font.getData().setScale(1f);
 
         for (PlatformComponent platform : platforms) {
             long widthCoordinate = (long) platform.getX() + (long) platform.getWidth();
             long heightCoordinate = (long) platform.getY() + (long) platform.getHeight();
-            font.draw(batch, platform.getX() + ", " + platform.getY(), platform.getX(), platform.getY() - 25);
+            font.draw(batch, platform.getX() + ", " + platform.getY(), platform.getX(), platform.getY() - 2.5f);
 
-            font.draw(batch, widthCoordinate + ", " + heightCoordinate, platform.getX() + platform.getWidth(), platform.getY() + platform.getHeight() + 25);
+            font.draw(batch, widthCoordinate + ", " + heightCoordinate, platform.getX() + platform.getWidth(), platform.getY() + platform.getHeight() + 2.5f);
 
             font.draw(batch, platform.getCharacterRelativePosition(), platform.getX(), platform.getY());
             batch.draw(platform.getPlatformTexture(), platform.getX(), platform.getY(), platform.getPlatform().getWidth(), platform.getPlatform().getHeight());
@@ -106,7 +106,7 @@ public class PlatformSystem {
         long intersectHeightCoordinate = (long) intersection.getY() + (long) intersection.getHeight();
 
         font.draw(batch, intersection.getX() + ", " + intersection.getY(), intersection.getX(), intersection.getY());
-        font.draw(batch, intersectWidthCoordinate + ", " + intersectHeightCoordinate, intersection.getX() + intersection.getWidth(), intersection.getY() + intersection.getHeight() + 25);
+        font.draw(batch, intersectWidthCoordinate + ", " + intersectHeightCoordinate, intersection.getX() + intersection.getWidth(), intersection.getY() + intersection.getHeight() + 2.5f);
 
         batch.draw(intersection.getPlatformTexture(), intersection.getX(), intersection.getY(), intersection.getPlatform().getWidth(), intersection.getPlatform().getHeight());
     }

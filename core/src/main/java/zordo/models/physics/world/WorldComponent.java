@@ -15,8 +15,8 @@ public class WorldComponent {
 
     public LevelBoundaryComponent ceiling;
     public LevelBoundaryComponent floor;
-//    public LevelBoundaryComponent leftWall;
-//    public LevelBoundaryComponent rightWall;
+    public LevelBoundaryComponent leftWall;
+    public LevelBoundaryComponent rightWall;
 
     int platformCount;
 
@@ -44,7 +44,7 @@ public class WorldComponent {
         platformIntersection = new DebugCollision(this.world);
 
         floor = new LevelBoundaryComponent(false, false, true,this);
-        floor.setHeight(10);
+        floor.setHeight(100);
         floor.setWidth(5000);
         floor.setCoordinates(0, 0);
         boundaryBodyDef = new BodyDef();
@@ -58,14 +58,14 @@ public class WorldComponent {
         boundaryBox.dispose();
 
         ceiling = new LevelBoundaryComponent(false,true,false,this);
-        ceiling.setHeight(10);
+        ceiling.setHeight(100);
         ceiling.setWidth(5000);
 
         ceiling.setCoordinates(0, 1000);
         // Create our body definition
         boundaryBodyDef = new BodyDef();
 // Set its world position
-        boundaryBodyDef.position.set(new Vector2(ceiling.getX(), ceiling.getY()));
+        boundaryBodyDef.position.set(ceiling.getX(), ceiling.getY());
 
 // Create a body from the definition and add it to the world
         boundaryBody = world.createBody(boundaryBodyDef);
@@ -81,8 +81,35 @@ public class WorldComponent {
         boundaryBox.dispose();
         ceiling.setPlatformBodyDef(boundaryBodyDef);
 
-//        leftWall = new LevelBoundaryComponent(true,false,false,this);
-//        rightWall = new LevelBoundaryComponent(true,false,false,this);
+        leftWall = new LevelBoundaryComponent(true,false,false,this);
+        leftWall.setHeight(5000);
+        leftWall.setWidth(100);
+
+        leftWall.setCoordinates(0, 0);
+
+        boundaryBodyDef = new BodyDef();
+        boundaryBodyDef.position.set(leftWall.getX(), leftWall.getY());
+
+        boundaryBody = world.createBody(boundaryBodyDef);
+        boundaryBox = new PolygonShape();
+        boundaryBox.setAsBox(leftWall.getWidth(), leftWall.getHeight());
+        boundaryBody.createFixture(boundaryBox, 0.0f);
+        boundaryBox.dispose();
+        leftWall.setPlatformBodyDef(boundaryBodyDef);
+
+        rightWall = new LevelBoundaryComponent(true,false,false,this);
+        rightWall.setHeight(5000);
+        rightWall.setWidth(100);
+        rightWall.setCoordinates(5000, 0);
+
+        boundaryBodyDef = new BodyDef();
+        boundaryBodyDef.position.set(rightWall.getX(), rightWall.getY());
+        boundaryBody = world.createBody(boundaryBodyDef);
+        boundaryBox = new PolygonShape();
+        boundaryBox.setAsBox(rightWall.getWidth(), rightWall.getHeight());
+        boundaryBody.createFixture(boundaryBox, 0.0f);
+        boundaryBox.dispose();
+        rightWall.setPlatformBodyDef(boundaryBodyDef);
 
     }
 

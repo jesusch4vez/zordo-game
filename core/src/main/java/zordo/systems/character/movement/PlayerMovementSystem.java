@@ -3,7 +3,6 @@ package zordo.systems.character.movement;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
@@ -13,7 +12,7 @@ import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
 public class PlayerMovementSystem extends CharacterMovementSystem {
     static float elapsed;
-    static float gravity = -9.8f;
+    static float gravity = -98f;
 
     public static void move(Player character, SpriteBatch batch, Level level, WorldComponent world) {
         if (!level.paused) {
@@ -48,10 +47,9 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                 character.getCharacterComponent().setIsColliding(false);
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.jumpRender(character);
-
-                character.getCharacterComponent().characterBody.applyLinearImpulse(0, 10, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
-//                character.getCharacterComponent().getCollider().y += 17 * Gdx.graphics.getDeltaTime();
+                character.getCharacterComponent().getCollider().y += 175 * Gdx.graphics.getDeltaTime();
                 PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
             } else {
                 if(character.getCharacterComponent().getIsDescending()) {
                     AnimationSystem.jumpRender(character);
@@ -59,6 +57,7 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
                     character.getCharacterComponent().setIsDescending(true);
                     character.getCharacterComponent().getCollider().y += gravity * Gdx.graphics.getDeltaTime();
                     PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
                 }
                 character.getCharacterComponent().setIsJumping(false);
             }
@@ -68,19 +67,15 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
 
     public static void handleLeftRight(Player character, Level level, WorldComponent world) {
         float axis = ControllerComponent.LEFT_STICK_X.getAxisValue();
-        Vector2 vel = character.getCharacterComponent().characterBody.getLinearVelocity();
-        Vector2 pos = character.getCharacterComponent().characterBody.getPosition();
 
         if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || (axis > 0) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if( vel.x > -100 ) {
-                character.getCharacterComponent().characterBody.applyLinearImpulse(10f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+            if(axis > 0) {
+                character.getCharacterComponent().getCollider().x += 100 * (axis) * Gdx.graphics.getDeltaTime();
+            } else {
+                character.getCharacterComponent().getCollider().x += 100 * Gdx.graphics.getDeltaTime();
             }
-//            if(axis > 0) {
-//                character.getCharacterComponent().getCollider().x += 10 * (axis) * Gdx.graphics.getDeltaTime();
-//            } else {
-//                character.getCharacterComponent().getCollider().x += 10 * Gdx.graphics.getDeltaTime();
-//            }
             PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
             character.getCharacterComponent().setIsStepping(true);
             character.getCharacterComponent().setIsFlippedRight(true);
             character.getCharacterComponent().setIsRunning(false);
@@ -96,15 +91,13 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
 
             if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-                if( vel.x > -200 ) {
-                    character.getCharacterComponent().characterBody.applyLinearImpulse(2f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+                if(axis > 0) {
+                    character.getCharacterComponent().getCollider().x += 125 * (axis) * Gdx.graphics.getDeltaTime();
+                } else {
+                    character.getCharacterComponent().getCollider().x += 125 * Gdx.graphics.getDeltaTime();
                 }
-//                if(axis > 0) {
-//                    character.getCharacterComponent().getCollider().x += 12 * (axis) * Gdx.graphics.getDeltaTime();
-//                } else {
-//                    character.getCharacterComponent().getCollider().x += 12 * Gdx.graphics.getDeltaTime();
-//                }
                 PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
                 character.getCharacterComponent().setIsStepping(false);
                 character.getCharacterComponent().setIsFlippedRight(true);
                 character.getCharacterComponent().setIsRunning(true);
@@ -123,15 +116,13 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
         }
         if (ControllerComponent.D_PAD_LEFT.isPressed() || (axis < 0) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            if( vel.x < 100 ) {
-                character.getCharacterComponent().characterBody.applyLinearImpulse(-1f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
+            if(axis < 0) {
+                character.getCharacterComponent().getCollider().x -= 100 * (-axis) * Gdx.graphics.getDeltaTime();
+            } else {
+                character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
             }
-//            if(axis < 0) {
-//                character.getCharacterComponent().getCollider().x -= 100 * (-axis) * Gdx.graphics.getDeltaTime();
-//            } else {
-//                character.getCharacterComponent().getCollider().x -= 100 * Gdx.graphics.getDeltaTime();
-//            }
             PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
 
             if(!character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().setIsStepping(true);
@@ -147,16 +138,14 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             }
 
             if(ControllerComponent.X_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
-                if( vel.x < 200 ) {
-                    character.getCharacterComponent().characterBody.applyLinearImpulse(-2f, 0, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, true);
-                }
                 character.getCharacterComponent().setIsRunning(true);
-//                if(axis < 0) {
-//                    character.getCharacterComponent().getCollider().x -= 125 * (-axis) * Gdx.graphics.getDeltaTime();
-//                } else {
-//                    character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
-//                }
+                if(axis < 0) {
+                    character.getCharacterComponent().getCollider().x -= 125 * (-axis) * Gdx.graphics.getDeltaTime();
+                } else {
+                    character.getCharacterComponent().getCollider().x -= 125 * Gdx.graphics.getDeltaTime();
+                }
                 PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
                 character.getCharacterComponent().setIsStepping(false);
                 character.getCharacterComponent().setIsFlippedRight(false);
 
@@ -186,7 +175,8 @@ public class PlayerMovementSystem extends CharacterMovementSystem {
             && !ControllerComponent.D_PAD_RIGHT.isPressed())) {
                 character.getCharacterComponent().setIsDucking(true);
                 AnimationSystem.duckRender(character);
-                PlatformSystem.solidPlatform(world.platforms, character, level, world);
+            PlatformSystem.solidPlatform(world.platforms, character, level, world);
+
         }
     }
 }

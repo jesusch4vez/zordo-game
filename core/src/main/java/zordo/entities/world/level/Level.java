@@ -77,27 +77,6 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void show() {
-//        platform = new PlatformComponent(5f,50f, this.world);
-//        platform.setCoordinates(50,50);
-
-//        world.platforms.add(platform);
-
-        world.floor.getPlatform().setHeight(8);
-        world.floor.getPlatform().setWidth(this.getLevelSize().getWidth());
-        world.floor.setCoordinates(0,-(int) world.floor.getPlatform().getHeight() - 10);
-
-        world.ceiling.getPlatform().setHeight(5);
-        world.ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
-        world.ceiling.setCoordinates(0,this.getLevelSize().getHeight());
-
-//        world.leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-//        world.leftWall.getPlatform().setWidth(5);
-//        world.leftWall.setCoordinates(-(int) world.leftWall.getWidth(),0);
-
-//        world.rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-//        world.rightWall.getPlatform().setWidth(5);
-//        world.rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) world.rightWall.getWidth(),0);
-
         TextureRegion background = new TextureRegion();
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
@@ -106,8 +85,8 @@ public class Level extends LevelComponent implements Screen {
 
         world.platforms.add(world.floor);
         world.platforms.add(world.ceiling);
-//        world.platforms.add(world.leftWall);
-//        world.platforms.add(world.rightWall);
+        world.platforms.add(world.leftWall);
+        world.platforms.add(world.rightWall);
     }
 
     @Override
@@ -117,10 +96,10 @@ public class Level extends LevelComponent implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         try {
-            bodies.add(player.getCharacterComponent().characterBody);
-            bodies.add(world.floor.getPlatformBody());
+//            bodies.add(player.getCharacterComponent().characterBody);
+//            bodies.add(world.floor.getPlatformBody());
 // Now fill the array with all bodies
-            world.getWorld().getBodies(bodies);
+//            world.getWorld().getBodies(bodies);
 
 //            for (Body b : bodies) {
                 // Get the body's user data - in this example, our user
