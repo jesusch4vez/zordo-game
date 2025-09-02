@@ -27,12 +27,16 @@ public class WorldComponent {
         this.world = new World(new Vector2(0, -1), true);
         platforms = new ArrayList<>();
 
+        // Floor platform
         floor = new LevelBoundaryComponent(this);
         floor.setHeight(50);
         floor.setWidth(2500);
-        floor.setCoordinates(0, 0);
+
         boundaryBodyDef = new BodyDef();
-        boundaryBodyDef.position.set(floor.getX(), floor.getY());
+
+        floor.setCoordinates(0, 0);
+        boundaryBodyDef.position.set(0, 0);
+
         boundaryBody = world.createBody(boundaryBodyDef);
         boundaryBox = new PolygonShape();
         boundaryBox.setAsBox(floor.getWidth(), floor.getHeight());
@@ -42,12 +46,13 @@ public class WorldComponent {
 
         boundaryBox.dispose();
 
+        // Ceiling platform
         ceiling =  new LevelBoundaryComponent(this);
         ceiling.setHeight(50);
         ceiling.setWidth(2500);
 
-        ceiling.setCoordinates(0, 1080);
         boundaryBodyDef = new BodyDef();
+        ceiling.setCoordinates(0, 1080);
         boundaryBodyDef.position.set(0, 1080);
 
         boundaryBody = world.createBody(boundaryBodyDef);
@@ -59,14 +64,15 @@ public class WorldComponent {
         ceiling.setPlatformBodyDef(boundaryBodyDef);
         boundaryBody.setUserData(ceiling);
 
+        // Left wall platform
         leftWall =  new LevelBoundaryComponent(this);
         leftWall.setHeight(2500);
         leftWall.setWidth(50);
 
-        leftWall.setCoordinates(0, 0);
-
         boundaryBodyDef = new BodyDef();
-        boundaryBodyDef.position.set(leftWall.getX(), leftWall.getY());
+
+        leftWall.setCoordinates(0, 0);
+        boundaryBodyDef.position.set(0, 0);
 
         boundaryBody = world.createBody(boundaryBodyDef);
         boundaryBox = new PolygonShape();
@@ -76,13 +82,15 @@ public class WorldComponent {
         leftWall.setPlatformBodyDef(boundaryBodyDef);
         boundaryBody.setUserData(leftWall);
 
+        // Right wall platform
         rightWall = new LevelBoundaryComponent(this);
         rightWall.setHeight(2500);
         rightWall.setWidth(50);
-        rightWall.setCoordinates(1920, 0);
 
         boundaryBodyDef = new BodyDef();
-        boundaryBodyDef.position.set(rightWall.getX(), rightWall.getY());
+
+        rightWall.setCoordinates(1920, 0);
+        boundaryBodyDef.position.set(1920, 0);
         boundaryBody = world.createBody(boundaryBodyDef);
         boundaryBox = new PolygonShape();
         boundaryBox.setAsBox(rightWall.getWidth(), rightWall.getHeight());

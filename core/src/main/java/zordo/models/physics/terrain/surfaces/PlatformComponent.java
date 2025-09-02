@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import zordo.models.Component;
-import zordo.models.physics.world.WorldComponent;
 
 public class PlatformComponent extends Component {
 
@@ -71,8 +70,6 @@ public class PlatformComponent extends Component {
     public void setPlatformTexture(Texture platformTexture) {
         this.platformTexture = platformTexture;
     }
-
-    public void setHoldsCharacter(Boolean holdsCharacter) {}
 
     public void setWidth(int width) {
         platform.setWidth(width);
