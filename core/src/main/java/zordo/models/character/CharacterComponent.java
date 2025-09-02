@@ -18,7 +18,7 @@ public class CharacterComponent implements ContactListener {
     Boolean isAirborne;
     Boolean isStanding;
 
-    Vector2 dimensions;
+    public Vector2 dimensions;
 
     Boolean isDucking;
 
@@ -41,7 +41,7 @@ public class CharacterComponent implements ContactListener {
         position = new Vector3();
         position.x = 100;
         position.y = 100;
-        dimensions = new Vector2(32, 55);
+        dimensions = new Vector2(32/5f, 55/5f);
 
         isFlippedRight = true;
         isJumping = false;
@@ -176,6 +176,22 @@ public class CharacterComponent implements ContactListener {
 
     public Boolean getIsAirborne() {
         return this.isAirborne;
+    }
+
+    public PolygonShape getCharacterShape() {
+        return characterShape;
+    }
+
+    public void setCharacterShape(Vector2 [] characterShape) {
+        this.getCharacterShape().set(characterShape);
+    }
+
+    public Body getCharacterBody() {
+        return this.characterBody;
+    }
+
+    public void setCharacterBody(Body characterBody) {
+        this.characterBody = characterBody;
     }
 
     public void setIsStanding(Boolean isStanding) {
