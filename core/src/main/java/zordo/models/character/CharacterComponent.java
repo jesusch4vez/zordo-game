@@ -24,7 +24,7 @@ public class CharacterComponent implements ContactListener {
 
     int jumps;
 
-    Vector3 position;
+    Vector2 position;
 
     public ArrayList<HeartComponent> hearts;
     public int health;
@@ -38,7 +38,7 @@ public class CharacterComponent implements ContactListener {
 
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
-        position = new Vector3();
+        position = new Vector2();
         position.x = 100;
         position.y = 100;
         dimensions = new Vector2(32/5f, 55/5f);
@@ -75,15 +75,15 @@ public class CharacterComponent implements ContactListener {
         collisionSensor = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 2f;
-        characterFixtureDef.friction = 2f;
+        characterFixtureDef.density = 1f;
+        characterFixtureDef.friction = 0.1f;
         characterFixtureDef.restitution = 0.10f;
         collisionSensor.shape = characterShape;
         collisionSensor.isSensor = true;
 
         characterBody.createFixture(characterFixtureDef);
         characterBody.createFixture(collisionSensor);
-        characterBody.setLinearVelocity(3f, 0f);
+        characterBody.setLinearVelocity(1.5f, 0f);
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
     }
@@ -92,7 +92,7 @@ public class CharacterComponent implements ContactListener {
         return this.health;
     }
 
-    public Vector3 getPosition() {
+    public Vector2 getPosition() {
         return this.position;
     }
 

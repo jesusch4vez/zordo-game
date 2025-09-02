@@ -25,6 +25,8 @@ public class LegendOfZordo extends Game {
 	public LevelSize medium;
 	public LevelSize large;
 
+    public int MAX_VELOCITY;
+
     public boolean isOnTitleMenu;
     public boolean isOnLevelMenu;
     public boolean isOnPauseMenu;
@@ -69,6 +71,8 @@ public class LegendOfZordo extends Game {
 			small = new LevelSize(small_width, small_height);
 			medium = new LevelSize(medium_width, medium_height);
 			large = new LevelSize(large_width, large_height);
+
+            MAX_VELOCITY = Integer.parseInt(properties.getProperty("MAX_VELOCITY"));
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.entities.world.level.Level;
@@ -14,7 +15,9 @@ public class DebugHudSystem {
         hudBatch.begin();
         BitmapFont font = new BitmapFont();
 
-        int X_MARGIN = 400;
+        Vector2 currentVelocity = player.getCharacterComponent().getCharacterBody().getLinearVelocity();
+
+        int X_MARGIN = 500;
         font.getData().setScale(2);
 
         font.draw(hudBatch, "AIRBORNE      " + player.getCharacterComponent().getIsAirborne().toString(), Gdx.graphics.getWidth() - X_MARGIN, Gdx.graphics.getHeight() - 50);
@@ -28,7 +31,7 @@ public class DebugHudSystem {
         font.draw(hudBatch, "COORDINATES", Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 650);
         font.draw(hudBatch, player.getCharacterComponent().getPosition().x + " , "+ player.getCharacterComponent().getPosition().y, Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 700);
 
-
+        font.draw(hudBatch, "VELOCITY: " + currentVelocity, Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 750);
         if(!ControllerComponent.getPressedButtons().isEmpty()) {
             float x = (Gdx.graphics.getWidth() / 2.0f) - X_MARGIN;
             int listMargin = 55;
