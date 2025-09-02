@@ -1,6 +1,5 @@
 package zordo.models.character;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -69,19 +68,19 @@ public class CharacterComponent {
         characterBody = world.getWorld().createBody(characterBodyDef);
 
         characterShape = new PolygonShape();
-//        characterShape.setAsBox(5, 5.0f);
+
         Vector2 [] vertices = { new Vector2(this.position.x, this.position.y), new Vector2(this.position.x + dimensions.x, this.position.y), new Vector2(this.position.x, this.position.y + dimensions.y), new Vector2(this.position.x + dimensions.x, this.position.y + dimensions.y) };
         characterShape.set(vertices);
 
         characterFixtureDef = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 1f;
-        characterFixtureDef.friction = 2f;
+        characterFixtureDef.density = 4f;
+        characterFixtureDef.friction = 10f;
         characterFixtureDef.restitution = 0.11f;
 
         characterBody.createFixture(characterFixtureDef);
-        characterBody.setLinearVelocity(1.15f, 1.05f);
+        characterBody.setLinearVelocity(3f, 0f);
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
     }

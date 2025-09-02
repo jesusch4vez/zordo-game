@@ -59,7 +59,6 @@ public class Level extends LevelComponent implements Screen {
         this.game.isOnLevel = true;
         this.world = new WorldComponent();
         this.debugRenderer = new Box2DDebugRenderer();
-//        bodies = new Array<>();
 
         elapsed = 0.0f;
 
@@ -69,12 +68,7 @@ public class Level extends LevelComponent implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         player = new Player(world);
 
-        // Create an array to be filled with the bodies
-        // (better don't create a new one every time though)
-
         bodies = new Array<>();
-
-//        world.getWorld().getBodies(bodies);
     }
 
     @Override
@@ -103,9 +97,7 @@ public class Level extends LevelComponent implements Screen {
             bodies.add(world.leftWall.getPlatformBody());
             bodies.add(world.rightWall.getPlatformBody());
             bodies.add(world.ceiling.getPlatformBody());
-// Now fill the array with all bodies
-//            bodies.add(world.floor.getPlatformBody());
-// Now fill the array with all bodies
+
             world.getWorld().getBodies(bodies);
             batch = new SpriteBatch();
             CameraComponent cam = (CameraComponent) components.get("Camera");
@@ -117,8 +109,6 @@ public class Level extends LevelComponent implements Screen {
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
             for (Body b : bodies) {
-//                 Get the body's user data - in this example, our user
-                // data is an instance of the Entity class
                 if(b.getUserData() instanceof CharacterComponent) {
                     CharacterComponent e = (CharacterComponent) b.getUserData();
                     e.setPosition(b.getPosition().x + 100, b.getPosition().y + 100);

@@ -188,7 +188,7 @@ public class GameControllerSystem implements ControllerListener {
         this.game.world = world;
 
         if (this.game.isOnLevel) {
-            PlayerMovementSystem.move(player, batch, this.game.level, this.game.world);
+            PlayerMovementSystem.move(player, batch, this.game.level);
         }
     }
 }
