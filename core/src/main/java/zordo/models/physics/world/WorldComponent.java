@@ -15,8 +15,6 @@ public class WorldComponent {
     public LevelBoundaryComponent leftWall;
     public LevelBoundaryComponent rightWall;
 
-    int platformCount;
-
     private World world;
 
     BodyDef boundaryBodyDef;

@@ -69,6 +69,9 @@ public class Level extends LevelComponent implements Screen {
         player = new Player(world);
 
         bodies = new Array<>();
+
+        CameraComponent cam = (CameraComponent) components.get("Camera");
+        camera = cam.getCamera();
     }
 
     @Override
@@ -100,8 +103,7 @@ public class Level extends LevelComponent implements Screen {
 
             world.getWorld().getBodies(bodies);
             batch = new SpriteBatch();
-            CameraComponent cam = (CameraComponent) components.get("Camera");
-            camera = cam.getCamera();
+
 
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
@@ -120,9 +122,7 @@ public class Level extends LevelComponent implements Screen {
                         p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
                         p.getPlatform().setSize(((LevelBoundaryComponent) b.getUserData()).getWidth(),((LevelBoundaryComponent) b.getUserData()).getHeight());
                         p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
-                        if(p.getPlatformTexture() != null) {
-                            batch.draw(p.getPlatformTexture(), p.getPlatform().getX(), p.getPlatform().getY(), p.getPlatform().getWidth(), p.getPlatform().getHeight());
-                        }
+                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
                     }
                 }
             }

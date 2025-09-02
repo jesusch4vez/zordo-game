@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import zordo.models.Component;
 
 public class PlatformComponent extends Component {
@@ -19,39 +18,15 @@ public class PlatformComponent extends Component {
     PolygonShape platformBox;
     Body platformBody;
 
-    public PlatformComponent(World world) {
-        super();
-        this.platform = new Rectangle();
-        platform.setWidth(10);
-        platform.setHeight(1);
-        platformTexture = new Texture("environment/platform-square.png");
-
-        characterRelativePosition = "";
-
-        platformBodyDef = new BodyDef();
-        platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
-
-        platformBody = world.createBody(platformBodyDef);
-
-        platformBox = new PolygonShape();
-        platformBox.setAsBox(platform.getWidth(), platform.getHeight());
-        platformBody.createFixture(platformBox, 0.0f);
-        platformBox.dispose();
-
-        platformBody.setUserData(this);
-    }
-
     public PlatformComponent() {
         super();
         this.platform = new Rectangle();
+        platformTexture = new Texture("environment/platform-square.png");
     }
 
     public void setCoordinates(float x, float y) {
         platform.setX(x);
         platform.setY(y);
-        if(this.platformBodyDef != null) {
-            this.platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
-        }
     }
 
     public float getX() {
@@ -80,9 +55,9 @@ public class PlatformComponent extends Component {
 
     public void setWidth(int width) {
         platform.setWidth(width);
-        if(platformBox!=null) {
-            platformBox.setAsBox(width,  this.platform.getHeight());
-        }
+//        if(platformBox!=null) {
+//            platformBox.setAsBox(width/2f, this.platform.getHeight()/2f);
+//        }
     }
 
     public float getWidth() {
@@ -91,9 +66,9 @@ public class PlatformComponent extends Component {
 
     public void setHeight(int height) {
         platform.setHeight(height);
-        if(platformBox!=null){
-            platformBox.setAsBox(this.platform.getWidth(),  height);
-        }
+//        if(platformBox!=null){
+//            platformBox.setAsBox(this.platform.getWidth()/2f,  height/2f);
+//        }
     }
 
     public float getHeight() {
