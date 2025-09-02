@@ -120,7 +120,9 @@ public class Level extends LevelComponent implements Screen {
                         p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
                         p.getPlatform().setSize(((LevelBoundaryComponent) b.getUserData()).getWidth(),((LevelBoundaryComponent) b.getUserData()).getHeight());
                         p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
-                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX(), p.getPlatform().getY(), p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                        if(p.getPlatformTexture() != null) {
+                            batch.draw(p.getPlatformTexture(), p.getPlatform().getX(), p.getPlatform().getY(), p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                        }
                     }
                 }
             }

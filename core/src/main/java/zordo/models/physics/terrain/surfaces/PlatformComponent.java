@@ -41,10 +41,17 @@ public class PlatformComponent extends Component {
         platformBody.setUserData(this);
     }
 
+    public PlatformComponent() {
+        super();
+        this.platform = new Rectangle();
+    }
+
     public void setCoordinates(float x, float y) {
         platform.setX(x);
         platform.setY(y);
-        this.platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
+        if(this.platformBodyDef != null) {
+            this.platformBodyDef.position.set(this.platform.getX(), this.platform.getY());
+        }
     }
 
     public float getX() {
@@ -73,7 +80,9 @@ public class PlatformComponent extends Component {
 
     public void setWidth(int width) {
         platform.setWidth(width);
-        platformBox.setAsBox(width,  this.platform.getHeight());
+        if(platformBox!=null) {
+            platformBox.setAsBox(width,  this.platform.getHeight());
+        }
     }
 
     public float getWidth() {
@@ -82,7 +91,9 @@ public class PlatformComponent extends Component {
 
     public void setHeight(int height) {
         platform.setHeight(height);
-        platformBox.setAsBox(this.platform.getWidth(),  height);
+        if(platformBox!=null){
+            platformBox.setAsBox(this.platform.getWidth(),  height);
+        }
     }
 
     public float getHeight() {

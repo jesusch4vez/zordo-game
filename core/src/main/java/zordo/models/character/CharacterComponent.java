@@ -1,18 +1,16 @@
 package zordo.models.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import zordo.models.animation.character.AnimationComponent;
 import zordo.models.health.HeartComponent;
 import zordo.models.physics.world.WorldComponent;
 
 import java.util.ArrayList;
 
-public class CharacterComponent {
+public class CharacterComponent implements ContactListener {
     Boolean isFlippedRight;
     Boolean isJumping;
     Boolean isStepping;
@@ -36,6 +34,7 @@ public class CharacterComponent {
     public Body characterBody;
     public PolygonShape characterShape;
     public FixtureDef characterFixtureDef;
+    public FixtureDef collisionSensor;
 
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
@@ -73,13 +72,17 @@ public class CharacterComponent {
         characterShape.set(vertices);
 
         characterFixtureDef = new FixtureDef();
+        collisionSensor = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 4f;
-        characterFixtureDef.friction = 10f;
-        characterFixtureDef.restitution = 0.11f;
+        characterFixtureDef.density = 2f;
+        characterFixtureDef.friction = 2f;
+        characterFixtureDef.restitution = 0.10f;
+        collisionSensor.shape = characterShape;
+        collisionSensor.isSensor = true;
 
         characterBody.createFixture(characterFixtureDef);
+        characterBody.createFixture(collisionSensor);
         characterBody.setLinearVelocity(3f, 0f);
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
@@ -187,5 +190,25 @@ public class CharacterComponent {
 
     public void setIsDucking(Boolean isDucking) {
         this.isDucking = isDucking;
+    }
+
+    @Override
+    public void beginContact(Contact contact) {
+        Gdx.app.log("Contact", "beginContact with: " + contact);
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+        Gdx.app.log("Contact", "endContact with: " + contact);
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
     }
 }
