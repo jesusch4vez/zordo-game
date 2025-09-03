@@ -5,8 +5,10 @@ import com.badlogic.gdx.math.Rectangle;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import zordo.models.Component;
+import zordo.models.physics.world.WorldComponent;
 
 public class PlatformComponent extends Component {
 
@@ -15,13 +17,37 @@ public class PlatformComponent extends Component {
     private String characterRelativePosition;
 
     BodyDef platformBodyDef;
+    FixtureDef collisionSensor;
     PolygonShape platformBox;
     Body platformBody;
 
-    public PlatformComponent() {
+    public PlatformComponent(WorldComponent world) {
         super();
-        this.platform = new Rectangle();
         platformTexture = new Texture("environment/platform-square.png");
+
+        // Physics platform
+        platform = new Rectangle();
+//        platform.setHeight(10);
+//        platform.setWidth(10);
+
+        platformBodyDef = new BodyDef();
+        collisionSensor = new FixtureDef();
+
+        platform.setPosition(0, 0);
+        platformBodyDef.position.set(platform.getWidth()/2, platform.getHeight()/2);
+
+        platformBody = world.getWorld().createBody(platformBodyDef);
+        platformBox = new PolygonShape();
+        platformBox.setAsBox(platform.getWidth()/2, platform.getHeight()/2);
+
+        collisionSensor.shape = platformBox;
+        collisionSensor.isSensor = true;
+
+        platformBody.createFixture(platformBox,0);
+        platformBody.createFixture(collisionSensor);
+        platformBody.setUserData(platform);
+
+        platformBox.dispose();
     }
 
     public void setCoordinates(float x, float y) {
@@ -55,9 +81,6 @@ public class PlatformComponent extends Component {
 
     public void setWidth(int width) {
         platform.setWidth(width);
-//        if(platformBox!=null) {
-//            platformBox.setAsBox(width/2f, this.platform.getHeight()/2f);
-//        }
     }
 
     public float getWidth() {
@@ -66,9 +89,6 @@ public class PlatformComponent extends Component {
 
     public void setHeight(int height) {
         platform.setHeight(height);
-//        if(platformBox!=null){
-//            platformBox.setAsBox(this.platform.getWidth()/2f,  height/2f);
-//        }
     }
 
     public float getHeight() {
@@ -104,5 +124,13 @@ public class PlatformComponent extends Component {
 
     public void setPlatformBox(PolygonShape platformBox) {
         this.platformBox = platformBox;
+    }
+
+    public FixtureDef getCollisionSensor() {
+        return collisionSensor;
+    }
+
+    public void setCollisionSensor(FixtureDef platformFixtureDef) {
+        this.collisionSensor = platformFixtureDef;
     }
 }

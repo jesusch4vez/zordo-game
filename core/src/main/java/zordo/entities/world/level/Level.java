@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -26,6 +27,7 @@ import zordo.systems.camera.CameraSystem;
 import zordo.systems.camera.DebugHudSystem;
 import zordo.systems.camera.HudSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Level extends LevelComponent implements Screen {
@@ -44,7 +46,14 @@ public class Level extends LevelComponent implements Screen {
     public HashMap<String, Component> components;
     Array<Body> bodies;
 
-//    PlatformComponent platform;
+    public Vector2 levelDimensions;
+    ArrayList<PlatformComponent> platforms;
+
+    LevelBoundaryComponent floor;
+    LevelBoundaryComponent ceiling;
+    LevelBoundaryComponent leftWall;
+    LevelBoundaryComponent rightWall;
+
     WorldComponent world;
     Box2DDebugRenderer debugRenderer;
 
@@ -72,6 +81,17 @@ public class Level extends LevelComponent implements Screen {
 
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
+
+        this.levelDimensions = new Vector2();
+        levelDimensions.x = 0;
+        levelDimensions.y = 0;
+
+        floor = new LevelBoundaryComponent(world);
+        ceiling = new LevelBoundaryComponent(world);
+        leftWall = new LevelBoundaryComponent(world);
+        rightWall = new LevelBoundaryComponent(world);
+
+        platforms = new ArrayList<>();
     }
 
     @Override
@@ -82,10 +102,25 @@ public class Level extends LevelComponent implements Screen {
         background.setRegionWidth(this.getLevelSize().getWidth());
         background.setRegionHeight(this.getLevelSize().getHeight());
 
-        world.platforms.add(world.floor);
-        world.platforms.add(world.ceiling);
-        world.platforms.add(world.leftWall);
-        world.platforms.add(world.rightWall);
+        this.levelDimensions.x = this.getLevelSize().getWidth();
+        this.levelDimensions.y = this.getLevelSize().getHeight();
+
+        floor.setWidth((int) levelDimensions.x);
+        floor.setHeight(50);
+
+        ceiling.setWidth((int) levelDimensions.x);
+        ceiling.setHeight(50);
+
+        leftWall.setWidth(50);
+        leftWall.setHeight((int) levelDimensions.y);
+
+        rightWall.setWidth(50);
+        rightWall.setHeight((int) levelDimensions.y);
+
+        platforms.add(floor);
+        platforms.add(ceiling);
+        platforms.add(leftWall);
+        platforms.add(rightWall);
     }
 
     @Override
@@ -96,10 +131,10 @@ public class Level extends LevelComponent implements Screen {
 
         try {
             bodies.add(player.getCharacterComponent().characterBody);
-            bodies.add(world.floor.getPlatformBody());
-            bodies.add(world.leftWall.getPlatformBody());
-            bodies.add(world.rightWall.getPlatformBody());
-            bodies.add(world.ceiling.getPlatformBody());
+            bodies.add(floor.getPlatformBody());
+            bodies.add(leftWall.getPlatformBody());
+            bodies.add(rightWall.getPlatformBody());
+            bodies.add(ceiling.getPlatformBody());
 
             world.getWorld().getBodies(bodies);
             batch = new SpriteBatch();
