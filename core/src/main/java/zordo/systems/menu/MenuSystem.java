@@ -18,10 +18,11 @@ public class MenuSystem {
 //        loadLevel.setLevelTheme(level.getLevelTheme());
 //        loadLevel.setLevelTerrain(level.setLevelTerrain());
 //        loadLevel.setLevelCharacters(level.setLevelCharacters());
-        game.setScreen(loadLevel);
+        game.activeLevel = loadLevel;
+        game.setScreen(game.activeLevel);
     }
 
-    public static void pauseMenu(LegendOfZordo game, Level level) {
-        game.setScreen(new PauseMenu(game, level));
+    public static void pauseMenu(LegendOfZordo game) {
+        game.setScreen(new PauseMenu(game));
     }
 }

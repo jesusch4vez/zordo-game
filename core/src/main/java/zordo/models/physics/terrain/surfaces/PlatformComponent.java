@@ -21,14 +21,14 @@ public class PlatformComponent extends Component {
     PolygonShape platformBox;
     Body platformBody;
 
-    public PlatformComponent(WorldComponent world) {
+    public PlatformComponent(WorldComponent world, float width, float height) {
         super();
         platformTexture = new Texture("environment/platform-square.png");
 
         // Physics platform
         platform = new Rectangle();
-//        platform.setHeight(10);
-//        platform.setWidth(10);
+        platform.setHeight(height);
+        platform.setWidth(width);
 
         platformBodyDef = new BodyDef();
         collisionSensor = new FixtureDef();

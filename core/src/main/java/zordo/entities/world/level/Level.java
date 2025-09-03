@@ -61,7 +61,6 @@ public class Level extends LevelComponent implements Screen {
 
     public Level(final LegendOfZordo game) {
         this.game = game;
-        this.game.level = this;
         this.game.isOnLevelMenu = false;
         this.game.isOnDebugMenu = false;
         this.game.isOnTitleMenu = false;
@@ -83,13 +82,13 @@ public class Level extends LevelComponent implements Screen {
         camera = cam.getCamera();
 
         this.levelDimensions = new Vector2();
-        levelDimensions.x = 0;
-        levelDimensions.y = 0;
+//        levelDimensions.x = this.getLevelSize().getWidth();
+//        levelDimensions.y = this.getLevelSize().getHeight();
 
-        floor = new LevelBoundaryComponent(world);
-        ceiling = new LevelBoundaryComponent(world);
-        leftWall = new LevelBoundaryComponent(world);
-        rightWall = new LevelBoundaryComponent(world);
+        floor = new LevelBoundaryComponent(world, levelDimensions.x, 25);
+        ceiling = new LevelBoundaryComponent(world, levelDimensions.x, 25);
+        leftWall = new LevelBoundaryComponent(world, 25, levelDimensions.y);
+        rightWall = new LevelBoundaryComponent(world,  25, levelDimensions.y);
 
         platforms = new ArrayList<>();
     }
