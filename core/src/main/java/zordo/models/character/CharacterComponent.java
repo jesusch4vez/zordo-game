@@ -1,19 +1,16 @@
 package zordo.models.character;
 
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import zordo.models.animation.character.AnimationComponent;
 import zordo.models.health.HeartComponent;
 import zordo.models.physics.world.WorldComponent;
 
 import java.util.ArrayList;
 
-public class CharacterComponent {
+public class CharacterComponent implements ContactListener {
     Boolean isFlippedRight;
     Boolean isJumping;
     Boolean isStepping;
@@ -21,20 +18,13 @@ public class CharacterComponent {
     Boolean isAirborne;
     Boolean isStanding;
 
-    Boolean isColliding;
-    Boolean onSurface;
-
-    Boolean isAscending;
-    Boolean isDescending;
+    public Vector2 dimensions;
 
     Boolean isDucking;
 
     int jumps;
 
-    Rectangle collider;
-    Vector3 position;
-
-    Vector3 previousPosition;
+    Vector2 position;
 
     public ArrayList<HeartComponent> hearts;
     public int health;
@@ -44,31 +34,21 @@ public class CharacterComponent {
     public Body characterBody;
     public PolygonShape characterShape;
     public FixtureDef characterFixtureDef;
+    public FixtureDef collisionSensor;
 
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
-        position = new Vector3();
-        previousPosition = new Vector3();
-        collider = new Rectangle();
-        collider.x = 10;
-        collider.y = 10;
-        collider.height = 53;
-        collider.width = 23;
-        position.x = collider.x;
-        position.y = collider.y;
-        previousPosition.x = collider.x;
-        previousPosition.y = collider.y;
+        position = new Vector2();
+        position.x = 100;
+        position.y = 100;
+        dimensions = new Vector2(32/5f, 55/5f);
 
         isFlippedRight = true;
         isJumping = false;
         isStepping = false;
         isRunning = false;
         isAirborne = false;
-        isColliding = false;
-        isAscending = false;
-        isDescending = false;
         isStanding = true;
-        onSurface = false;
         isDucking = false;
 
         health = 8;
@@ -81,25 +61,30 @@ public class CharacterComponent {
 
         characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;
-        characterBodyDef.position.set(100, 200);
+        characterBodyDef.position.set(this.getPosition().x - 100, this.getPosition().y -100);
         characterBodyDef.fixedRotation = true;
 
         characterBody = world.getWorld().createBody(characterBodyDef);
 
         characterShape = new PolygonShape();
-//        characterShape.setAsBox(5, 5.0f);
-        Vector2 [] vertices = { new Vector2(collider.x, collider.y), new Vector2(collider.x, collider.y+collider.height), new Vector2(collider.x + collider.width, collider.y), new Vector2(collider.x+collider.width, collider.y + collider.height)};
+
+        Vector2 [] vertices = { new Vector2(this.position.x, this.position.y), new Vector2(this.position.x + dimensions.x, this.position.y), new Vector2(this.position.x, this.position.y + dimensions.y), new Vector2(this.position.x + dimensions.x, this.position.y + dimensions.y) };
         characterShape.set(vertices);
 
         characterFixtureDef = new FixtureDef();
+        collisionSensor = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 2f;
-        characterFixtureDef.friction = 0.2f;
-        characterFixtureDef.restitution = 0.01f;
+        characterFixtureDef.density = 1f;
+        characterFixtureDef.friction = 0.1f;
+        characterFixtureDef.restitution = 0.10f;
+        collisionSensor.shape = characterShape;
+        collisionSensor.isSensor = true;
 
         characterBody.createFixture(characterFixtureDef);
-        characterBody.setLinearVelocity(1.0f, 0.0f);
+        characterBody.createFixture(collisionSensor);
+        characterBody.setLinearVelocity(1.5f, 0f);
+        characterBody.isFixedRotation();
         characterBody.setUserData(this);
     }
 
@@ -107,52 +92,30 @@ public class CharacterComponent {
         return this.health;
     }
 
-    public void setCollider(Rectangle collider) {
-        this.collider = collider;
-    }
-
-    public Rectangle getCollider() {
-        return this.collider;
-    }
-
-    public Vector3 getPosition() {
+    public Vector2 getPosition() {
         return this.position;
     }
 
     public void setPosition(Vector3 position) {
-        this.collider.x = position.x;
-        this.collider.y = position.y;
-        this.position.x = collider.x;
-        this.position.y = collider.y;
+        this.position.x = position.x;
+        this.position.y = position.y;
         this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
-        this.collider.x = position.x;
-        this.collider.y = position.y;
         this.characterBody.getPosition().set(position.x, position.y);
-    }
-
-    public Vector3 getPreviousPosition() {
-        return this.previousPosition;
     }
 
     public void setX(float x) {
         this.position.x = x;
-        this.getCollider().setX(x);
         this.characterBody.getPosition().x = x;
     }
 
     public void setY(float y) {
         this.position.y = y;
-        this.getCollider().setY(y);
         this.characterBody.getPosition().y = y;
-    }
-
-    public void setPreviousPosition(Vector3 previousPosition) {
-        this.previousPosition = previousPosition;
     }
 
     public void setIsFlippedRight(Boolean flip) {
@@ -215,12 +178,20 @@ public class CharacterComponent {
         return this.isAirborne;
     }
 
-    public void setIsColliding(Boolean isColliding) {
-        this.isColliding = isColliding;
+    public PolygonShape getCharacterShape() {
+        return characterShape;
     }
 
-    public Boolean getIsColliding() {
-        return this.isColliding;
+    public void setCharacterShape(Vector2 [] characterShape) {
+        this.getCharacterShape().set(characterShape);
+    }
+
+    public Body getCharacterBody() {
+        return this.characterBody;
+    }
+
+    public void setCharacterBody(Body characterBody) {
+        this.characterBody = characterBody;
     }
 
     public void setIsStanding(Boolean isStanding) {
@@ -231,22 +202,29 @@ public class CharacterComponent {
         return this.isStanding;
     }
 
-    public Boolean getIsAscending() {
-        return isAscending;
-    }
-    public void setIsAscending(Boolean isAscending) {
-        this.isAscending = isAscending;
-    }
-    public Boolean getIsDescending() {
-        return isDescending;
-    }
-    public void setIsDescending(Boolean isDescending) {
-        this.isDescending = isDescending;
-    }
-
     public Boolean getIsDucking() { return  isDucking; }
 
     public void setIsDucking(Boolean isDucking) {
         this.isDucking = isDucking;
+    }
+
+    @Override
+    public void beginContact(Contact contact) {
+        Gdx.app.log("Contact", "beginContact with: " + contact);
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+        Gdx.app.log("Contact", "endContact with: " + contact);
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
     }
 }

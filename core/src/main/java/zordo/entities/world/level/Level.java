@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -17,6 +18,7 @@ import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
 import zordo.models.character.CharacterComponent;
 import zordo.models.gamePad.ControllerComponent;
+import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
@@ -24,8 +26,8 @@ import zordo.entities.characters.player.Player;
 import zordo.systems.camera.CameraSystem;
 import zordo.systems.camera.DebugHudSystem;
 import zordo.systems.camera.HudSystem;
-import zordo.systems.physics.terrain.surfaces.PlatformSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Level extends LevelComponent implements Screen {
@@ -44,7 +46,14 @@ public class Level extends LevelComponent implements Screen {
     public HashMap<String, Component> components;
     Array<Body> bodies;
 
-    PlatformComponent platform;
+    public Vector2 levelDimensions;
+    ArrayList<PlatformComponent> platforms;
+
+    LevelBoundaryComponent floor;
+    LevelBoundaryComponent ceiling;
+    LevelBoundaryComponent leftWall;
+    LevelBoundaryComponent rightWall;
+
     WorldComponent world;
     Box2DDebugRenderer debugRenderer;
 
@@ -52,14 +61,12 @@ public class Level extends LevelComponent implements Screen {
 
     public Level(final LegendOfZordo game) {
         this.game = game;
-        this.game.level = this;
         this.game.isOnLevelMenu = false;
         this.game.isOnDebugMenu = false;
         this.game.isOnTitleMenu = false;
         this.game.isOnLevel = true;
         this.world = new WorldComponent();
         this.debugRenderer = new Box2DDebugRenderer();
-//        bodies = new Array<>();
 
         elapsed = 0.0f;
 
@@ -69,45 +76,36 @@ public class Level extends LevelComponent implements Screen {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         player = new Player(world);
 
-        // Create an array to be filled with the bodies
-        // (better don't create a new one every time though)
-
         bodies = new Array<>();
+
+        CameraComponent cam = (CameraComponent) components.get("Camera");
+        camera = cam.getCamera();
+
+        this.levelDimensions = new Vector2();
     }
 
     @Override
     public void show() {
-        platform = new PlatformComponent(50,500);
-        platform.setCoordinates(500,500);
-
-        world.platforms.add(platform);
-
-        world.floor.getPlatform().setHeight(800);
-        world.floor.getPlatform().setWidth(this.getLevelSize().getWidth());
-        world.floor.setCoordinates(0,-(int) world.floor.getPlatform().getHeight());
-
-        world.ceiling.getPlatform().setHeight(50);
-        world.ceiling.getPlatform().setWidth(this.getLevelSize().getWidth());
-        world.ceiling.setCoordinates(0,this.getLevelSize().getHeight());
-
-        world.leftWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        world.leftWall.getPlatform().setWidth(50);
-        world.leftWall.setCoordinates(-(int) world.leftWall.getWidth(),0);
-
-        world.rightWall.getPlatform().setHeight(this.getLevelSize().getHeight());
-        world.rightWall.getPlatform().setWidth(50);
-        world.rightWall.setCoordinates(this.getLevelSize().getWidth() - (int) world.rightWall.getWidth(),0);
-
         TextureRegion background = new TextureRegion();
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
         background.setRegionWidth(this.getLevelSize().getWidth());
         background.setRegionHeight(this.getLevelSize().getHeight());
 
-        world.platforms.add(world.floor);
-        world.platforms.add(world.ceiling);
-        world.platforms.add(world.leftWall);
-        world.platforms.add(world.rightWall);
+        this.levelDimensions.x = this.getLevelSize().getWidth();
+        this.levelDimensions.y = this.getLevelSize().getHeight();
+
+        floor = new LevelBoundaryComponent(world, levelDimensions.x + 50/2f, 25, 0, 0);
+        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 50/2f, 25, 0, this.levelDimensions.y);
+        leftWall = new LevelBoundaryComponent(world, 25, levelDimensions.y + 50/2f, 0, 0);
+        rightWall = new LevelBoundaryComponent(world,  25, levelDimensions.y + 50/2f, levelDimensions.x, 0);
+
+        platforms = new ArrayList<>();
+
+        platforms.add(floor);
+        platforms.add(ceiling);
+        platforms.add(leftWall);
+        platforms.add(rightWall);
     }
 
     @Override
@@ -118,38 +116,33 @@ public class Level extends LevelComponent implements Screen {
 
         try {
             bodies.add(player.getCharacterComponent().characterBody);
-            bodies.add(world.groundBody);
-// Now fill the array with all bodies
             world.getWorld().getBodies(bodies);
-
-            for (Body b : bodies) {
-                // Get the body's user data - in this example, our user
-                // data is an instance of the Entity class
-                CharacterComponent e = (CharacterComponent) b.getUserData();
-
-                if (e != null) {
-                    // Update the entities/sprites position and angle
-                    e.setPosition(b.getPosition().x, b.getPosition().y);
-                    // We need to convert our angle from radians to degrees
-//                    e.setRotation(MathUtils.radiansToDegrees * b.getAngle());
-                }
-            }
-
             batch = new SpriteBatch();
-            CameraComponent cam = (CameraComponent) components.get("Camera");
-            camera = cam.getCamera();
 
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
+
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
+
+            for (Body b : bodies) {
+                if(b.getUserData() instanceof CharacterComponent) {
+                    CharacterComponent e = (CharacterComponent) b.getUserData();
+                    e.setPosition(b.getPosition().x + 100, b.getPosition().y + 100);
+                } else {
+                    if(b.getUserData() instanceof LevelBoundaryComponent) {
+                        LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();
+                        p.setHeight((int) ((LevelBoundaryComponent) b.getUserData()).getHeight());
+                        p.setWidth((int) ((LevelBoundaryComponent) b.getUserData()).getWidth());
+                        p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
+                        p.getPlatform().setSize(((LevelBoundaryComponent) b.getUserData()).getWidth(),((LevelBoundaryComponent) b.getUserData()).getHeight());
+                        p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
+                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                    }
+                }
+            }
 
             this.game.controllerListener.handleInput(player, batch, elapsed, this.game, this.world);
 
-            PlatformSystem.render(world.platforms, batch);
-
-            if(this.getDebugMode()) {
-                PlatformSystem.renderCollisionDebugPlatform(world.platformIntersection, world.platforms, batch);
-            }
             batch.end();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);

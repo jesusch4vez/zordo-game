@@ -2,39 +2,54 @@ package zordo.models.physics.terrain.surfaces;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import zordo.models.Component;
+import zordo.models.physics.world.WorldComponent;
 
 public class PlatformComponent extends Component {
 
     private Texture platformTexture;
     private Rectangle platform;
-    private Boolean holdsCharacter;
-    private Boolean isJumpable;
     private String characterRelativePosition;
 
-    public PlatformComponent() {
-        super();
-        this.platform = new Rectangle();
-        platform.setWidth(100);
-        platform.setHeight(10);
-        platformTexture = new Texture("environment/platform-square.png");
-        holdsCharacter = false;
-        isJumpable = false;
-        characterRelativePosition = "";
-    }
+    BodyDef platformBodyDef;
+    FixtureDef collisionSensor;
+    PolygonShape platformBox;
+    Body platformBody;
 
-    public PlatformComponent(int height, int width) {
-        super();
-        this.platform = new Rectangle();
-        platform.setWidth(width);
+    public PlatformComponent(WorldComponent world, float width, float height, float x, float y) {
+        platformTexture = new Texture("environment/platform-square.png");
+
+        // Physics platform
+        platform = new Rectangle();
         platform.setHeight(height);
-        platformTexture = new Texture("environment/platform-square.png");
-        holdsCharacter = false;
-        isJumpable = false;
-        characterRelativePosition = "";
+        platform.setWidth(width);
+        platform.setPosition(x, y);
+
+        platformBodyDef = new BodyDef();
+        collisionSensor = new FixtureDef();
+
+        platformBodyDef.position.set(x + width/2 - 25/2f,y + height/2 - 25/2f);
+
+        platformBody = world.getWorld().createBody(platformBodyDef);
+        platformBox = new PolygonShape();
+        platformBox.setAsBox(width/2, height/2);
+
+        collisionSensor.shape = platformBox;
+        collisionSensor.isSensor = true;
+
+        platformBody.createFixture(platformBox,0);
+        platformBody.createFixture(collisionSensor);
+        platformBody.setUserData(platform);
+
+        platformBox.dispose();
     }
 
-    public void setCoordinates(int x, int y) {
+    public void setCoordinates(float x, float y) {
         platform.setX(x);
         platform.setY(y);
     }
@@ -63,12 +78,6 @@ public class PlatformComponent extends Component {
         this.platformTexture = platformTexture;
     }
 
-    public Boolean getHoldsCharacter() {
-        return this.holdsCharacter;
-    }
-
-    public void setHoldsCharacter(Boolean holdsCharacter) {}
-
     public void setWidth(int width) {
         platform.setWidth(width);
     }
@@ -85,18 +94,42 @@ public class PlatformComponent extends Component {
         return platform.getHeight();
     }
 
-    public void setIsJumpable(Boolean isJumpable) {
-        this.isJumpable = isJumpable;
-    }
-
-    public Boolean getIsJumpable() {
-        return isJumpable;
-    }
-
     public void setCharacterRelativePosition(String characterRelativePosition) {
         this.characterRelativePosition = characterRelativePosition;
     }
     public String getCharacterRelativePosition() {
         return characterRelativePosition;
+    }
+
+    public Body getPlatformBody() {
+        return platformBody;
+    }
+
+    public void setPlatformBody(Body platformBody) {
+        this.platformBody = platformBody;
+    }
+
+    public BodyDef getPlatformBodyDef() {
+        return platformBodyDef;
+    }
+
+    public void setPlatformBodyDef(BodyDef platformBodyDef) {
+        this.platformBodyDef = platformBodyDef;
+    }
+
+    public PolygonShape getPlatformBox() {
+        return platformBox;
+    }
+
+    public void setPlatformBox(PolygonShape platformBox) {
+        this.platformBox = platformBox;
+    }
+
+    public FixtureDef getCollisionSensor() {
+        return collisionSensor;
+    }
+
+    public void setCollisionSensor(FixtureDef platformFixtureDef) {
+        this.collisionSensor = platformFixtureDef;
     }
 }

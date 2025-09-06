@@ -1,19 +1,9 @@
 package zordo.models.physics.terrain.surfaces;
 
+import zordo.models.physics.world.WorldComponent;
+
 public class LevelBoundaryComponent extends PlatformComponent {
-    Boolean isWall;
-    Boolean isCeiling;
-    Boolean isFloor;
-
-    public LevelBoundaryComponent() {
-        isWall = false;
-        isCeiling = false;
-        isFloor = false;
-    }
-
-    public LevelBoundaryComponent(Boolean isWall, Boolean isCeiling, Boolean isFloor) {
-        this.isWall = isWall;
-        this.isCeiling = isCeiling;
-        this.isFloor = isFloor;
+    public LevelBoundaryComponent(WorldComponent world, float width, float height, float x, float y) {
+        super(world, width, height, x, y);
     }
 }

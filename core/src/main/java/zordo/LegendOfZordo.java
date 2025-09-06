@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.badlogic.gdx.controllers.Controllers;
+import zordo.entities.world.level.Level;
 import zordo.models.physics.world.WorldComponent;
 import zordo.models.world.levels.LevelComponent;
 import zordo.models.world.levels.LevelSize;
@@ -15,7 +16,6 @@ import zordo.entities.player_interface.menu.game.DebugModeMenu;
 import zordo.entities.player_interface.menu.game.LevelMenu;
 import zordo.entities.player_interface.menu.game.PauseMenu;
 import zordo.entities.player_interface.menu.title.TitleMenu;
-import zordo.entities.world.level.Level;
 import zordo.systems.gamePad.GameControllerSystem;
 
 public class LegendOfZordo extends Game {
@@ -24,6 +24,10 @@ public class LegendOfZordo extends Game {
     public LevelSize small;
 	public LevelSize medium;
 	public LevelSize large;
+
+    public Level activeLevel;
+
+    public int MAX_VELOCITY;
 
     public boolean isOnTitleMenu;
     public boolean isOnLevelMenu;
@@ -34,7 +38,6 @@ public class LegendOfZordo extends Game {
     public LevelMenu levelMenu;
     public DebugModeMenu debugModeMenu;
     public PauseMenu pauseMenu;
-    public Level level;
     public WorldComponent world;
 
     @Override
@@ -48,8 +51,8 @@ public class LegendOfZordo extends Game {
         Controllers.addListener(controllerListener);
         levelMenu = new LevelMenu(this);
         debugModeMenu = new DebugModeMenu(this, new LevelComponent());
-        pauseMenu = new PauseMenu(this, new Level(this));
-        level = new Level(this);
+        pauseMenu = new PauseMenu(this);
+        activeLevel = new Level(this);
         world = new WorldComponent();
 
 		Properties properties = new Properties();
@@ -69,6 +72,8 @@ public class LegendOfZordo extends Game {
 			small = new LevelSize(small_width, small_height);
 			medium = new LevelSize(medium_width, medium_height);
 			large = new LevelSize(large_width, large_height);
+
+            MAX_VELOCITY = Integer.parseInt(properties.getProperty("MAX_VELOCITY"));
 
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -33,7 +33,7 @@ public class HudSystem {
         }
 
         if(level.paused) {
-            MenuSystem.pauseMenu(game, level);
+            MenuSystem.pauseMenu(game);
         }
         hudBatch.end();
     }

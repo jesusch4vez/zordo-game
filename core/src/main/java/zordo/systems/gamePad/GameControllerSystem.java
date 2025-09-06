@@ -170,25 +170,25 @@ public class GameControllerSystem implements ControllerListener {
     }
 
     private void handleButton(int buttonCode) {
-        this.game.level.player.playerController.pressButton(buttonCode);
+        this.game.activeLevel.player.playerController.pressButton(buttonCode);
     }
 
     private void handleButtonUp(int buttonCode) {
-        this.game.level.player.playerController.releaseButton(buttonCode);
+        this.game.activeLevel.player.playerController.releaseButton(buttonCode);
     }
 
     private void handleAxis(int axisCode, float value) {
-        this.game.level.player.playerController.tiltAxis(axisCode, value);
+        this.game.activeLevel.player.playerController.tiltAxis(axisCode, value);
     }
 
     public void handleInput(Player player, SpriteBatch batch, float deltaTime, LegendOfZordo game, WorldComponent world) throws InterruptedException {
-        this.game.level = game.level;
-        this.game.level.batch = batch;
-        this.game.level.player = player;
+        this.game.activeLevel = game.activeLevel;
+        this.game.activeLevel.batch = batch;
+        this.game.activeLevel.player = player;
         this.game.world = world;
 
         if (this.game.isOnLevel) {
-            PlayerMovementSystem.move(player, batch, this.game.level, this.game.world);
+            PlayerMovementSystem.move(player, batch, this.game.activeLevel);
         }
     }
 }

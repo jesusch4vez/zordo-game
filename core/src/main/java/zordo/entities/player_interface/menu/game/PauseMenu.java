@@ -31,7 +31,7 @@ public class PauseMenu implements Screen {
 
     HashMap<String, Component> components;
 
-    public PauseMenu(LegendOfZordo game, Level level) {
+    public PauseMenu(LegendOfZordo game) {
         this.game = game;
 
         components = new HashMap<>();
@@ -42,7 +42,6 @@ public class PauseMenu implements Screen {
         background.setTexture(backgroundTexture);
 
         selection = 0;
-        this.level = level;
 
         batch = new SpriteBatch();
         font = new BitmapFont();
