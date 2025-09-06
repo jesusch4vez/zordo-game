@@ -21,24 +21,23 @@ public class PlatformComponent extends Component {
     PolygonShape platformBox;
     Body platformBody;
 
-    public PlatformComponent(WorldComponent world, float width, float height) {
-        super();
+    public PlatformComponent(WorldComponent world, float width, float height, float x, float y) {
         platformTexture = new Texture("environment/platform-square.png");
 
         // Physics platform
         platform = new Rectangle();
         platform.setHeight(height);
         platform.setWidth(width);
+        platform.setPosition(x, y);
 
         platformBodyDef = new BodyDef();
         collisionSensor = new FixtureDef();
 
-        platform.setPosition(0, 0);
-        platformBodyDef.position.set(platform.getWidth()/2, platform.getHeight()/2);
+        platformBodyDef.position.set(x + width/2 - 25/2f,y + height/2 - 25/2f);
 
         platformBody = world.getWorld().createBody(platformBodyDef);
         platformBox = new PolygonShape();
-        platformBox.setAsBox(platform.getWidth()/2, platform.getHeight()/2);
+        platformBox.setAsBox(width/2, height/2);
 
         collisionSensor.shape = platformBox;
         collisionSensor.isSensor = true;

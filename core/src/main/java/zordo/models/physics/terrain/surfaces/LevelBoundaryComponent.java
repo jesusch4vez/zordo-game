@@ -3,7 +3,7 @@ package zordo.models.physics.terrain.surfaces;
 import zordo.models.physics.world.WorldComponent;
 
 public class LevelBoundaryComponent extends PlatformComponent {
-    public LevelBoundaryComponent(WorldComponent world, float width, float height) {
-        super(world, width, height);
+    public LevelBoundaryComponent(WorldComponent world, float width, float height, float x, float y) {
+        super(world, width, height, x, y);
     }
 }

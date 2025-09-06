@@ -82,15 +82,6 @@ public class Level extends LevelComponent implements Screen {
         camera = cam.getCamera();
 
         this.levelDimensions = new Vector2();
-//        levelDimensions.x = this.getLevelSize().getWidth();
-//        levelDimensions.y = this.getLevelSize().getHeight();
-
-        floor = new LevelBoundaryComponent(world, levelDimensions.x, 25);
-        ceiling = new LevelBoundaryComponent(world, levelDimensions.x, 25);
-        leftWall = new LevelBoundaryComponent(world, 25, levelDimensions.y);
-        rightWall = new LevelBoundaryComponent(world,  25, levelDimensions.y);
-
-        platforms = new ArrayList<>();
     }
 
     @Override
@@ -104,17 +95,12 @@ public class Level extends LevelComponent implements Screen {
         this.levelDimensions.x = this.getLevelSize().getWidth();
         this.levelDimensions.y = this.getLevelSize().getHeight();
 
-        floor.setWidth((int) levelDimensions.x);
-        floor.setHeight(50);
+        floor = new LevelBoundaryComponent(world, levelDimensions.x + 50/2f, 25, 0, 0);
+        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 50/2f, 25, 0, this.levelDimensions.y);
+        leftWall = new LevelBoundaryComponent(world, 25, levelDimensions.y + 50/2f, 0, 0);
+        rightWall = new LevelBoundaryComponent(world,  25, levelDimensions.y + 50/2f, levelDimensions.x, 0);
 
-        ceiling.setWidth((int) levelDimensions.x);
-        ceiling.setHeight(50);
-
-        leftWall.setWidth(50);
-        leftWall.setHeight((int) levelDimensions.y);
-
-        rightWall.setWidth(50);
-        rightWall.setHeight((int) levelDimensions.y);
+        platforms = new ArrayList<>();
 
         platforms.add(floor);
         platforms.add(ceiling);
@@ -130,14 +116,8 @@ public class Level extends LevelComponent implements Screen {
 
         try {
             bodies.add(player.getCharacterComponent().characterBody);
-            bodies.add(floor.getPlatformBody());
-            bodies.add(leftWall.getPlatformBody());
-            bodies.add(rightWall.getPlatformBody());
-            bodies.add(ceiling.getPlatformBody());
-
             world.getWorld().getBodies(bodies);
             batch = new SpriteBatch();
-
 
             batch.setProjectionMatrix(camera.combined);
             batch.begin();
