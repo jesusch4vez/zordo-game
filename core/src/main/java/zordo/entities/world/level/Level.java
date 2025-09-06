@@ -49,10 +49,10 @@ public class Level extends LevelComponent implements Screen {
     public Vector2 levelDimensions;
     ArrayList<PlatformComponent> platforms;
 
-    LevelBoundaryComponent floor;
-    LevelBoundaryComponent ceiling;
-    LevelBoundaryComponent leftWall;
-    LevelBoundaryComponent rightWall;
+    public LevelBoundaryComponent floor;
+    public LevelBoundaryComponent ceiling;
+    public LevelBoundaryComponent leftWall;
+    public LevelBoundaryComponent rightWall;
 
     WorldComponent world;
     Box2DDebugRenderer debugRenderer;
@@ -81,7 +81,7 @@ public class Level extends LevelComponent implements Screen {
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
         camera.zoom = 0.25f;
-
+        camera.position.set(player.getCharacterComponent().getPosition(), 0);
         this.levelDimensions = new Vector2();
     }
 
@@ -156,7 +156,7 @@ public class Level extends LevelComponent implements Screen {
         }
 
         if (!this.paused) {
-            CameraSystem.follow(player, camera);
+            CameraSystem.follow(player, camera, this.game);
         }
         HudSystem.renderHUD(player);
         if(this.getDebugMode()) {

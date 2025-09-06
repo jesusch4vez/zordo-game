@@ -30,10 +30,10 @@ public class PlayerMovementSystem {
                 character.getCharacterComponent().setIsAirborne(true);
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.jumpRender(character);
-                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, 15), character.getCharacterComponent().getPosition(), true);
+                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, 1500f), character.getCharacterComponent().getPosition(), true);
             } else {
                 character.getCharacterComponent().setIsJumping(false);
-                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, -9.8f), character.getCharacterComponent().getPosition(), true);
+                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, -3000f), character.getCharacterComponent().getPosition(), true);
 
             }
         }
@@ -52,16 +52,16 @@ public class PlayerMovementSystem {
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(true);
                 AnimationSystem.walkRender(character);
-                character.getCharacterComponent().characterBody.applyLinearImpulse(2f, 0, pos.x * 2, pos.y * 2, true);
+                character.getCharacterComponent().characterBody.applyLinearImpulse(500f, 0, pos.x * 2, pos.y * 2, true);
                 if ((ControllerComponent.X_BUTTON.isPressed()) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
                     character.getCharacterComponent().setIsRunning(true);
                     character.getCharacterComponent().setIsStepping(false);
                     AnimationSystem.runRender(character);
-                    character.getCharacterComponent().characterBody.applyLinearImpulse(5f, 0, pos.x * 2, pos.y * 2, true);
+                    character.getCharacterComponent().characterBody.applyLinearImpulse(500f, 0, pos.x * 2, pos.y * 2, true);
                 }
             } else {
                 if(Math.abs(currentVelocity.x) > 0f && currentVelocity.x > 0) {
-                    character.getCharacterComponent().characterBody.applyLinearImpulse(-2f, 0, pos.x * 2, pos.y * 2, true);
+                    character.getCharacterComponent().characterBody.applyLinearImpulse(-500f, 0, pos.x * 2, pos.y * 2, true);
                 }
             }
         }
@@ -70,16 +70,16 @@ public class PlayerMovementSystem {
                 character.getCharacterComponent().setIsStepping(true);
                 character.getCharacterComponent().setIsFlippedRight(false);
                 AnimationSystem.walkRender(character);
-                character.getCharacterComponent().characterBody.applyLinearImpulse(-2f, 0, pos.x * 2, pos.y * 2, true);
+                character.getCharacterComponent().characterBody.applyLinearImpulse(-500f, 0, pos.x * 2, pos.y * 2, true);
                 if ((ControllerComponent.X_BUTTON.isPressed()) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
                     character.getCharacterComponent().setIsRunning(true);
                     character.getCharacterComponent().setIsStepping(false);
                     AnimationSystem.runRender(character);
-                    character.getCharacterComponent().characterBody.applyLinearImpulse(-5f, 0, character.getCharacterComponent().characterBody.getPosition().x * 2, character.getCharacterComponent().characterBody.getPosition().y * 2, true);
+                    character.getCharacterComponent().characterBody.applyLinearImpulse(-500f, 0, character.getCharacterComponent().characterBody.getPosition().x * 2, character.getCharacterComponent().characterBody.getPosition().y * 2, true);
                 }
             } else {
                 if (Math.abs(currentVelocity.x) > 0f && currentVelocity.x < 0) {
-                    character.getCharacterComponent().characterBody.applyLinearImpulse(2f, 0, pos.x * 2, pos.y * 2, true);
+                    character.getCharacterComponent().characterBody.applyLinearImpulse(500f, 0, pos.x * 2, pos.y * 2, true);
                 }
             }
         }

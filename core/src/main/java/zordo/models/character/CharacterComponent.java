@@ -83,7 +83,7 @@ public class CharacterComponent implements ContactListener {
 
         characterBody.createFixture(characterFixtureDef);
         characterBody.createFixture(collisionSensor);
-        characterBody.setLinearVelocity(1.5f, 0f);
+        characterBody.setLinearVelocity(0f, 0f);
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
     }

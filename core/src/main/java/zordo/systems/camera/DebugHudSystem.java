@@ -17,7 +17,7 @@ public class DebugHudSystem {
 
         Vector2 currentVelocity = player.getCharacterComponent().getCharacterBody().getLinearVelocity();
 
-        int X_MARGIN = 500;
+        int X_MARGIN = 1000;
         font.getData().setScale(2);
 
         font.draw(hudBatch, "AIRBORNE      " + player.getCharacterComponent().getIsAirborne().toString(), Gdx.graphics.getWidth() - X_MARGIN, Gdx.graphics.getHeight() - 50);
@@ -47,8 +47,17 @@ public class DebugHudSystem {
                 hudBatch.draw(ControllerComponent.getMovedAxes().get(axis).getTexture(), x+= listMargin, Gdx.graphics.getHeight() - 150, 50, 50);
             }
         }
+        font.draw(hudBatch, "CameraSystem Position: " + camera.position.x + ", " + camera.position.y, Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 900);
+        font.draw(hudBatch, "CameraSystem Zoom: " + camera.zoom, Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 950);
 
-        font.draw(hudBatch, "CameraSystem Zoom: " + camera.zoom, Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 800);
+        font.draw(hudBatch, "CameraSystem viewport width: " + camera.viewportWidth, Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 1100);
+        font.draw(hudBatch, "CameraSystem viewport height: " + camera.viewportHeight, Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 1150);
+
+        font.draw(hudBatch, "CameraSystem viewport width - camera.x: " + (camera.viewportWidth - camera.position.x), Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 1200);
+        font.draw(hudBatch, "CameraSystem viewport height - camera.y: " + (camera.viewportHeight - camera.position.y), Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 1250);
+
+        font.draw(hudBatch, "CameraSystem viewport width / camera.x: " + (camera.viewportWidth / camera.position.x), Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 1300);
+        font.draw(hudBatch, "CameraSystem viewport height / camera.y: " + (camera.viewportHeight / camera.position.y), Gdx.graphics.getWidth()-X_MARGIN - 100, Gdx.graphics.getHeight() - 1350);
 
         hudBatch.end();
     }

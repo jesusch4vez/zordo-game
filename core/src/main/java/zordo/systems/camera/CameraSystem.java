@@ -1,21 +1,46 @@
 package zordo.systems.camera;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import zordo.LegendOfZordo;
 import zordo.entities.characters.player.Player;
-import zordo.models.gamePad.ControllerComponent;
 
 public class CameraSystem {
-    public static void follow(Player player, OrthographicCamera camera) {
-        camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
-        if (Gdx.input.isKeyPressed(Input.Keys.A) || ControllerComponent.LEFT_STICK.isPressed()) {
-            camera.zoom += 0.02F;
-            //If the A Key is pressed, add 0.02 to the Camera's Zoom
+    public static void follow(Player player, OrthographicCamera camera, LegendOfZordo game) {
+        if(camera.viewportWidth / camera.position.x < 8 && camera.viewportWidth / camera.position.x > 3 )  {
+            camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.Q) || ControllerComponent.RIGHT_STICK.isPressed()) {
-            camera.zoom -= 0.02F;
-            //If the Q Key is pressed, subtract 0.02 from the Camera's Zoom
+        else if(camera.viewportWidth / camera.position.x >= 8) {
+//        else if(player.getCharacterComponent().getPosition().x < game.activeLevel.rightWall.getX() - 300) {
+            camera.position.y = player.getCharacterComponent().getPosition().y;
+            camera.position.x = game.activeLevel.leftWall.getX() + 240;
+//            camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
+//        }
+            if(player.getCharacterComponent().getPosition().x >= game.activeLevel.leftWall.getX() + 240) {
+                camera.position.x = player.getCharacterComponent().getPosition().x;
+            }
         }
+        else if(camera.viewportWidth / camera.position.x <= 3) {
+//          else if(player.getCharacterComponent().getPosition().x < game.activeLevel.rightWall.getX() - 300) {
+                camera.position.y = player.getCharacterComponent().getPosition().y;
+                camera.position.x = game.activeLevel.rightWall.getX() - 240;
+//            camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
+//        }
+            if(player.getCharacterComponent().getPosition().x <= game.activeLevel.rightWall.getX() - 240) {
+                camera.position.x = player.getCharacterComponent().getPosition().x;
+            }
+        }
+//        else if()  {
+//            camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
+//        }
+//        else if(camera.viewportWidth / camera.position.x <= 3) {
+////        else if(player.getCharacterComponent().getPosition().x < game.activeLevel.rightWall.getX() - 300) {
+//            camera.position.y = player.getCharacterComponent().getPosition().y;
+//            camera.position.x = game.activeLevel.rightWall.getX() - 240;
+////            camera.position.set(player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, 0);
+////        }
+////            if(player.getCharacterComponent().getPosition().x <= game.activeLevel.rightWall.getX() - 240) {
+////                camera.position.x = player.getCharacterComponent().getPosition().x;
+////            }
+//        }
     }
 }
