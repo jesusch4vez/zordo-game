@@ -48,6 +48,8 @@ public class DebugHudSystem {
             }
         }
 
+        font.draw(hudBatch, "CameraSystem Zoom: " + camera.zoom, Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 800);
+
         hudBatch.end();
     }
 }

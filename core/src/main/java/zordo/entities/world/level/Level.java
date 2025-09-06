@@ -80,6 +80,7 @@ public class Level extends LevelComponent implements Screen {
 
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
+        camera.zoom = 0.25f;
 
         this.levelDimensions = new Vector2();
     }

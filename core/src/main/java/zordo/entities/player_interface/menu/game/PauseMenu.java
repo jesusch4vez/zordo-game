@@ -13,7 +13,6 @@ import zordo.LegendOfZordo;
 import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
 import zordo.models.gamePad.ControllerComponent;
-import zordo.entities.world.level.Level;
 
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +22,6 @@ public class PauseMenu implements Screen {
     int selection;
     final LegendOfZordo game;
     private final Texture backgroundTexture;
-    Level level;
     private SpriteBatch batch;
     BitmapFont font;
 
@@ -112,8 +110,8 @@ public class PauseMenu implements Screen {
             } else if (selection == 1) {
                 game.setScreen(new LevelMenu(game));
             }  else if(selection == 2) {
-                level.paused = false;
-                game.setScreen(level);
+                game.activeLevel.paused = false;
+                game.setScreen(game.activeLevel);
             }
             ControllerComponent.START_BUTTON.release();
         }
