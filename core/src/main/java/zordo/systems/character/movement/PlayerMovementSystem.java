@@ -26,14 +26,16 @@ public class PlayerMovementSystem {
             handleLeftRight(character, level);
             if (ControllerComponent.A_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setIsStanding(false);
+                character.getCharacterComponent().setIsStepping(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.jumpRender(character);
-                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, 15f), character.getCharacterComponent().getPosition(), true);
+                character.getCharacterComponent().characterBody.setLinearVelocity(character.getCharacterComponent().characterBody.getLinearVelocity().x,0);
+                character.getCharacterComponent().characterBody.applyForceToCenter(0, 25000f, true);
             } else if(character.getCharacterComponent().getCharacterBody().isAwake()) {
                 character.getCharacterComponent().setIsJumping(false);
-                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, -9.80f), character.getCharacterComponent().getPosition(), false);
+                character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, -9.8f), character.getCharacterComponent().getPosition(), false);
             } else if(!character.getCharacterComponent().getCharacterBody().isAwake()) {
                 character.getCharacterComponent().getCharacterBody().setLinearVelocity(0,0);
             }
@@ -46,15 +48,15 @@ public class PlayerMovementSystem {
 
         Vector2 currentVelocity = character.getCharacterComponent().getCharacterBody().getLinearVelocity();
         Vector2 pos = character.getCharacterComponent().getCharacterBody().getPosition();
-
+        character.getCharacterComponent().setIsAirborne(Math.abs(currentVelocity.y) > 0);
         if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || (axis > 0) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             if(!character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().getCharacterBody().setLinearVelocity(0f,0f);
-                character.getCharacterComponent().setIsStepping(true);
             }
             if(!character.getCharacterComponent().getIsAirborne()) {
                 AnimationSystem.walkRender(character);
             }
+            character.getCharacterComponent().setIsStepping(true);
             character.getCharacterComponent().setIsFlippedRight(true);
 
             if (currentVelocity.x < level.game.MAX_WALK_VELOCITY) {
@@ -82,12 +84,12 @@ public class PlayerMovementSystem {
         else if (ControllerComponent.D_PAD_LEFT.isPressed() || (axis < 0) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             if(character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().getCharacterBody().setLinearVelocity(0f,0f);
-                character.getCharacterComponent().setIsStepping(true);
                 AnimationSystem.walkRender(character);
             }
             if(!character.getCharacterComponent().getIsAirborne()) {
                 AnimationSystem.walkRender(character);
             }
+            character.getCharacterComponent().setIsStepping(true);
             character.getCharacterComponent().setIsFlippedRight(false);
             if (axis < 0) {
                 if (currentVelocity.x > -level.game.MAX_WALK_VELOCITY) {
@@ -118,7 +120,6 @@ public class PlayerMovementSystem {
             if(Math.abs(currentVelocity.x) > 0 && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().characterBody.applyLinearImpulse(-currentVelocity.x * 10,0f,0f, 0f,false);
             }
-            character.getCharacterComponent().setIsAirborne(Math.abs(currentVelocity.y) > 0);
         }
     }
 }

@@ -41,7 +41,7 @@ public class CharacterComponent implements ContactListener {
         position = new Vector2();
         position.x = 10;
         position.y = 10;
-        dimensions = new Vector2(12f/5f, 25f/5f);
+        dimensions = new Vector2(6f, 12f);
 
         isFlippedRight = true;
         isJumping = false;
@@ -61,7 +61,7 @@ public class CharacterComponent implements ContactListener {
 
         characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;
-        characterBodyDef.position.set(this.getPosition().x - 10, this.getPosition().y -10);
+        characterBodyDef.position.set(this.getPosition().x - 5, this.getPosition().y -5);
         characterBodyDef.fixedRotation = true;
 
         characterBody = world.getWorld().createBody(characterBodyDef);
@@ -75,9 +75,9 @@ public class CharacterComponent implements ContactListener {
         collisionSensor = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 5.5f;
+        characterFixtureDef.density = 0.5f;
         characterFixtureDef.friction = 1f;
-        characterFixtureDef.restitution = 0.1f;
+        characterFixtureDef.restitution = 0.01f;
         collisionSensor.shape = characterShape;
         collisionSensor.isSensor = true;
 

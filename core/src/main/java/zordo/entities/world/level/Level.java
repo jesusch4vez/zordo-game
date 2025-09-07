@@ -57,7 +57,7 @@ public class Level extends LevelComponent implements Screen {
     WorldComponent world;
     Box2DDebugRenderer debugRenderer;
 
-    int platformCount=1000;
+    int platformCount=100;
 
     public Level(final LegendOfZordo game) {
         this.game = game;
@@ -87,7 +87,7 @@ public class Level extends LevelComponent implements Screen {
         platforms = new ArrayList<>();
 
         for(int i =0; i < platformCount; i++) {
-            PlatformComponent platform = new PlatformComponent(this.world, 5f,5f, 10 * i, 25);
+            PlatformComponent platform = new PlatformComponent(this.world, 30f,5f, 38 * i, 25);
             platforms.add(platform);
             bodies.add(platform.getPlatformBody());
         }
