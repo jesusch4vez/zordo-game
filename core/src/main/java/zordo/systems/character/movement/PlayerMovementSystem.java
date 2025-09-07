@@ -48,15 +48,17 @@ public class PlayerMovementSystem {
 
         Vector2 currentVelocity = character.getCharacterComponent().getCharacterBody().getLinearVelocity();
         Vector2 pos = character.getCharacterComponent().getCharacterBody().getPosition();
+
         character.getCharacterComponent().setIsAirborne(Math.abs(currentVelocity.y) > 0);
+
         if ((ControllerComponent.D_PAD_RIGHT.isPressed()) || (axis > 0) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            character.getCharacterComponent().setIsStepping(!character.getCharacterComponent().getIsAirborne());
             if(!character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().getCharacterBody().setLinearVelocity(0f,0f);
             }
             if(!character.getCharacterComponent().getIsAirborne()) {
                 AnimationSystem.walkRender(character);
             }
-            character.getCharacterComponent().setIsStepping(true);
             character.getCharacterComponent().setIsFlippedRight(true);
 
             if (currentVelocity.x < level.game.MAX_WALK_VELOCITY) {
@@ -82,6 +84,7 @@ public class PlayerMovementSystem {
             }
         }
         else if (ControllerComponent.D_PAD_LEFT.isPressed() || (axis < 0) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            character.getCharacterComponent().setIsStepping(!character.getCharacterComponent().getIsAirborne());
             if(character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().getCharacterBody().setLinearVelocity(0f,0f);
                 AnimationSystem.walkRender(character);
@@ -89,7 +92,6 @@ public class PlayerMovementSystem {
             if(!character.getCharacterComponent().getIsAirborne()) {
                 AnimationSystem.walkRender(character);
             }
-            character.getCharacterComponent().setIsStepping(true);
             character.getCharacterComponent().setIsFlippedRight(false);
             if (axis < 0) {
                 if (currentVelocity.x > -level.game.MAX_WALK_VELOCITY) {
