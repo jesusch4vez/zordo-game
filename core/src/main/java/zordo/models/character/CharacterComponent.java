@@ -75,17 +75,17 @@ public class CharacterComponent implements ContactListener {
         collisionSensor = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 1f;
-        characterFixtureDef.friction = 0.1f;
-        characterFixtureDef.restitution = 0.10f;
+        characterFixtureDef.density = 5.5f;
+        characterFixtureDef.friction = 10.1f;
+        characterFixtureDef.restitution = 0.1f;
         collisionSensor.shape = characterShape;
         collisionSensor.isSensor = true;
 
         characterBody.createFixture(characterFixtureDef);
         characterBody.createFixture(collisionSensor);
-        characterBody.setLinearVelocity(5.5f, 0f);
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
+
     }
 
     public int getHealth() {

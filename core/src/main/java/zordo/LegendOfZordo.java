@@ -28,6 +28,9 @@ public class LegendOfZordo extends Game {
     public Level activeLevel;
 
     public int MAX_VELOCITY;
+    public int MAX_WALK_VELOCITY;
+    public int WALK_SPEED;
+    public int RUN_SPEED;
 
     public boolean isOnTitleMenu;
     public boolean isOnLevelMenu;
@@ -74,6 +77,9 @@ public class LegendOfZordo extends Game {
 			large = new LevelSize(large_width, large_height);
 
             MAX_VELOCITY = Integer.parseInt(properties.getProperty("MAX_VELOCITY"));
+            RUN_SPEED = Integer.parseInt(properties.getProperty("RUN_SPEED"));
+            WALK_SPEED = Integer.parseInt(properties.getProperty("WALK_SPEED"));
+            MAX_WALK_VELOCITY = Integer.parseInt(properties.getProperty("MAX_WALK_VELOCITY"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
