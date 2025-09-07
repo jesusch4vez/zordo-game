@@ -57,7 +57,7 @@ public class Level extends LevelComponent implements Screen {
     WorldComponent world;
     Box2DDebugRenderer debugRenderer;
 
-    int platformCount;
+    int platformCount=1000;
 
     public Level(final LegendOfZordo game) {
         this.game = game;
@@ -83,6 +83,14 @@ public class Level extends LevelComponent implements Screen {
         camera.zoom = 0.25f;
         camera.position.set(player.getCharacterComponent().getPosition(), 0);
         this.levelDimensions = new Vector2();
+
+        platforms = new ArrayList<>();
+
+        for(int i =0; i < platformCount; i++) {
+            PlatformComponent platform = new PlatformComponent(this.world, 5f,5f, 10 * i, 25);
+            platforms.add(platform);
+            bodies.add(platform.getPlatformBody());
+        }
     }
 
     @Override
@@ -100,8 +108,6 @@ public class Level extends LevelComponent implements Screen {
         ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 5.0f/2f, 2.5f, 0, levelDimensions.y);
         leftWall = new LevelBoundaryComponent(world, 2.5f, levelDimensions.y + 5.0f/2f, 0, 0);
         rightWall = new LevelBoundaryComponent(world,  2.5f, levelDimensions.y + 5.0f/2f, levelDimensions.x, 0);
-
-        platforms = new ArrayList<>();
 
         platforms.add(floor);
         platforms.add(ceiling);
@@ -144,6 +150,14 @@ public class Level extends LevelComponent implements Screen {
                         p.getPlatform().setSize(((LevelBoundaryComponent) b.getUserData()).getWidth(),((LevelBoundaryComponent) b.getUserData()).getHeight());
                         p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
                         batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                    } else {
+                        PlatformComponent p = (PlatformComponent) b.getUserData();
+                        p.setHeight((int) ((PlatformComponent) b.getUserData()).getHeight());
+                        p.setWidth((int) ((PlatformComponent) b.getUserData()).getWidth());
+                        p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
+                        p.getPlatform().setSize(p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                        p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
+                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
                     }
                 }
             }
@@ -167,11 +181,9 @@ public class Level extends LevelComponent implements Screen {
         HudSystem.renderHUD(player);
         if(this.getDebugMode()) {
             DebugHudSystem.renderDebugHud(player, this, camera);
+            debugRenderer.render(world.getWorld(), camera.combined);
         }
-
-        debugRenderer.render(world.getWorld(), camera.combined);
         camera.update();
-
         this.world.getWorld().step(1/60f, 6, 2);
     }
 

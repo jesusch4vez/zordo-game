@@ -76,7 +76,7 @@ public class CharacterComponent implements ContactListener {
 
         characterFixtureDef.shape = characterShape;
         characterFixtureDef.density = 5.5f;
-        characterFixtureDef.friction = 10.1f;
+        characterFixtureDef.friction = 1f;
         characterFixtureDef.restitution = 0.1f;
         collisionSensor.shape = characterShape;
         collisionSensor.isSensor = true;
