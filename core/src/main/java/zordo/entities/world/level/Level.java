@@ -96,10 +96,10 @@ public class Level extends LevelComponent implements Screen {
         this.levelDimensions.x = this.getLevelSize().getWidth();
         this.levelDimensions.y = this.getLevelSize().getHeight();
 
-        floor = new LevelBoundaryComponent(world, levelDimensions.x + 50/2f, 25, 0, 0);
-        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 50/2f, 25, 0, this.levelDimensions.y);
-        leftWall = new LevelBoundaryComponent(world, 25, levelDimensions.y + 50/2f, 0, 0);
-        rightWall = new LevelBoundaryComponent(world,  25, levelDimensions.y + 50/2f, levelDimensions.x, 0);
+        floor = new LevelBoundaryComponent(world, levelDimensions.x + 5.0f/2f, 2.5f, 0, 0);
+        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 5.0f/2f, 2.5f, 0, levelDimensions.y);
+        leftWall = new LevelBoundaryComponent(world, 2.5f, levelDimensions.y + 5.0f/2f, 0, 0);
+        rightWall = new LevelBoundaryComponent(world,  2.5f, levelDimensions.y + 5.0f/2f, levelDimensions.x, 0);
 
         platforms = new ArrayList<>();
 
@@ -117,6 +117,12 @@ public class Level extends LevelComponent implements Screen {
 
         try {
             bodies.add(player.getCharacterComponent().characterBody);
+
+            bodies.add(floor.getPlatformBody());
+            bodies.add(ceiling.getPlatformBody());
+            bodies.add(leftWall.getPlatformBody());
+            bodies.add(rightWall.getPlatformBody());
+
             world.getWorld().getBodies(bodies);
             batch = new SpriteBatch();
 
@@ -128,7 +134,7 @@ public class Level extends LevelComponent implements Screen {
             for (Body b : bodies) {
                 if(b.getUserData() instanceof CharacterComponent) {
                     CharacterComponent e = (CharacterComponent) b.getUserData();
-                    e.setPosition(b.getPosition().x + 100, b.getPosition().y + 100);
+                    e.setPosition(b.getPosition().x + 10.0f, b.getPosition().y + 10.0f);
                 } else {
                     if(b.getUserData() instanceof LevelBoundaryComponent) {
                         LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();

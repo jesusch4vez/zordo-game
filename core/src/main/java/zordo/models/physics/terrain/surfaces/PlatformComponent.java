@@ -33,7 +33,7 @@ public class PlatformComponent extends Component {
         platformBodyDef = new BodyDef();
         collisionSensor = new FixtureDef();
 
-        platformBodyDef.position.set(x + width/2 - 25/2f,y + height/2 - 25/2f);
+        platformBodyDef.position.set(x + width/2 - 2.5f/2f,y + height/2 - 2.5f/2f);
 
         platformBody = world.getWorld().createBody(platformBodyDef);
         platformBox = new PolygonShape();
@@ -44,7 +44,7 @@ public class PlatformComponent extends Component {
 
         platformBody.createFixture(platformBox,0);
         platformBody.createFixture(collisionSensor);
-        platformBody.setUserData(platform);
+        platformBody.setUserData(this);
 
         platformBox.dispose();
     }
