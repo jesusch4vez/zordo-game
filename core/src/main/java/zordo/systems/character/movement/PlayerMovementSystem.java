@@ -35,7 +35,6 @@ public class PlayerMovementSystem {
                 character.getCharacterComponent().setIsJumping(false);
                 character.getCharacterComponent().characterBody.applyLinearImpulse(new Vector2(0f, -9.80f), character.getCharacterComponent().getPosition(), false);
             } else if(!character.getCharacterComponent().getCharacterBody().isAwake()) {
-                character.getCharacterComponent().setIsAirborne(false);
                 character.getCharacterComponent().getCharacterBody().setLinearVelocity(0,0);
             }
         }
@@ -116,12 +115,10 @@ public class PlayerMovementSystem {
                 }
             }
         } else {
-            if(Math.abs(currentVelocity.x) > 0) {
+            if(Math.abs(currentVelocity.x) > 0 && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterComponent().characterBody.applyLinearImpulse(-currentVelocity.x * 10,0f,0f, 0f,false);
             }
-            if(Math.abs(currentVelocity.y) > 0) {
-                character.getCharacterComponent().setIsAirborne(true);
-            }
+            character.getCharacterComponent().setIsAirborne(Math.abs(currentVelocity.y) > 0);
         }
     }
 }
