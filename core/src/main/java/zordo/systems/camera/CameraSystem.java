@@ -18,36 +18,36 @@ public class CameraSystem {
             //If the Q Key is pressed, subtract 0.02 from the Camera's Zoom
         }
 
-        if(camera.viewportWidth / camera.position.x < 8 && camera.viewportWidth / camera.position.x > 3 )  {
+        if(player.getCharacterComponent().getPosition().x > 1450 * camera.zoom )  {
             camera.position.x = player.getCharacterComponent().getPosition().x;
         }
-        else if(camera.viewportWidth / camera.position.x >= 8) {
-            camera.position.x = game.activeLevel.leftWall.getX() + 24.0f;
-            if(player.getCharacterComponent().getPosition().x >= game.activeLevel.leftWall.getX() + 24.0f) {
-                camera.position.x = player.getCharacterComponent().getPosition().x;
+        else if(player.getCharacterComponent().getPosition().x <= 1450 * camera.zoom ) {
+            camera.position.x = game.activeLevel.leftWall.getX() + 1450 * camera.zoom - game.activeLevel.leftWall.getWidth();
+//            if(player.getCharacterComponent().getPosition().x >= game.activeLevel.leftWall.getX() + 24.0f) {
+//                camera.position.x = player.getCharacterComponent().getPosition().x;
             }
-        }
-        else if(camera.viewportWidth / camera.position.x <= 3) {
-                camera.position.x = game.activeLevel.rightWall.getX() - 24.0f;
-            if(player.getCharacterComponent().getPosition().x <= game.activeLevel.rightWall.getX() - 24.0f) {
-                camera.position.x = player.getCharacterComponent().getPosition().x;
-            }
-        }
-
-        if (camera.viewportHeight / camera.position.y < 8 && camera.viewportHeight / camera.position.y > 4 )  {
-            camera.position.y = player.getCharacterComponent().getPosition().y;
-        }
-        else if(camera.viewportHeight / camera.position.y >= 8) {
-            camera.position.y = game.activeLevel.floor.getY() + 1.2f;
-            if(player.getCharacterComponent().getPosition().y >= game.activeLevel.floor.getY() + 1.20f) {
-                camera.position.y = player.getCharacterComponent().getPosition().y;
-            }
-        }
-        else if(camera.viewportHeight / camera.position.y <= 4) {
-            camera.position.y = game.activeLevel.ceiling.getY() - 1.20f;
-            if(player.getCharacterComponent().getPosition().y <= game.activeLevel.ceiling.getY() - 1.20f) {
-                camera.position.y = player.getCharacterComponent().getPosition().y;
-            }
-        }
+//        }
+//        else if(camera.viewportWidth / camera.position.x <= 3) {
+//                camera.position.x = game.activeLevel.rightWall.getX() - 24.0f;
+//            if(player.getCharacterComponent().getPosition().x <= game.activeLevel.rightWall.getX() - 24.0f) {
+//                camera.position.x = player.getCharacterComponent().getPosition().x;
+//            }
+//        }
+//
+//        if (camera.viewportHeight / camera.position.y < 8 && camera.viewportHeight / camera.position.y > 4 )  {
+//            camera.position.y = player.getCharacterComponent().getPosition().y;
+//        }
+//        else if(camera.viewportHeight / camera.position.y >= 8) {
+//            camera.position.y = game.activeLevel.floor.getY() + 1.2f;
+//            if(player.getCharacterComponent().getPosition().y >= game.activeLevel.floor.getY() + 1.20f) {
+//                camera.position.y = player.getCharacterComponent().getPosition().y;
+//            }
+//        }
+//        else if(camera.viewportHeight / camera.position.y <= 4) {
+//            camera.position.y = game.activeLevel.ceiling.getY() - 1.20f;
+//            if(player.getCharacterComponent().getPosition().y <= game.activeLevel.ceiling.getY() - 1.20f) {
+//                camera.position.y = player.getCharacterComponent().getPosition().y;
+//            }
+//        }
     }
 }
