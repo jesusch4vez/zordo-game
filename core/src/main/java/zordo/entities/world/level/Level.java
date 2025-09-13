@@ -86,8 +86,8 @@ public class Level extends LevelComponent implements Screen {
 
         platforms = new ArrayList<>();
 
-        for(int i =0; i < platformCount; i++) {
-            PlatformComponent platform = new PlatformComponent(this.world, 30f,5f, 38 * i, 25);
+        for(int i = 2; i < platformCount; i++) {
+            PlatformComponent platform = new PlatformComponent(this.world, 30f,5f, 38 * i, 100);
             platforms.add(platform);
             bodies.add(platform.getPlatformBody());
         }
@@ -104,10 +104,10 @@ public class Level extends LevelComponent implements Screen {
         this.levelDimensions.x = this.getLevelSize().getWidth();
         this.levelDimensions.y = this.getLevelSize().getHeight();
 
-        floor = new LevelBoundaryComponent(world, levelDimensions.x + 5.0f/2f, 2.5f, 0, 0);
-        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 5.0f/2f, 2.5f, 0, levelDimensions.y);
-        leftWall = new LevelBoundaryComponent(world, 2.5f, levelDimensions.y + 5.0f/2f, 0, 0);
-        rightWall = new LevelBoundaryComponent(world,  2.5f, levelDimensions.y + 5.0f/2f, levelDimensions.x, 0);
+        floor = new LevelBoundaryComponent(world, levelDimensions.x + 50.0f/2f, 50.5f, 0, 0);
+        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 50.0f/2f, 50.5f, 0, levelDimensions.y);
+        leftWall = new LevelBoundaryComponent(world, 50.5f, levelDimensions.y + 50.0f/2f, 0, 0);
+        rightWall = new LevelBoundaryComponent(world,  50.5f, levelDimensions.y + 50.0f/2f, levelDimensions.x, 0);
 
         platforms.add(floor);
         platforms.add(ceiling);
@@ -140,7 +140,7 @@ public class Level extends LevelComponent implements Screen {
             for (Body b : bodies) {
                 if(b.getUserData() instanceof CharacterComponent) {
                     CharacterComponent e = (CharacterComponent) b.getUserData();
-                    e.setPosition(b.getPosition().x + 10.0f, b.getPosition().y + 10.0f);
+                    e.setPosition(b.getPosition().x + 60.0f, b.getPosition().y + 60.0f);
                 } else {
                     if(b.getUserData() instanceof LevelBoundaryComponent) {
                         LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();

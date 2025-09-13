@@ -39,8 +39,8 @@ public class CharacterComponent implements ContactListener {
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
         position = new Vector2();
-        position.x = 10;
-        position.y = 10;
+        position.x = 60;
+        position.y = 60;
         dimensions = new Vector2(6f, 12f);
 
         isFlippedRight = true;
