@@ -16,15 +16,12 @@ import java.util.HashMap;
 
 public class Player extends Character {
     public ControllerComponent playerController;
-    public BodyLoader bodyLoader;
 
     public BodyDef characterBodyDef;
     public HashMap<String, Body> playerBodies;
     public Body characterBody;
     public PolygonShape characterShape;
     public FixtureDef characterFixtureDef;
-
-    int jumps;
 
     Vector2 position;
 
@@ -50,7 +47,7 @@ public class Player extends Character {
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
 
-        bodyLoader.attachFixture(characterBody, "standing", characterFixtureDef);
+        BodyLoader.attachFixture(characterBody, "standing", characterFixtureDef);
     }
 
     public PolygonShape getCharacterShape() {

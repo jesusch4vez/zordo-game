@@ -32,7 +32,8 @@ public class BodyLoader {
 	private static final CircleShape circleShape = new CircleShape();
 	private static final Vector2 vec = new Vector2();
 
-	// -------------------------------------------------------------------------
+
+    // -------------------------------------------------------------------------
 	// Ctors
 	// -------------------------------------------------------------------------
 
@@ -78,6 +79,9 @@ public class BodyLoader {
 
 		Vector2 origin = vec.set(rbModel.origin);
 
+        FixtureDef collisionSensor = new FixtureDef();
+        collisionSensor.isSensor = true;
+
 		for (int i=0, n=rbModel.polygons.size(); i<n; i++) {
 			PolygonModel polygon = rbModel.polygons.get(i);
 			Vector2[] vertices = polygon.buffer;
@@ -90,6 +94,8 @@ public class BodyLoader {
 			polygonShape.set(vertices);
 			fd.shape = polygonShape;
 			body.createFixture(fd);
+            collisionSensor.shape = polygonShape;
+            body.createFixture(collisionSensor);
 
             for (Vector2 vertex : vertices) {
                 free(vertex);
