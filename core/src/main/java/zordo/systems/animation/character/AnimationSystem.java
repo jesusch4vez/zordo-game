@@ -24,33 +24,44 @@ public class AnimationSystem {
     }
 
     public static void walkRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+
         if (player.getCharacterComponent().getIsFlippedRight()) {
-            BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef);
+            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef);
             animation = player.getCharacterComponent().getAnimation().getWalkingRightAnimation();
         } else {
-            BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef);
+            BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef);
             animation = player.getCharacterComponent().getAnimation().getWalkingLeftAnimation();
         }
     }
 
     public static void runRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+
         if (player.getCharacterComponent().getIsFlippedRight()) {
+            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef);
             animation = player.getCharacterComponent().getAnimation().getRunningRightAnimation();
         } else {
+            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef);
             animation = player.getCharacterComponent().getAnimation().getRunningLeftAnimation();
         }
     }
 
 
     public static void jumpRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+
         if (player.getCharacterComponent().getIsFlippedRight()) {
+            BodyLoader.attachFixture(player.characterBody, "jumping-0", player.characterFixtureDef);
             animation = player.getCharacterComponent().getAnimation().getJumpingRightAnimation();
         } else {
+            BodyLoader.attachFixture(player.characterBody, "jumping-0", player.characterFixtureDef);
             animation = player.getCharacterComponent().getAnimation().getJumpingLeftAnimation();
         }
     }
 
     public static void duckRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
         if (player.getCharacterComponent().getIsFlippedRight()) {
             animation = player.getCharacterComponent().getAnimation().getDuckingRightAnimation();
         } else  {
