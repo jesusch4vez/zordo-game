@@ -5,17 +5,18 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import zordo.entities.characters.player.Player;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.entities.world.level.Level;
 
 public class DebugHudSystem {
-    public static void renderDebugHud(Character player, Level level, OrthographicCamera camera) {
+    public static void renderDebugHud(Player player, Level level, OrthographicCamera camera) {
         SpriteBatch hudBatch = new SpriteBatch();
         hudBatch.begin();
         BitmapFont font = new BitmapFont();
 
-        Vector2 currentVelocity = player.getCharacterComponent().getCharacterBody().getLinearVelocity();
+        Vector2 currentVelocity = player.characterBody.getLinearVelocity();
 
         int X_MARGIN = 1000;
         font.getData().setScale(2);

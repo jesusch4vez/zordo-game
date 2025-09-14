@@ -122,7 +122,7 @@ public class Level extends LevelComponent implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         try {
-            bodies.add(player.getCharacterComponent().characterBody);
+            bodies.add(player.characterBody);
 
             bodies.add(floor.getPlatformBody());
             bodies.add(ceiling.getPlatformBody());
@@ -138,9 +138,9 @@ public class Level extends LevelComponent implements Screen {
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
             for (Body b : bodies) {
-                if(b.getUserData() instanceof CharacterComponent) {
-                    CharacterComponent e = (CharacterComponent) b.getUserData();
-                    e.setPosition(b.getPosition().x, b.getPosition().y);
+                if(b.getUserData() instanceof Player) {
+                    Player e = (Player) b.getUserData();
+                    e.getCharacterComponent().setPosition(b.getPosition().x, b.getPosition().y);
                 } else {
                     if(b.getUserData() instanceof LevelBoundaryComponent) {
                         LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();
