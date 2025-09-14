@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import zordo.models.animation.character.AnimationComponent;
 import zordo.models.health.HeartComponent;
+import zordo.models.physics.BodyEditorLoader;
 import zordo.models.physics.world.WorldComponent;
 
 import java.util.ArrayList;
@@ -34,9 +35,11 @@ public class CharacterComponent implements ContactListener {
     public Body characterBody;
     public PolygonShape characterShape;
     public FixtureDef characterFixtureDef;
-    public FixtureDef collisionSensor;
+
+    public BodyEditorLoader bodyEditorLoader;
 
     public CharacterComponent(WorldComponent world) {
+        bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal("physics/character/player/bodyEditorProject.json"));
         jumps = 0;
         position = new Vector2();
         position.x = 60;
@@ -66,26 +69,17 @@ public class CharacterComponent implements ContactListener {
 
         characterBody = world.getWorld().createBody(characterBodyDef);
 
-        characterShape = new PolygonShape();
-
-        Vector2 [] vertices = { new Vector2(this.position.x, this.position.y), new Vector2(this.position.x + dimensions.x, this.position.y), new Vector2(this.position.x, this.position.y + dimensions.y), new Vector2(this.position.x + dimensions.x, this.position.y + dimensions.y) };
-        characterShape.set(vertices);
-
         characterFixtureDef = new FixtureDef();
-        collisionSensor = new FixtureDef();
 
         characterFixtureDef.shape = characterShape;
         characterFixtureDef.density = 0.5f;
         characterFixtureDef.friction = 1f;
         characterFixtureDef.restitution = 0.01f;
-        collisionSensor.shape = characterShape;
-        collisionSensor.isSensor = true;
 
-        characterBody.createFixture(characterFixtureDef);
-        characterBody.createFixture(collisionSensor);
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
 
+        bodyEditorLoader.attachFixture(characterBody, "link-standing-rigid", characterFixtureDef);
     }
 
     public int getHealth() {

@@ -71,20 +71,19 @@ public class BodyEditorLoader {
 	 * @param body The Box2d body you want to attach the fixture to.
 	 * @param name The name of the fixture you want to load.
 	 * @param fd The fixture parameters to apply to the created body fixture.
-	 * @param scale The desired scale of the body. The default width is 1.
 	 */
-	public void attachFixture(Body body, String name, FixtureDef fd, Matrix3 scale) {
+	public void attachFixture(Body body, String name, FixtureDef fd) {
 		RigidBodyModel rbModel = model.rigidBodies.get(name);
 		if (rbModel == null) throw new RuntimeException("Name '" + name + "' was not found.");
 
-		Vector2 origin = vec.set(rbModel.origin).mul(scale);
+		Vector2 origin = vec.set(rbModel.origin);
 
 		for (int i=0, n=rbModel.polygons.size(); i<n; i++) {
 			PolygonModel polygon = rbModel.polygons.get(i);
 			Vector2[] vertices = polygon.buffer;
 
 			for (int ii=0, nn=vertices.length; ii<nn; ii++) {
-				vertices[ii] = newVec().set(polygon.vertices.get(ii)).mul(scale);
+				vertices[ii] = newVec().set(polygon.vertices.get(ii));
 				vertices[ii].sub(origin);
 			}
 
@@ -92,15 +91,15 @@ public class BodyEditorLoader {
 			fd.shape = polygonShape;
 			body.createFixture(fd);
 
-			for (int ii=0, nn=vertices.length; ii<nn; ii++) {
-				free(vertices[ii]);
-			}
+            for (Vector2 vertex : vertices) {
+                free(vertex);
+            }
 		}
 
 		for (int i=0, n=rbModel.circles.size(); i<n; i++) {
 			CircleModel circle = rbModel.circles.get(i);
-			Vector2 center = newVec().set(circle.center).mul(scale);
-			float radius = circle.radius * scale.det();
+			Vector2 center = newVec().set(circle.center);
+			float radius = circle.radius;
 
 			circleShape.setPosition(center);
 			circleShape.setRadius(radius);

@@ -56,8 +56,8 @@ public class AnimationSystem {
         if(!level.paused) {
             nextFrame = animation.getKeyFrame(elapsed, true);
 //            nextFrame.scale(.05f);
-            Vector2[] vertices = { new Vector2(nextFrame.getX(), nextFrame.getY()), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY()), new Vector2(nextFrame.getX(), nextFrame.getY() + nextFrame.getHeight()/2f), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY() + nextFrame.getHeight()/2f) };
-            character.getCharacterComponent().setCharacterShape(vertices);
+//            Vector2[] vertices = { new Vector2(nextFrame.getX(), nextFrame.getY()), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY()), new Vector2(nextFrame.getX(), nextFrame.getY() + nextFrame.getHeight()/2f), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY() + nextFrame.getHeight()/2f) };
+//            character.getCharacterComponent().setCharacterShape(vertices);
         }
         batch.draw(nextFrame, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, character.getCharacterComponent().dimensions.x, character.getCharacterComponent().dimensions.y);
     }
