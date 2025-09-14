@@ -12,11 +12,14 @@ import zordo.entities.characters.Character;
 import zordo.models.physics.BodyEditorLoader;
 import zordo.models.physics.world.WorldComponent;
 
+import java.util.HashMap;
+
 public class Player extends Character {
     public ControllerComponent playerController;
     public BodyEditorLoader bodyEditorLoader;
 
     public BodyDef characterBodyDef;
+    public HashMap<String, Body> playerBodies;
     public Body characterBody;
     public PolygonShape characterShape;
     public FixtureDef characterFixtureDef;
@@ -27,8 +30,9 @@ public class Player extends Character {
 
     public Player(WorldComponent world) {
         super(world);
+        playerBodies = new HashMap<>();
         playerController = new ControllerComponent();
-        bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal("physics/character/player/bodyEditorProject.json"));
+        bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal("physics/character/player/playerBodies.json"));
         characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;
         characterBodyDef.position.set(super.getCharacterComponent().getPosition().x - 5, super.getCharacterComponent().getPosition().y -5);
@@ -47,6 +51,7 @@ public class Player extends Character {
         characterBody.setUserData(this);
 
         bodyEditorLoader.attachFixture(characterBody, "link-standing-rigid", characterFixtureDef);
+        playerBodies.put("link-standing-rigid", characterBody);
     }
 
     public PolygonShape getCharacterShape() {
