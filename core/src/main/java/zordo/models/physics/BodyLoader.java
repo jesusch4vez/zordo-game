@@ -21,27 +21,27 @@ import java.util.Map;
  *
  * @author Aurelien Ribon | http://www.aurelienribon.com
  */
-public class BodyEditorLoader {
+public class BodyLoader {
 
 	// Model
-	private final Model model;
+	private static Model model;
 
 	// Reusable stuff
-	private final List<Vector2> vectorPool = new ArrayList<Vector2>();
-	private final PolygonShape polygonShape = new PolygonShape();
-	private final CircleShape circleShape = new CircleShape();
-	private final Vector2 vec = new Vector2();
+	private static final List<Vector2> vectorPool = new ArrayList<Vector2>();
+	private static final PolygonShape polygonShape = new PolygonShape();
+	private static final CircleShape circleShape = new CircleShape();
+	private static final Vector2 vec = new Vector2();
 
 	// -------------------------------------------------------------------------
 	// Ctors
 	// -------------------------------------------------------------------------
 
-	public BodyEditorLoader(FileHandle file) {
+	public static void load(FileHandle file) {
 		if (file == null) throw new NullPointerException("file is null");
 		model = readJson(file.readString());
 	}
 
-	public BodyEditorLoader(String str) {
+	public static void load(String str) {
 		if (str == null) throw new NullPointerException("str is null");
 		model = readJson(str);
 	}
@@ -72,7 +72,7 @@ public class BodyEditorLoader {
 	 * @param name The name of the fixture you want to load.
 	 * @param fd The fixture parameters to apply to the created body fixture.
 	 */
-	public void attachFixture(Body body, String name, FixtureDef fd) {
+	public static void attachFixture(Body body, String name, FixtureDef fd) {
 		RigidBodyModel rbModel = model.rigidBodies.get(name);
 		if (rbModel == null) throw new RuntimeException("Name '" + name + "' was not found.");
 
@@ -109,6 +109,12 @@ public class BodyEditorLoader {
 			free(center);
 		}
 	}
+
+    public static void destroyFixture(Body body) {
+        for(int i =0; i < body.getFixtureList().size; i++) {
+            body.destroyFixture(body.getFixtureList().get(i));
+        }
+    }
 
 	/**
 	 * Gets the image path attached to the given name.
@@ -172,7 +178,7 @@ public class BodyEditorLoader {
 	// Json reading process
 	// -------------------------------------------------------------------------
 
-	private Model readJson(String str) {
+	private static Model readJson(String str) {
 		Model m = new Model();
 
 		JsonValue map = new JsonReader().parse(str);
@@ -186,7 +192,7 @@ public class BodyEditorLoader {
 		return m;
 	}
 
-	private RigidBodyModel readRigidBody(JsonValue bodyElem) {
+	private static RigidBodyModel readRigidBody(JsonValue bodyElem) {
 		RigidBodyModel rbModel = new RigidBodyModel();
 		rbModel.name = bodyElem.getString("name");
 		rbModel.imagePath = bodyElem.getString("imagePath");
@@ -232,11 +238,11 @@ public class BodyEditorLoader {
 	// Helpers
 	// -------------------------------------------------------------------------
 
-	private Vector2 newVec() {
+	private static Vector2 newVec() {
 		return vectorPool.isEmpty() ? new Vector2() : vectorPool.remove(0);
 	}
 
-	private void free(Vector2 v) {
+	private static void free(Vector2 v) {
 		vectorPool.add(v);
 	}
 }

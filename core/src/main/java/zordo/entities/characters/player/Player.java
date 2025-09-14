@@ -9,14 +9,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
-import zordo.models.physics.BodyEditorLoader;
+import zordo.models.physics.BodyLoader;
 import zordo.models.physics.world.WorldComponent;
 
 import java.util.HashMap;
 
 public class Player extends Character {
     public ControllerComponent playerController;
-    public BodyEditorLoader bodyEditorLoader;
+    public BodyLoader bodyLoader;
 
     public BodyDef characterBodyDef;
     public HashMap<String, Body> playerBodies;
@@ -32,7 +32,7 @@ public class Player extends Character {
         super(world);
         playerBodies = new HashMap<>();
         playerController = new ControllerComponent();
-        bodyEditorLoader = new BodyEditorLoader(Gdx.files.internal("physics/character/player/playerBodies.json"));
+        BodyLoader.load(Gdx.files.internal("physics/character/player/playerBodies.json"));
         characterBodyDef = new BodyDef();
         characterBodyDef.type = BodyDef.BodyType.DynamicBody;
         characterBodyDef.position.set(super.getCharacterComponent().getPosition().x - 5, super.getCharacterComponent().getPosition().y -5);
@@ -50,8 +50,7 @@ public class Player extends Character {
         characterBody.isFixedRotation();
         characterBody.setUserData(this);
 
-        bodyEditorLoader.attachFixture(characterBody, "link-standing-rigid", characterFixtureDef);
-        playerBodies.put("link-standing-rigid", characterBody);
+        bodyLoader.attachFixture(characterBody, "standing", characterFixtureDef);
     }
 
     public PolygonShape getCharacterShape() {

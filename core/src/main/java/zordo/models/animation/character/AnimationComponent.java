@@ -34,11 +34,11 @@ public class AnimationComponent extends Component {
 
 
     // accessing sprite assets from the directory files
-    String standuri = "character/player/link-standing-sprites/";
-    String runuri = "character/player/link-running-sprites/";
-    String jumpuri = "character/player/link-jumping-sprites/";
+    String standuri = "physics/character/player/link-standing-sprites/";
+    String runuri = "physics/character/player/link-running-sprites/";
+    String jumpuri = "physics/character/player/link-jumping-sprites/";
 
-    String duckinguri = "character/player/link-ducking-sprites/";
+    String duckinguri = "physics/character/player/link-ducking-sprites/";
 
     public AnimationComponent() {
         // animation objects
@@ -58,12 +58,8 @@ public class AnimationComponent extends Component {
         // standing and jumping sprite creation
         standingRightFrames[0] = new Sprite(new Texture(standuri + "link-standing-0.png"));
         standingLeftFrames[0] = new Sprite(standingRightFrames[0]);
-        standingRightFrames[0].setScale(0.05f);
-        standingLeftFrames[0].setScale(0.05f);
         jumpingRightFrames[0] = new Sprite(new Texture(jumpuri + "link-jumping-0.png"));
         jumpingLeftFrames[0] = new Sprite(jumpingRightFrames[0]);
-        jumpingRightFrames[0].setScale(0.05f);
-        jumpingLeftFrames[0].setScale(0.05f);
         duckingRightFrames[0] = new Sprite(new Texture(duckinguri + "link-ducking.png"));
         duckingLeftFrames[0] = new Sprite(duckingRightFrames[0]);
         standingLeftFrames[0].flip(true, false);
@@ -76,8 +72,6 @@ public class AnimationComponent extends Component {
         for(int i = 0; i < 6; i++) {
             runningRightFrames[i] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
             runningLeftFrames[i] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
-            runningRightFrames[i].setScale(0.05f);
-            runningLeftFrames[i].setScale(0.05f);
             if( i != 2 && i != 5) {
                 walkingRightFrames[j] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
                 walkingLeftFrames[j] = new Sprite(new Texture(runuri + "link-running-" + i + ".png"));
