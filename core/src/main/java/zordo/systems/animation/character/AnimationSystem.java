@@ -54,6 +54,7 @@ public class AnimationSystem {
     public static void animate(Character character, SpriteBatch batch, float elapsed, Level level) {
         if(!level.paused) {
             nextFrame = animation.getKeyFrame(elapsed, true);
+            nextFrame.setScale(0.05f);
         }
         batch.draw(nextFrame, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y);
     }
