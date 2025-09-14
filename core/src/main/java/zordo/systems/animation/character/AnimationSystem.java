@@ -3,7 +3,6 @@ package zordo.systems.animation.character;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import zordo.entities.characters.Character;
 import zordo.entities.world.level.Level;
 
@@ -55,10 +54,7 @@ public class AnimationSystem {
     public static void animate(Character character, SpriteBatch batch, float elapsed, Level level) {
         if(!level.paused) {
             nextFrame = animation.getKeyFrame(elapsed, true);
-//            nextFrame.scale(.05f);
-//            Vector2[] vertices = { new Vector2(nextFrame.getX(), nextFrame.getY()), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY()), new Vector2(nextFrame.getX(), nextFrame.getY() + nextFrame.getHeight()/2f), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY() + nextFrame.getHeight()/2f) };
-//            character.getCharacterComponent().setCharacterShape(vertices);
         }
-        batch.draw(nextFrame, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, character.getCharacterComponent().dimensions.x, character.getCharacterComponent().dimensions.y);
+        batch.draw(nextFrame, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y);
     }
 }

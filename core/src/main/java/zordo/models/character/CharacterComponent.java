@@ -44,7 +44,6 @@ public class CharacterComponent implements ContactListener {
         position = new Vector2();
         position.x = 60;
         position.y = 60;
-        dimensions = new Vector2(6f, 12f);
 
         isFlippedRight = true;
         isJumping = false;

@@ -140,7 +140,7 @@ public class Level extends LevelComponent implements Screen {
             for (Body b : bodies) {
                 if(b.getUserData() instanceof CharacterComponent) {
                     CharacterComponent e = (CharacterComponent) b.getUserData();
-                    e.setPosition(b.getPosition().x + 60.0f, b.getPosition().y + 60.0f);
+                    e.setPosition(b.getPosition().x, b.getPosition().y);
                 } else {
                     if(b.getUserData() instanceof LevelBoundaryComponent) {
                         LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();
