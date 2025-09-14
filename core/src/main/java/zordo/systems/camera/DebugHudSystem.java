@@ -21,10 +21,11 @@ public class DebugHudSystem {
         int X_MARGIN = 1000;
         font.getData().setScale(2);
 
-        font.draw(hudBatch, "AIRBORNE      " + player.getCharacterComponent().getIsAirborne().toString(), Gdx.graphics.getWidth() - X_MARGIN, Gdx.graphics.getHeight() - 50);
-        font.draw(hudBatch, "JUMPING     " + player.getCharacterComponent().getIsJumping().toString(), Gdx.graphics.getWidth() -X_MARGIN, Gdx.graphics.getHeight() - 150);
-        font.draw(hudBatch, "RUNNING     " + player.getCharacterComponent().getIsRunning().toString(), Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 200);
-        font.draw(hudBatch, "WALKING     " + player.getCharacterComponent().getIsStepping().toString(), Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 250);
+        font.draw(hudBatch, "AWAKE             " + player.getCharacterBody().isAwake(), Gdx.graphics.getWidth() - X_MARGIN, Gdx.graphics.getHeight() - 50);
+        font.draw(hudBatch, "AIRBORNE      " + player.getCharacterComponent().getIsAirborne().toString(), Gdx.graphics.getWidth() - X_MARGIN, Gdx.graphics.getHeight() - 150);
+        font.draw(hudBatch, "JUMPING     " + player.getCharacterComponent().getIsJumping().toString(), Gdx.graphics.getWidth() -X_MARGIN, Gdx.graphics.getHeight() - 250);
+        font.draw(hudBatch, "RUNNING     " + player.getCharacterComponent().getIsRunning().toString(), Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 300);
+        font.draw(hudBatch, "WALKING     " + player.getCharacterComponent().getIsStepping().toString(), Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 350);
 
         font.draw(hudBatch, "LEVEL ", Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 450);
         font.draw(hudBatch, "SIZE " + level.getLevelSize().getWidth() + "x" + level.getLevelSize().getHeight(), Gdx.graphics.getWidth()-X_MARGIN, Gdx.graphics.getHeight() - 500);
