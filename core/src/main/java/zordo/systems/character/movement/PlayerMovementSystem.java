@@ -39,6 +39,7 @@ public class PlayerMovementSystem {
                     character.characterBody.applyLinearImpulse(new Vector2(0f, -9.8f), character.getCharacterComponent().getPosition(), false);
                 }
             }
+            character.characterBody.setAwake(character.getCharacterComponent().getIsAirborne() || character.getCharacterComponent().getIsRunning() || character.getCharacterComponent().getIsStepping() || character.getCharacterComponent().getIsJumping());
         }
         AnimationSystem.animate(character, batch, elapsed, level);
     }

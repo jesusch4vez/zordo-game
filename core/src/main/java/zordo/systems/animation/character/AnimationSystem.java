@@ -30,7 +30,7 @@ public class AnimationSystem {
             BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef, 1.5f);
             animation = player.getCharacterComponent().getAnimation().getWalkingRightAnimation();
         } else {
-            BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef,1.5f);
+            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef,1.5f);
             animation = player.getCharacterComponent().getAnimation().getWalkingLeftAnimation();
         }
     }
@@ -39,10 +39,10 @@ public class AnimationSystem {
         BodyLoader.destroyFixture(player.characterBody);
 
         if (player.getCharacterComponent().getIsFlippedRight()) {
-            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef,1.5f);
+            BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef,1.5f);
             animation = player.getCharacterComponent().getAnimation().getRunningRightAnimation();
         } else {
-            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef,1.5f);
+            BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef,1.5f);
             animation = player.getCharacterComponent().getAnimation().getRunningLeftAnimation();
         }
     }
@@ -55,7 +55,7 @@ public class AnimationSystem {
             BodyLoader.attachFixture(player.characterBody, "jumping-0", player.characterFixtureDef,1.5f);
             animation = player.getCharacterComponent().getAnimation().getJumpingRightAnimation();
         } else {
-            BodyLoader.attachFixture(player.characterBody, "jumping-0", player.characterFixtureDef,1.5f);
+            BodyLoader.attachFixture(player.characterBody, "jumping-0-left", player.characterFixtureDef,1.5f);
             animation = player.getCharacterComponent().getAnimation().getJumpingLeftAnimation();
         }
     }
