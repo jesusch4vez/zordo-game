@@ -3,30 +3,34 @@ package zordo.entities.characters.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.models.physics.BodyLoader;
+import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.world.WorldComponent;
 
 import java.util.HashMap;
 
-public class Player extends Character {
+public class Player extends Character implements ContactListener {
     public ControllerComponent playerController;
 
     public BodyDef characterBodyDef;
     public HashMap<String, Body> playerBodies;
     public Body characterBody;
     public PolygonShape characterShape;
+    public PolygonShape colliderShape;
+
     public FixtureDef characterFixtureDef;
 
     Vector2 position;
 
     public Player(WorldComponent world) {
         super(world);
+        colliderShape = new PolygonShape();
+        FixtureDef collisionSensor = new FixtureDef();
+        collisionSensor.isSensor = true;
+
         playerBodies = new HashMap<>();
         playerController = new ControllerComponent();
         BodyLoader.load(Gdx.files.internal("physics/character/player/playerBodies.json"));
@@ -39,15 +43,19 @@ public class Player extends Character {
 
         characterFixtureDef = new FixtureDef();
 
+        collisionSensor.shape = colliderShape;
+
+        characterBody.createFixture(collisionSensor);
+
         characterFixtureDef.shape = characterShape;
         characterFixtureDef.density = 0.5f;
         characterFixtureDef.friction = 1f;
         characterFixtureDef.restitution = 0.01f;
 
         characterBody.isFixedRotation();
-        characterBody.setUserData(this);
 
-        BodyLoader.attachFixture(characterBody, "standing", characterFixtureDef);
+        BodyLoader.attachFixture(characterBody, "standing", characterFixtureDef, 1.5f);
+        characterBody.setUserData(this);
     }
 
     public PolygonShape getCharacterShape() {
@@ -91,5 +99,30 @@ public class Player extends Character {
     public void setY(float y) {
         this.position.y = y;
         this.characterBody.getPosition().y = y;
+    }
+
+    @Override
+    public void beginContact(Contact contact) {
+        this.getCharacterComponent().setIsAirborne(false);
+        if (contact.getFixtureA().getBody().getPosition().y < this.characterBody.getPosition().y) {
+            this.characterBody.setLinearVelocity(characterBody.getLinearVelocity().x, 0f);
+        } else if (contact.getFixtureB().getBody().getPosition().y < this.characterBody.getPosition().y) {
+            this.characterBody.setLinearVelocity(characterBody.getLinearVelocity().x, 0f);
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
+
     }
 }

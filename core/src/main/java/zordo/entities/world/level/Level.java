@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
@@ -18,6 +19,7 @@ import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
 import zordo.models.character.CharacterComponent;
 import zordo.models.gamePad.ControllerComponent;
+import zordo.models.physics.BodyLoader;
 import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.models.physics.world.WorldComponent;
@@ -95,6 +97,7 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void show() {
+        world.getWorld().setContactListener(player);
         TextureRegion background = new TextureRegion();
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);

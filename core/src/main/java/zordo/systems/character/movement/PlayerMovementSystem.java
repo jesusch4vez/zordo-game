@@ -32,12 +32,12 @@ public class PlayerMovementSystem {
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.jumpRender(character);
                 character.characterBody.setLinearVelocity(character.characterBody.getLinearVelocity().x,0);
-                character.characterBody.applyForceToCenter(0, 25000f, true);
-            } else if(character.getCharacterBody().isAwake()) {
+                character.characterBody.applyForceToCenter(0, 10000f, true);
+            } else {
                 character.getCharacterComponent().setIsJumping(false);
-                character.characterBody.applyLinearImpulse(new Vector2(0f, -9.8f), character.getCharacterComponent().getPosition(), false);
-            } else if(!character.getCharacterBody().isAwake()) {
-                character.getCharacterBody().setLinearVelocity(0,0);
+                if(character.getCharacterComponent().getIsAirborne()) {
+                    character.characterBody.applyLinearImpulse(new Vector2(0f, -9.8f), character.getCharacterComponent().getPosition(), false);
+                }
             }
         }
         AnimationSystem.animate(character, batch, elapsed, level);
@@ -120,7 +120,7 @@ public class PlayerMovementSystem {
             }
         } else {
             if(Math.abs(currentVelocity.x) > 0 && !character.getCharacterComponent().getIsAirborne()) {
-                character.characterBody.applyLinearImpulse(-currentVelocity.x * 10,0f,0f, 0f,false);
+                character.characterBody.applyLinearImpulse(-currentVelocity.x,0f,0f, 0f,false);
             }
         }
     }

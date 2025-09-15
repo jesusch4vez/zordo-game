@@ -3,10 +3,7 @@ package zordo.models.physics;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import java.util.ArrayList;
@@ -73,29 +70,24 @@ public class BodyLoader {
 	 * @param name The name of the fixture you want to load.
 	 * @param fd The fixture parameters to apply to the created body fixture.
 	 */
-	public static void attachFixture(Body body, String name, FixtureDef fd) {
+	public static void attachFixture(Body body, String name, FixtureDef fd, float scale) {
 		RigidBodyModel rbModel = model.rigidBodies.get(name);
 		if (rbModel == null) throw new RuntimeException("Name '" + name + "' was not found.");
 
 		Vector2 origin = vec.set(rbModel.origin);
-
-        FixtureDef collisionSensor = new FixtureDef();
-        collisionSensor.isSensor = true;
 
 		for (int i=0, n=rbModel.polygons.size(); i<n; i++) {
 			PolygonModel polygon = rbModel.polygons.get(i);
 			Vector2[] vertices = polygon.buffer;
 
 			for (int ii=0, nn=vertices.length; ii<nn; ii++) {
-				vertices[ii] = newVec().set(polygon.vertices.get(ii));
+				vertices[ii] = newVec().set(polygon.vertices.get(ii)).scl(scale);
 				vertices[ii].sub(origin);
 			}
 
 			polygonShape.set(vertices);
 			fd.shape = polygonShape;
 			body.createFixture(fd);
-            collisionSensor.shape = polygonShape;
-            body.createFixture(collisionSensor);
 
             for (Vector2 vertex : vertices) {
                 free(vertex);
