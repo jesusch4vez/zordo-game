@@ -57,9 +57,6 @@ public class PlayerMovementSystem {
             if(!character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterBody().setLinearVelocity(0f,0f);
             }
-            if(!character.getCharacterComponent().getIsAirborne()) {
-                AnimationSystem.walkRender(character);
-            }
             character.getCharacterComponent().setIsFlippedRight(true);
 
             if (currentVelocity.x < level.game.MAX_WALK_VELOCITY) {
@@ -82,15 +79,16 @@ public class PlayerMovementSystem {
                         character.characterBody.applyLinearImpulse(level.game.RUN_SPEED, 0, pos.x, pos.y, true);
                     }
                 }
+            } else {
+                if(!character.getCharacterComponent().getIsAirborne()) {
+                    AnimationSystem.walkRender(character);
+                }
             }
         }
         else if (ControllerComponent.D_PAD_LEFT.isPressed() || (axis < 0) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             character.getCharacterComponent().setIsStepping(!character.getCharacterComponent().getIsAirborne());
             if(character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsAirborne()) {
                 character.getCharacterBody().setLinearVelocity(0f,0f);
-                AnimationSystem.walkRender(character);
-            }
-            if(!character.getCharacterComponent().getIsAirborne()) {
                 AnimationSystem.walkRender(character);
             }
             character.getCharacterComponent().setIsFlippedRight(false);
@@ -118,11 +116,14 @@ public class PlayerMovementSystem {
                         character.characterBody.applyLinearImpulse(-level.game.WALK_SPEED, 0, pos.x, pos.y, true);
                     }
                 }
+            } else {
+                if(!character.getCharacterComponent().getIsAirborne()) {
+                    AnimationSystem.walkRender(character);
+                }
             }
-        } else {
-            if(Math.abs(currentVelocity.x) > 0 && !character.getCharacterComponent().getIsAirborne()) {
-                character.characterBody.applyLinearImpulse(-currentVelocity.x,0f,0f, 0f,false);
-            }
+        }
+        if(Math.abs(currentVelocity.x) > 0 && !character.getCharacterComponent().getIsAirborne()) {
+            character.characterBody.applyLinearImpulse(-currentVelocity.x,0f,0f, 0f,false);
         }
     }
 }

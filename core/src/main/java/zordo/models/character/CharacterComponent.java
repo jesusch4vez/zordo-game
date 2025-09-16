@@ -10,7 +10,7 @@ import zordo.models.physics.world.WorldComponent;
 
 import java.util.ArrayList;
 
-public class CharacterComponent implements ContactListener {
+public class CharacterComponent {
     Boolean isFlippedRight;
     Boolean isJumping;
     Boolean isStepping;
@@ -65,23 +65,19 @@ public class CharacterComponent implements ContactListener {
     public void setPosition(Vector3 position) {
         this.position.x = position.x;
         this.position.y = position.y;
-//        this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
-//        this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setX(float x) {
         this.position.x = x;
-//        this.characterBody.getPosition().x = x;
     }
 
     public void setY(float y) {
         this.position.y = y;
-//        this.characterBody.getPosition().y = y;
     }
 
     public void setIsFlippedRight(Boolean flip) {
@@ -156,25 +152,5 @@ public class CharacterComponent implements ContactListener {
 
     public void setIsDucking(Boolean isDucking) {
         this.isDucking = isDucking;
-    }
-
-    @Override
-    public void beginContact(Contact contact) {
-        Gdx.app.log("Contact", "beginContact with: " + contact);
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-        Gdx.app.log("Contact", "endContact with: " + contact);
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 }

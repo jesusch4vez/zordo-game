@@ -12,13 +12,17 @@ public class AnimationSystem {
     static Sprite nextFrame;
 
     public static void standRender(Player player) {
-        BodyLoader.destroyFixture(player.characterBody);
-
         if(player.getCharacterComponent().getIsFlippedRight() && !player.getCharacterComponent().getIsJumping()) {
-            BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef, 1.8f);
+            if(!player.getCharacterComponent().getIsStanding()) {
+                BodyLoader.destroyFixture(player.characterBody);
+                BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef, 1.8f);
+            }
             animation = player.getCharacterComponent().getAnimation().getStandingRightAnimation();
         } else if (!player.getCharacterComponent().getIsJumping()) {
-            BodyLoader.attachFixture(player.characterBody, "standing-left", player.characterFixtureDef, 1.8f);
+            if(!player.getCharacterComponent().getIsStanding() && !player.getCharacterComponent().getIsFlippedRight()) {
+                BodyLoader.destroyFixture(player.characterBody);
+                BodyLoader.attachFixture(player.characterBody, "standing-left", player.characterFixtureDef, 1.8f);
+            }
             animation = player.getCharacterComponent().getAnimation().getStandingLeftAnimation();
         }
     }
@@ -30,19 +34,18 @@ public class AnimationSystem {
             BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef, 1.8f*1.5f);
             animation = player.getCharacterComponent().getAnimation().getWalkingRightAnimation();
         } else {
-            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef,1.8f*1.5f);
+            BodyLoader.attachFixture(player.characterBody, "running-0-left", player.characterFixtureDef,1.8f*1.5f);
             animation = player.getCharacterComponent().getAnimation().getWalkingLeftAnimation();
         }
     }
 
     public static void runRender(Player player) {
         BodyLoader.destroyFixture(player.characterBody);
-
         if (player.getCharacterComponent().getIsFlippedRight()) {
             BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef,1.8f*1.5f);
             animation = player.getCharacterComponent().getAnimation().getRunningRightAnimation();
         } else {
-            BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef,1.8f*1.5f);
+            BodyLoader.attachFixture(player.characterBody, "running-1-left", player.characterFixtureDef,1.8f*1.5f);
             animation = player.getCharacterComponent().getAnimation().getRunningLeftAnimation();
         }
     }

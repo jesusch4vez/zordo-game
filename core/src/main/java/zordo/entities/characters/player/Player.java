@@ -102,11 +102,10 @@ public class Player extends Character implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
+        this.getCharacterComponent().setIsAirborne(false);
         if (contact.getFixtureA().getBody().getPosition().y < this.characterBody.getPosition().y) {
-            this.getCharacterComponent().setIsAirborne(false);
             this.characterBody.setLinearVelocity(characterBody.getLinearVelocity().x, 0f);
         } else if (contact.getFixtureB().getBody().getPosition().y < this.characterBody.getPosition().y) {
-            this.getCharacterComponent().setIsAirborne(false);
             this.characterBody.setLinearVelocity(characterBody.getLinearVelocity().x, 0f);
         }
     }
