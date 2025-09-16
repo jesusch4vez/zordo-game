@@ -18,7 +18,7 @@ public class AnimationSystem {
             BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef, 1.8f);
             animation = player.getCharacterComponent().getAnimation().getStandingRightAnimation();
         } else if (!player.getCharacterComponent().getIsJumping()) {
-            BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef, 1.8f);
+            BodyLoader.attachFixture(player.characterBody, "standing-left", player.characterFixtureDef, 1.8f);
             animation = player.getCharacterComponent().getAnimation().getStandingLeftAnimation();
         }
     }
