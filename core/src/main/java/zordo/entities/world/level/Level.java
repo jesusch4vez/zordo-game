@@ -149,7 +149,7 @@ public class Level extends LevelComponent implements Screen {
                         p.getPlatform().setPosition(gameBody.getPosition().x, gameBody.getPosition().y);
                         p.getPlatform().setSize(((LevelBoundaryComponent) gameBody.getUserData()).getWidth(),((LevelBoundaryComponent) gameBody.getUserData()).getHeight());
                         p.setPlatformTexture(((PlatformComponent) gameBody.getUserData()).getPlatformTexture());
-                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight() + 0.5f);
                     } else {
                         PlatformComponent p = (PlatformComponent) gameBody.getUserData();
                         p.setHeight((int) ((PlatformComponent) gameBody.getUserData()).getHeight());
@@ -157,7 +157,7 @@ public class Level extends LevelComponent implements Screen {
                         p.getPlatform().setPosition(gameBody.getPosition().x, gameBody.getPosition().y);
                         p.getPlatform().setSize(p.getPlatform().getWidth(), p.getPlatform().getHeight());
                         p.setPlatformTexture(((PlatformComponent) gameBody.getUserData()).getPlatformTexture());
-                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
+                        batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight() + 0.25f);
                     }
                 }
             }
