@@ -8,15 +8,15 @@ import java.io.IOException;
 import java.util.Properties;
 
 import com.badlogic.gdx.controllers.Controllers;
-import zordo.entities.world.level.Level;
-import zordo.models.physics.world.WorldComponent;
-import zordo.models.world.levels.LevelComponent;
-import zordo.models.world.levels.LevelSize;
-import zordo.entities.player_interface.menu.game.DebugModeMenu;
-import zordo.entities.player_interface.menu.game.LevelMenu;
-import zordo.entities.player_interface.menu.game.PauseMenu;
-import zordo.entities.player_interface.menu.title.TitleMenu;
-import zordo.systems.gamePad.GameControllerSystem;
+import zordo.game.entities.world.level.Level;
+import zordo.game.models.physics.world.WorldComponent;
+import zordo.game.models.levels.LevelComponent;
+import zordo.game.models.levels.LevelSize;
+import zordo.game.entities.player_interface.menu.game.DebugModeMenu;
+import zordo.game.entities.player_interface.menu.game.LevelMenu;
+import zordo.game.entities.player_interface.menu.game.PauseMenu;
+import zordo.game.entities.player_interface.menu.title.TitleMenu;
+import zordo.game.systems.gamePad.GameControllerSystem;
 
 public class LegendOfZordo extends Game {
     public GameControllerSystem controllerListener;
