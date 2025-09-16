@@ -7,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.entities.characters.Character;
 import zordo.models.physics.BodyLoader;
-import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.world.WorldComponent;
 
 import java.util.HashMap;
