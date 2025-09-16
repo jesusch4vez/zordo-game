@@ -1,0 +1,117 @@
+link-sprites.png
+size: 235, 125
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+link-jumping-0
+  rotate: true
+  xy: 1, 1
+  size: 33, 55
+  orig: 33, 55
+  offset: 0, 0
+  index: -1
+link-jumping-1
+  rotate: false
+  xy: 139, 86
+  size: 44, 37
+  orig: 44, 37
+  offset: 0, 0
+  index: -1
+link-running-1
+  rotate: false
+  xy: 107, 45
+  size: 30, 51
+  orig: 30, 51
+  offset: 0, 0
+  index: -1
+link-running-2
+  rotate: true
+  xy: 54, 94
+  size: 30, 51
+  orig: 30, 51
+  offset: 0, 0
+  index: -1
+link-running-3
+  rotate: false
+  xy: 192, 44
+  size: 38, 45
+  orig: 38, 45
+  offset: 0, 0
+  index: -1
+link-running-4
+  rotate: true
+  xy: 1, 91
+  size: 32, 51
+  orig: 32, 51
+  offset: 0, 0
+  index: -1
+link-running-5
+  rotate: true
+  xy: 139, 56
+  size: 28, 51
+  orig: 28, 51
+  offset: 0, 0
+  index: -1
+link-running-6
+  rotate: true
+  xy: 188, 1
+  size: 41, 45
+  orig: 41, 45
+  offset: 0, 0
+  index: -1
+link-standing-0
+  rotate: false
+  xy: 57, 39
+  size: 23, 53
+  orig: 23, 53
+  offset: 0, 0
+  index: -1
+link-standing-1
+  rotate: false
+  xy: 82, 39
+  size: 23, 53
+  orig: 23, 53
+  offset: 0, 0
+  index: -1
+link-standing-2
+  rotate: false
+  xy: 163, 1
+  size: 23, 53
+  orig: 23, 53
+  offset: 0, 0
+  index: -1
+link-standing-3
+  rotate: false
+  xy: 31, 36
+  size: 24, 53
+  orig: 24, 53
+  offset: 0, 0
+  index: -1
+link-standing-4
+  rotate: true
+  xy: 185, 91
+  size: 25, 49
+  orig: 25, 49
+  offset: 0, 0
+  index: -1
+link-standing-armdown
+  rotate: false
+  xy: 1, 36
+  size: 28, 53
+  orig: 28, 53
+  offset: 0, 0
+  index: -1
+link-standing-armout
+  rotate: true
+  xy: 58, 1
+  size: 36, 53
+  orig: 36, 53
+  offset: 0, 0
+  index: -1
+link-standing-point
+  rotate: true
+  xy: 113, 1
+  size: 42, 48
+  orig: 42, 48
+  offset: 0, 0
+  index: -1

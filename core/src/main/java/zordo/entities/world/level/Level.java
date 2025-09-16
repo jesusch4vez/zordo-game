@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import zordo.LegendOfZordo;
 import zordo.models.Component;
 import zordo.models.camera.CameraComponent;
-import zordo.models.character.CharacterComponent;
 import zordo.models.gamePad.ControllerComponent;
 import zordo.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.models.physics.terrain.surfaces.PlatformComponent;
@@ -95,6 +94,7 @@ public class Level extends LevelComponent implements Screen {
 
     @Override
     public void show() {
+        world.getWorld().setContactListener(player);
         TextureRegion background = new TextureRegion();
         backgroundTexture = new Texture("environment/background_32.png");
         background.setTexture(backgroundTexture);
@@ -122,7 +122,7 @@ public class Level extends LevelComponent implements Screen {
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         try {
-            bodies.add(player.getCharacterComponent().characterBody);
+            bodies.add(player.characterBody);
 
             bodies.add(floor.getPlatformBody());
             bodies.add(ceiling.getPlatformBody());
@@ -137,26 +137,26 @@ public class Level extends LevelComponent implements Screen {
 
             batch.draw(backgroundTexture, 0, 0, this.getLevelSize().getWidth(), this.getLevelSize().getHeight());
 
-            for (Body b : bodies) {
-                if(b.getUserData() instanceof CharacterComponent) {
-                    CharacterComponent e = (CharacterComponent) b.getUserData();
-                    e.setPosition(b.getPosition().x + 60.0f, b.getPosition().y + 60.0f);
+            for (Body gameBody : bodies) {
+                if(gameBody.getUserData() instanceof Player) {
+                    Player e = (Player) gameBody.getUserData();
+                    e.getCharacterComponent().setPosition(gameBody.getPosition().x, gameBody.getPosition().y);
                 } else {
-                    if(b.getUserData() instanceof LevelBoundaryComponent) {
-                        LevelBoundaryComponent p = (LevelBoundaryComponent) b.getUserData();
-                        p.setHeight((int) ((LevelBoundaryComponent) b.getUserData()).getHeight());
-                        p.setWidth((int) ((LevelBoundaryComponent) b.getUserData()).getWidth());
-                        p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
-                        p.getPlatform().setSize(((LevelBoundaryComponent) b.getUserData()).getWidth(),((LevelBoundaryComponent) b.getUserData()).getHeight());
-                        p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
+                    if(gameBody.getUserData() instanceof LevelBoundaryComponent) {
+                        LevelBoundaryComponent p = (LevelBoundaryComponent) gameBody.getUserData();
+                        p.setHeight((int) ((LevelBoundaryComponent) gameBody.getUserData()).getHeight());
+                        p.setWidth((int) ((LevelBoundaryComponent) gameBody.getUserData()).getWidth());
+                        p.getPlatform().setPosition(gameBody.getPosition().x, gameBody.getPosition().y);
+                        p.getPlatform().setSize(((LevelBoundaryComponent) gameBody.getUserData()).getWidth(),((LevelBoundaryComponent) gameBody.getUserData()).getHeight());
+                        p.setPlatformTexture(((PlatformComponent) gameBody.getUserData()).getPlatformTexture());
                         batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
                     } else {
-                        PlatformComponent p = (PlatformComponent) b.getUserData();
-                        p.setHeight((int) ((PlatformComponent) b.getUserData()).getHeight());
-                        p.setWidth((int) ((PlatformComponent) b.getUserData()).getWidth());
-                        p.getPlatform().setPosition(b.getPosition().x, b.getPosition().y);
+                        PlatformComponent p = (PlatformComponent) gameBody.getUserData();
+                        p.setHeight((int) ((PlatformComponent) gameBody.getUserData()).getHeight());
+                        p.setWidth((int) ((PlatformComponent) gameBody.getUserData()).getWidth());
+                        p.getPlatform().setPosition(gameBody.getPosition().x, gameBody.getPosition().y);
                         p.getPlatform().setSize(p.getPlatform().getWidth(), p.getPlatform().getHeight());
-                        p.setPlatformTexture(((PlatformComponent) b.getUserData()).getPlatformTexture());
+                        p.setPlatformTexture(((PlatformComponent) gameBody.getUserData()).getPlatformTexture());
                         batch.draw(p.getPlatformTexture(), p.getPlatform().getX() - p.getWidth()/2f, p.getPlatform().getY() - p.getHeight()/2f, p.getPlatform().getWidth(), p.getPlatform().getHeight());
                     }
                 }

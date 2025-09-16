@@ -3,62 +3,79 @@ package zordo.systems.animation.character;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import zordo.entities.characters.Character;
+import zordo.entities.characters.player.Player;
 import zordo.entities.world.level.Level;
+import zordo.models.physics.BodyLoader;
 
 public class AnimationSystem {
     static Animation<Sprite> animation;
     static Sprite nextFrame;
 
-    public static void standRender(Character character) {
-        if(character.getCharacterComponent().getIsFlippedRight() && !character.getCharacterComponent().getIsJumping()) {
-            animation = character.getCharacterComponent().getAnimation().getStandingRightAnimation();
-        } else if (!character.getCharacterComponent().getIsJumping()) {
-            animation = character.getCharacterComponent().getAnimation().getStandingLeftAnimation();
+    public static void standRender(Player player) {
+        if(player.getCharacterComponent().getIsFlippedRight() && !player.getCharacterComponent().getIsJumping()) {
+            if(!player.getCharacterComponent().getIsStanding()) {
+                BodyLoader.destroyFixture(player.characterBody);
+                BodyLoader.attachFixture(player.characterBody, "standing", player.characterFixtureDef, 1.8f);
+            }
+            animation = player.getCharacterComponent().getAnimation().getStandingRightAnimation();
+        } else if (!player.getCharacterComponent().getIsJumping()) {
+            if(!player.getCharacterComponent().getIsStanding() && !player.getCharacterComponent().getIsFlippedRight()) {
+                BodyLoader.destroyFixture(player.characterBody);
+                BodyLoader.attachFixture(player.characterBody, "standing-left", player.characterFixtureDef, 1.8f);
+            }
+            animation = player.getCharacterComponent().getAnimation().getStandingLeftAnimation();
         }
     }
 
-    public static void walkRender(Character character) {
-        if (character.getCharacterComponent().getIsFlippedRight()) {
-            animation = character.getCharacterComponent().getAnimation().getWalkingRightAnimation();
+    public static void walkRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+
+        if (player.getCharacterComponent().getIsFlippedRight()) {
+            BodyLoader.attachFixture(player.characterBody, "running-0", player.characterFixtureDef, 1.8f*1.5f);
+            animation = player.getCharacterComponent().getAnimation().getWalkingRightAnimation();
         } else {
-            animation = character.getCharacterComponent().getAnimation().getWalkingLeftAnimation();
+            BodyLoader.attachFixture(player.characterBody, "running-0-left", player.characterFixtureDef,1.8f*1.5f);
+            animation = player.getCharacterComponent().getAnimation().getWalkingLeftAnimation();
         }
     }
 
-    public static void runRender(Character character) {
-        if (character.getCharacterComponent().getIsFlippedRight()) {
-            animation = character.getCharacterComponent().getAnimation().getRunningRightAnimation();
+    public static void runRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+        if (player.getCharacterComponent().getIsFlippedRight()) {
+            BodyLoader.attachFixture(player.characterBody, "running-1", player.characterFixtureDef,1.8f*1.5f);
+            animation = player.getCharacterComponent().getAnimation().getRunningRightAnimation();
         } else {
-            animation = character.getCharacterComponent().getAnimation().getRunningLeftAnimation();
+            BodyLoader.attachFixture(player.characterBody, "running-1-left", player.characterFixtureDef,1.8f*1.5f);
+            animation = player.getCharacterComponent().getAnimation().getRunningLeftAnimation();
         }
     }
 
 
-    public static void jumpRender(Character character) {
-        if (character.getCharacterComponent().getIsFlippedRight()) {
-            animation = character.getCharacterComponent().getAnimation().getJumpingRightAnimation();
+    public static void jumpRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+
+        if (player.getCharacterComponent().getIsFlippedRight()) {
+            BodyLoader.attachFixture(player.characterBody, "jumping-0", player.characterFixtureDef,1.8f*1.5f);
+            animation = player.getCharacterComponent().getAnimation().getJumpingRightAnimation();
         } else {
-            animation = character.getCharacterComponent().getAnimation().getJumpingLeftAnimation();
+            BodyLoader.attachFixture(player.characterBody, "jumping-0-left", player.characterFixtureDef,1.8f*1.5f);
+            animation = player.getCharacterComponent().getAnimation().getJumpingLeftAnimation();
         }
     }
 
-    public static void duckRender(Character character) {
-        if (character.getCharacterComponent().getIsFlippedRight()) {
-            animation = character.getCharacterComponent().getAnimation().getDuckingRightAnimation();
+    public static void duckRender(Player player) {
+        BodyLoader.destroyFixture(player.characterBody);
+        if (player.getCharacterComponent().getIsFlippedRight()) {
+            animation = player.getCharacterComponent().getAnimation().getDuckingRightAnimation();
         } else  {
-            animation = character.getCharacterComponent().getAnimation().getDuckingLeftAnimation();
+            animation = player.getCharacterComponent().getAnimation().getDuckingLeftAnimation();
         }
     }
 
-    public static void animate(Character character, SpriteBatch batch, float elapsed, Level level) {
+    public static void animate(Player player, SpriteBatch batch, float elapsed, Level level) {
         if(!level.paused) {
             nextFrame = animation.getKeyFrame(elapsed, true);
-//            nextFrame.scale(.05f);
-            Vector2[] vertices = { new Vector2(nextFrame.getX(), nextFrame.getY()), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY()), new Vector2(nextFrame.getX(), nextFrame.getY() + nextFrame.getHeight()/2f), new Vector2(nextFrame.getX() + nextFrame.getWidth(), nextFrame.getY() + nextFrame.getHeight()/2f) };
-            character.getCharacterComponent().setCharacterShape(vertices);
         }
-        batch.draw(nextFrame, character.getCharacterComponent().getPosition().x, character.getCharacterComponent().getPosition().y, character.getCharacterComponent().dimensions.x, character.getCharacterComponent().dimensions.y);
+        batch.draw(nextFrame, player.getCharacterComponent().getPosition().x, player.getCharacterComponent().getPosition().y, nextFrame.getWidth()/12, nextFrame.getHeight()/12);
     }
 }

@@ -34,11 +34,11 @@ public class AnimationComponent extends Component {
 
 
     // accessing sprite assets from the directory files
-    String standuri = "character/player/link-standing-sprites/";
-    String runuri = "character/player/link-running-sprites/";
-    String jumpuri = "character/player/link-jumping-sprites/";
+    String standuri = "physics/character/player/link-standing-sprites/";
+    String runuri = "physics/character/player/link-running-sprites/";
+    String jumpuri = "physics/character/player/link-jumping-sprites/";
 
-    String duckinguri = "character/player/link-ducking-sprites/";
+    String duckinguri = "physics/character/player/link-ducking-sprites/";
 
     public AnimationComponent() {
         // animation objects

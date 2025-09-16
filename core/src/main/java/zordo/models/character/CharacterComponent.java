@@ -10,7 +10,7 @@ import zordo.models.physics.world.WorldComponent;
 
 import java.util.ArrayList;
 
-public class CharacterComponent implements ContactListener {
+public class CharacterComponent {
     Boolean isFlippedRight;
     Boolean isJumping;
     Boolean isStepping;
@@ -30,18 +30,12 @@ public class CharacterComponent implements ContactListener {
     public int health;
     AnimationComponent animation;
 
-    public BodyDef characterBodyDef;
-    public Body characterBody;
-    public PolygonShape characterShape;
-    public FixtureDef characterFixtureDef;
-    public FixtureDef collisionSensor;
 
     public CharacterComponent(WorldComponent world) {
         jumps = 0;
         position = new Vector2();
         position.x = 60;
         position.y = 60;
-        dimensions = new Vector2(6f, 12f);
 
         isFlippedRight = true;
         isJumping = false;
@@ -58,34 +52,6 @@ public class CharacterComponent implements ContactListener {
             hearts.add(new HeartComponent());
         }
         animation = new AnimationComponent();
-
-        characterBodyDef = new BodyDef();
-        characterBodyDef.type = BodyDef.BodyType.DynamicBody;
-        characterBodyDef.position.set(this.getPosition().x - 5, this.getPosition().y -5);
-        characterBodyDef.fixedRotation = true;
-
-        characterBody = world.getWorld().createBody(characterBodyDef);
-
-        characterShape = new PolygonShape();
-
-        Vector2 [] vertices = { new Vector2(this.position.x, this.position.y), new Vector2(this.position.x + dimensions.x, this.position.y), new Vector2(this.position.x, this.position.y + dimensions.y), new Vector2(this.position.x + dimensions.x, this.position.y + dimensions.y) };
-        characterShape.set(vertices);
-
-        characterFixtureDef = new FixtureDef();
-        collisionSensor = new FixtureDef();
-
-        characterFixtureDef.shape = characterShape;
-        characterFixtureDef.density = 0.5f;
-        characterFixtureDef.friction = 1f;
-        characterFixtureDef.restitution = 0.01f;
-        collisionSensor.shape = characterShape;
-        collisionSensor.isSensor = true;
-
-        characterBody.createFixture(characterFixtureDef);
-        characterBody.createFixture(collisionSensor);
-        characterBody.isFixedRotation();
-        characterBody.setUserData(this);
-
     }
 
     public int getHealth() {
@@ -99,23 +65,19 @@ public class CharacterComponent implements ContactListener {
     public void setPosition(Vector3 position) {
         this.position.x = position.x;
         this.position.y = position.y;
-        this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setPosition(float x, float y) {
         this.position.x = x;
         this.position.y = y;
-        this.characterBody.getPosition().set(position.x, position.y);
     }
 
     public void setX(float x) {
         this.position.x = x;
-        this.characterBody.getPosition().x = x;
     }
 
     public void setY(float y) {
         this.position.y = y;
-        this.characterBody.getPosition().y = y;
     }
 
     public void setIsFlippedRight(Boolean flip) {
@@ -178,22 +140,6 @@ public class CharacterComponent implements ContactListener {
         return this.isAirborne;
     }
 
-    public PolygonShape getCharacterShape() {
-        return characterShape;
-    }
-
-    public void setCharacterShape(Vector2 [] characterShape) {
-        this.getCharacterShape().set(characterShape);
-    }
-
-    public Body getCharacterBody() {
-        return this.characterBody;
-    }
-
-    public void setCharacterBody(Body characterBody) {
-        this.characterBody = characterBody;
-    }
-
     public void setIsStanding(Boolean isStanding) {
         this.isStanding = isStanding;
     }
@@ -206,25 +152,5 @@ public class CharacterComponent implements ContactListener {
 
     public void setIsDucking(Boolean isDucking) {
         this.isDucking = isDucking;
-    }
-
-    @Override
-    public void beginContact(Contact contact) {
-        Gdx.app.log("Contact", "beginContact with: " + contact);
-    }
-
-    @Override
-    public void endContact(Contact contact) {
-        Gdx.app.log("Contact", "endContact with: " + contact);
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 }

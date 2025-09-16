@@ -10,8 +10,8 @@ import zordo.models.gamePad.ControllerComponent;
 public class CameraSystem {
     public static void follow(Player player, OrthographicCamera camera, LegendOfZordo game) {
         if (Gdx.input.isKeyPressed(Input.Keys.A) || ControllerComponent.LEFT_STICK.isPressed()) {
-            if(game.activeLevel.getLevelSize().getWidth() > camera.viewportWidth * camera.zoom
-            && game.activeLevel.getLevelSize().getHeight() > camera.viewportHeight * camera.zoom) {
+            if(game.activeLevel.getLevelSize().getWidth() > camera.viewportWidth * camera.zoom - game.activeLevel.rightWall.getWidth()
+            && game.activeLevel.getLevelSize().getHeight() > camera.viewportHeight * camera.zoom - game.activeLevel.ceiling.getHeight()) {
                 camera.zoom += 0.005F;
                 //If the A Key is pressed, add 0.02 to the Camera's Zoom
             }
