@@ -36,6 +36,7 @@ public class CameraSystem {
 
         if(player.getCharacterComponent().getPosition().y <= game.activeLevel.floor.getY() + (camera.viewportHeight / 2) * camera.zoom ) {
             camera.position.y = (game.activeLevel.floor.getY() + (camera.viewportHeight / 2) * camera.zoom) - game.activeLevel.floor.getHeight()/2;
+            camera.position.y += 10;
         } else if(player.getCharacterComponent().getPosition().y >= game.activeLevel.ceiling.getX() - (camera.viewportHeight / 2) * camera.zoom ) {
             camera.position.y = (game.activeLevel.ceiling.getY() - (camera.viewportHeight / 2) * camera.zoom) + game.activeLevel.ceiling.getHeight()/2;
         } else {

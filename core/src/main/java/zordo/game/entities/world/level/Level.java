@@ -131,8 +131,9 @@ public class Level extends LevelComponent implements Screen {
 
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
-        camera.zoom = 0.075f;
+        camera.zoom = 0.045f;
         camera.position.set(player.getCharacterComponent().getPosition(), 0);
+        camera.position.y += 10;
         this.levelDimensions = new Vector2();
     }
 
