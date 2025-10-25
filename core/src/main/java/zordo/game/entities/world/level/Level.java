@@ -92,7 +92,7 @@ public class Level extends LevelComponent implements Screen {
         }
 
         int j = 0;
-        int platJ = records.size();
+        int platJ = records.size() + 1;
         int floorWidth = 0;
         int ceilingWidth = 0;
         int leftWallHeight = 0;
@@ -102,21 +102,21 @@ public class Level extends LevelComponent implements Screen {
             int i = 0;
             for(String value: record) {
                 if (value.equals("_") || value.equals("-")) {
-                    PlatformComponent platform = new PlatformComponent(this.world, 30f, 5f, 38 * i, platJ * 50);
+                    PlatformComponent platform = new PlatformComponent(this.world, 15f, 3f, (25f * i) + 15f,25 + platJ * 10);
                     platforms.add(platform);
                     bodies.add(platform.getPlatformBody());
                 }
                 if (value.equals("TB")) {
-                    ceilingWidth = 50 * i;
+                    ceilingWidth = 25 * i;
                 }
                 if (value.equals("LB")) {
-                    leftWallHeight = 50 * j;
+                    leftWallHeight = 25 * j;
                 }
                 if (value.equals("RB")) {
-                    rightWallHeight = 50 * j;
+                    rightWallHeight = 25 * j;
                 }
                 if (value.equals("BB")) {
-                    floorWidth = 50 * i;
+                    floorWidth = 25 * i;
                 }
                 i++;
             }
