@@ -13,6 +13,7 @@ import zordo.game.models.camera.CameraComponent;
 import zordo.game.models.Component;
 import zordo.game.systems.animation.title.TitleAnimationSystem;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class TitleMenu implements Screen {
@@ -61,7 +62,7 @@ public class TitleMenu implements Screen {
 
         try {
             this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), game);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
     }

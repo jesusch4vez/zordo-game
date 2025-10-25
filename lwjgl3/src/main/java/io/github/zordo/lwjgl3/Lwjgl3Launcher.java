@@ -1,6 +1,5 @@
 package io.github.zordo.lwjgl3;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import zordo.LegendOfZordo;
@@ -12,8 +11,8 @@ public class Lwjgl3Launcher {
         createApplication();
     }
 
-    private static Lwjgl3Application createApplication() {
-        return new Lwjgl3Application(new LegendOfZordo(), getDefaultConfiguration());
+    private static void createApplication() {
+        new Lwjgl3Application(new LegendOfZordo(), getDefaultConfiguration());
     }
 
     private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {

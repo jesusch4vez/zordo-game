@@ -16,6 +16,8 @@ import zordo.game.models.camera.CameraComponent;
 import zordo.game.models.menu.LevelItem;
 import zordo.game.models.levels.LevelComponent;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class LevelMenu implements Screen {
@@ -95,7 +97,7 @@ public class LevelMenu implements Screen {
 
         try {
             this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), this.game);
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
 

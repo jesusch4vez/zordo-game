@@ -56,7 +56,11 @@ public class LegendOfZordo extends Game {
         levelMenu = new LevelMenu(this);
         debugModeMenu = new DebugModeMenu(this, new LevelComponent());
         pauseMenu = new PauseMenu(this);
-        activeLevel = new Level(this);
+        try {
+            activeLevel = new Level(this);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         world = new WorldComponent();
 
 		Properties properties = new Properties();

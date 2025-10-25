@@ -15,6 +15,8 @@ import zordo.game.models.physics.world.WorldComponent;
 import zordo.game.systems.character.movement.PlayerMovementSystem;
 import zordo.game.systems.menu.MenuSystem;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class GameControllerSystem implements ControllerListener {
@@ -95,7 +97,7 @@ public class GameControllerSystem implements ControllerListener {
         return false;
     }
 
-    public void handleInput(float deltaTime, LegendOfZordo game) throws InterruptedException {
+    public void handleInput(float deltaTime, LegendOfZordo game) throws InterruptedException, IOException {
         this.game = game;
         float x_ls_value = ControllerComponent.LEFT_STICK_X.getAxisValue();
         float y_ls_value = ControllerComponent.LEFT_STICK_Y.getAxisValue();

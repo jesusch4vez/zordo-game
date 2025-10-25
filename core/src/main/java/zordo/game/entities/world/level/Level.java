@@ -26,8 +26,14 @@ import zordo.game.systems.camera.CameraSystem;
 import zordo.game.systems.camera.DebugHudSystem;
 import zordo.game.systems.camera.HudSystem;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Level extends LevelComponent implements Screen {
     public final LegendOfZordo game;
@@ -56,9 +62,7 @@ public class Level extends LevelComponent implements Screen {
     WorldComponent world;
     Box2DDebugRenderer debugRenderer;
 
-    int platformCount=100;
-
-    public Level(final LegendOfZordo game) {
+    public Level(final LegendOfZordo game) throws IOException {
         this.game = game;
         this.game.isOnLevelMenu = false;
         this.game.isOnDebugMenu = false;
@@ -76,20 +80,60 @@ public class Level extends LevelComponent implements Screen {
         player = new Player(world);
 
         bodies = new Array<>();
+        platforms = new ArrayList<>();
+        List<List<String>> records = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("environment/level_layouts/level_layout.csv"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                records.add(Arrays.asList(values));
+            }
+        }
+
+        int j = 0;
+        int platJ = records.size();
+        int floorWidth = 0;
+        int ceilingWidth = 0;
+        int leftWallHeight = 0;
+        int rightWallHeight = 0;
+
+        for(List<String> record: records) {
+            int i = 0;
+            for(String value: record) {
+                if (value.equals("_") || value.equals("-")) {
+                    PlatformComponent platform = new PlatformComponent(this.world, 30f, 5f, 38 * i, platJ * 50);
+                    platforms.add(platform);
+                    bodies.add(platform.getPlatformBody());
+                }
+                if (value.equals("TB")) {
+                    ceilingWidth = 50 * i;
+                }
+                if (value.equals("LB")) {
+                    leftWallHeight = 50 * j;
+                }
+                if (value.equals("RB")) {
+                    rightWallHeight = 50 * j;
+                }
+                if (value.equals("BB")) {
+                    floorWidth = 50 * i;
+                }
+                i++;
+            }
+            platJ--;
+            j++;
+        }
+
+        floor = new LevelBoundaryComponent(world, floorWidth + 50.0f/2f, 50.5f, 0, 0);
+        ceiling = new LevelBoundaryComponent(world, ceilingWidth + 50.0f/2f, 50.5f, 0, leftWallHeight);
+        leftWall = new LevelBoundaryComponent(world, 50.5f, leftWallHeight + 50.0f/2f, 0, 0);
+        rightWall = new LevelBoundaryComponent(world,  50.5f,  rightWallHeight + 50.0f/2f, floorWidth, 0);
 
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
         camera.zoom = 0.075f;
         camera.position.set(player.getCharacterComponent().getPosition(), 0);
         this.levelDimensions = new Vector2();
-
-        platforms = new ArrayList<>();
-
-        for(int i = 2; i < platformCount; i++) {
-            PlatformComponent platform = new PlatformComponent(this.world, 30f,5f, 38 * i, 100);
-            platforms.add(platform);
-            bodies.add(platform.getPlatformBody());
-        }
     }
 
     @Override
@@ -103,11 +147,6 @@ public class Level extends LevelComponent implements Screen {
 
         this.levelDimensions.x = this.getLevelSize().getWidth();
         this.levelDimensions.y = this.getLevelSize().getHeight();
-
-        floor = new LevelBoundaryComponent(world, levelDimensions.x + 50.0f/2f, 50.5f, 0, 0);
-        ceiling = new LevelBoundaryComponent(world, levelDimensions.x + 50.0f/2f, 50.5f, 0, levelDimensions.y);
-        leftWall = new LevelBoundaryComponent(world, 50.5f, levelDimensions.y + 50.0f/2f, 0, 0);
-        rightWall = new LevelBoundaryComponent(world,  50.5f, levelDimensions.y + 50.0f/2f, levelDimensions.x, 0);
 
         platforms.add(floor);
         platforms.add(ceiling);

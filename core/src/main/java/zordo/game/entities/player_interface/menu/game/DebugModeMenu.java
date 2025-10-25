@@ -13,6 +13,7 @@ import zordo.game.models.Component;
 import zordo.game.models.camera.CameraComponent;
 import zordo.game.models.levels.LevelComponent;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class DebugModeMenu implements Screen {
@@ -71,8 +72,7 @@ public class DebugModeMenu implements Screen {
 
         try {
             this.game.controllerListener.handleInput(Gdx.graphics.getDeltaTime(), this.game);
-
-        } catch (InterruptedException e) {
+        } catch (InterruptedException | IOException e) {
             throw new RuntimeException(e);
         }
 
