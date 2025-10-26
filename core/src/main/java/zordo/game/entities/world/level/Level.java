@@ -53,7 +53,6 @@ public class Level extends LevelComponent implements Screen {
     Array<Body> bodies;
 
     public Vector2 levelDimensions;
-    ArrayList<PlatformComponent> platforms;
 
     public LevelBoundaryComponent floor;
     public LevelBoundaryComponent ceiling;
@@ -72,6 +71,8 @@ public class Level extends LevelComponent implements Screen {
         this.world = new WorldComponent();
         this.debugRenderer = new Box2DDebugRenderer();
 
+        this.levelDimensions = new Vector2();
+
         elapsed = 0.0f;
 
         components = new HashMap<>();
@@ -81,7 +82,6 @@ public class Level extends LevelComponent implements Screen {
         player = new Player(world);
 
         bodies = new Array<>();
-        platforms = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader("environment/level_layouts/level_layout-" + game.levelMenu.selectedLevel + ".csv"))) {
@@ -102,12 +102,8 @@ public class Level extends LevelComponent implements Screen {
         for(List<String> record: records) {
             int i = 0;
             for(String value: record) {
-                if(value.equals("P")) {
-                    player.setPosition(i, j);
-                }
                 if (value.equals("_") || value.equals("-")) {
                     PlatformComponent platform = new PlatformComponent(this.world, 15f, 3f, (25f * i) + 15f,25 + platJ * 10);
-                    platforms.add(platform);
                     bodies.add(platform.getPlatformBody());
                 }
                 if (value.equals("TB")) {
@@ -128,17 +124,16 @@ public class Level extends LevelComponent implements Screen {
             j++;
         }
 
-        floor = new LevelBoundaryComponent(world, floorWidth + 50.0f/2f, 50.5f, 0, 0);
-        ceiling = new LevelBoundaryComponent(world, ceilingWidth + 50.0f/2f, 50.5f, 0, leftWallHeight);
-        leftWall = new LevelBoundaryComponent(world, 50.5f, leftWallHeight + 50.0f/2f, 0, 0);
-        rightWall = new LevelBoundaryComponent(world,  50.5f,  rightWallHeight + 50.0f/2f, floorWidth, 0);
+        floor = new LevelBoundaryComponent(world, floorWidth + 50.0f/2f, 25.5f, 0, 0);
+        ceiling = new LevelBoundaryComponent(world, ceilingWidth + 50.0f/2f, 25.5f, 0, leftWallHeight);
+        leftWall = new LevelBoundaryComponent(world, 25.5f, leftWallHeight + 50.0f/2f, 0, 0);
+        rightWall = new LevelBoundaryComponent(world,  25.5f,  rightWallHeight + 50.0f/2f, floorWidth, 0);
 
         CameraComponent cam = (CameraComponent) components.get("Camera");
         camera = cam.getCamera();
         camera.zoom = 0.045f;
         camera.position.set(player.getCharacterComponent().getPosition(), 0);
         camera.position.y += 10;
-        this.levelDimensions = new Vector2();
 
         LevelSize levelSize = new LevelSize(floorWidth, leftWallHeight);
         this.setLevelSize(levelSize);
@@ -155,11 +150,6 @@ public class Level extends LevelComponent implements Screen {
 
         this.levelDimensions.x = this.getLevelSize().getWidth();
         this.levelDimensions.y = this.getLevelSize().getHeight();
-
-        platforms.add(floor);
-        platforms.add(ceiling);
-        platforms.add(leftWall);
-        platforms.add(rightWall);
     }
 
     @Override
