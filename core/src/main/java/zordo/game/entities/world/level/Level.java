@@ -17,6 +17,7 @@ import zordo.LegendOfZordo;
 import zordo.game.models.Component;
 import zordo.game.models.camera.CameraComponent;
 import zordo.game.models.gamePad.ControllerComponent;
+import zordo.game.models.levels.LevelSize;
 import zordo.game.models.physics.terrain.surfaces.LevelBoundaryComponent;
 import zordo.game.models.physics.terrain.surfaces.PlatformComponent;
 import zordo.game.models.physics.world.WorldComponent;
@@ -83,7 +84,7 @@ public class Level extends LevelComponent implements Screen {
         platforms = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("environment/level_layouts/level_layout.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("environment/level_layouts/level_layout-" + game.levelMenu.selectedLevel + ".csv"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
@@ -135,6 +136,9 @@ public class Level extends LevelComponent implements Screen {
         camera.position.set(player.getCharacterComponent().getPosition(), 0);
         camera.position.y += 10;
         this.levelDimensions = new Vector2();
+
+        LevelSize levelSize = new LevelSize(floorWidth, leftWallHeight);
+        this.setLevelSize(levelSize);
     }
 
     @Override

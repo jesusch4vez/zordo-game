@@ -16,7 +16,7 @@ public class MenuSystem {
     public static void activateLevel(LegendOfZordo game, LevelComponent level) throws IOException {
         Level loadLevel = new Level(game);
         loadLevel.setDebugMode(level.getDebugMode());
-        loadLevel.setLevelSize(level.getLevelSize());
+//        loadLevel.setLevelSize(level.getLevelSize());
 //        loadLevel.setLevelTheme(level.getLevelTheme());
 //        loadLevel.setLevelTerrain(level.setLevelTerrain());
 //        loadLevel.setLevelCharacters(level.setLevelCharacters());

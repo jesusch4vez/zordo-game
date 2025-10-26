@@ -68,18 +68,6 @@ public class LegendOfZordo extends Game {
 
 		try (FileInputStream props = new FileInputStream(propertiesFile)) {
 			properties.load(props);
-			int small_width = Integer.parseInt(properties.getProperty("SMALL_WIDTH"));
-			int small_height = Integer.parseInt(properties.getProperty("SMALL_HEIGHT"));
-
-			int medium_width = Integer.parseInt(properties.getProperty("MEDIUM_WIDTH"));
-			int medium_height = Integer.parseInt(properties.getProperty("MEDIUM_HEIGHT"));
-
-			int large_width = Integer.parseInt(properties.getProperty("LARGE_WIDTH"));
-			int large_height = Integer.parseInt(properties.getProperty("LARGE_HEIGHT"));
-
-			small = new LevelSize(small_width, small_height);
-			medium = new LevelSize(medium_width, medium_height);
-			large = new LevelSize(large_width, large_height);
 
             MAX_VELOCITY = Integer.parseInt(properties.getProperty("MAX_VELOCITY"));
             RUN_SPEED = Integer.parseInt(properties.getProperty("RUN_SPEED"));
