@@ -30,6 +30,8 @@ public class Player extends Character implements ContactListener {
         FixtureDef collisionSensor = new FixtureDef();
         collisionSensor.isSensor = true;
 
+        this.position = new Vector2();
+
         playerBodies = new HashMap<>();
         playerController = new ControllerComponent();
         BodyLoader.load(Gdx.files.internal("physics/character/player/playerBodies.json"));

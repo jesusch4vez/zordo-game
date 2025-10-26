@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -28,7 +29,6 @@ import zordo.game.systems.camera.DebugHudSystem;
 import zordo.game.systems.camera.HudSystem;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,6 +102,9 @@ public class Level extends LevelComponent implements Screen {
         for(List<String> record: records) {
             int i = 0;
             for(String value: record) {
+                if(value.equals("P")) {
+                    player.setPosition(i, j);
+                }
                 if (value.equals("_") || value.equals("-")) {
                     PlatformComponent platform = new PlatformComponent(this.world, 15f, 3f, (25f * i) + 15f,25 + platJ * 10);
                     platforms.add(platform);
