@@ -27,9 +27,7 @@ import zordo.game.systems.camera.CameraSystem;
 import zordo.game.systems.camera.DebugHudSystem;
 import zordo.game.systems.camera.HudSystem;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -83,7 +81,7 @@ public class Level extends LevelComponent implements Screen {
         bodies = new Array<>();
         List<List<String>> records = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("environment/level_layouts/level_layout-" + game.levelMenu.selectedLevel + ".csv"))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/environment/level_layouts/level_layout-" + game.levelMenu.selectedLevel + ".csv")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(",");
