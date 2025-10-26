@@ -2,9 +2,8 @@ package zordo;
 
 import com.badlogic.gdx.Game;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import com.badlogic.gdx.controllers.Controllers;
@@ -63,17 +62,22 @@ public class LegendOfZordo extends Game {
         }
         world = new WorldComponent();
 
-		Properties properties = new Properties();
-		File propertiesFile = new File("game_config.properties");
-
-		try (FileInputStream props = new FileInputStream(propertiesFile)) {
-			properties.load(props);
+        try {
+            Properties properties = new Properties();
+            InputStream propertiesFile = this.getClass().getResourceAsStream("/game_config.properties");
+            BufferedInputStream props = new BufferedInputStream(propertiesFile);
+            properties.load(props);
 
             MAX_VELOCITY = Integer.parseInt(properties.getProperty("MAX_VELOCITY"));
             RUN_SPEED = Integer.parseInt(properties.getProperty("RUN_SPEED"));
             WALK_SPEED = Integer.parseInt(properties.getProperty("WALK_SPEED"));
             MAX_WALK_VELOCITY = Integer.parseInt(properties.getProperty("MAX_WALK_VELOCITY"));
             MAX_UPWARD_VELOCITY = Integer.parseInt(properties.getProperty("MAX_UPWARD_VELOCITY"));
+
+            System.out.println("Max Velocity: " + MAX_VELOCITY);
+            System.out.println("Max Walk Velocity: " + MAX_WALK_VELOCITY);
+            System.out.println("Max Upward Velocity: " + MAX_UPWARD_VELOCITY);
+
 
 		} catch (IOException e) {
 			e.printStackTrace();
