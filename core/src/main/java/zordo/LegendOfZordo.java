@@ -3,14 +3,12 @@ package zordo;
 import com.badlogic.gdx.Game;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.Properties;
 
 import com.badlogic.gdx.controllers.Controllers;
 import zordo.game.entities.world.level.Level;
 import zordo.game.models.physics.world.WorldComponent;
 import zordo.game.models.levels.LevelComponent;
-import zordo.game.models.levels.LevelSize;
 import zordo.game.entities.player_interface.menu.game.DebugModeMenu;
 import zordo.game.entities.player_interface.menu.game.LevelMenu;
 import zordo.game.entities.player_interface.menu.game.PauseMenu;
@@ -19,10 +17,6 @@ import zordo.game.systems.gamePad.GameControllerSystem;
 
 public class LegendOfZordo extends Game {
     public GameControllerSystem controllerListener;
-
-    public LevelSize small;
-	public LevelSize medium;
-	public LevelSize large;
 
     public Level activeLevel;
 
@@ -73,12 +67,6 @@ public class LegendOfZordo extends Game {
             WALK_SPEED = Integer.parseInt(properties.getProperty("WALK_SPEED"));
             MAX_WALK_VELOCITY = Integer.parseInt(properties.getProperty("MAX_WALK_VELOCITY"));
             MAX_UPWARD_VELOCITY = Integer.parseInt(properties.getProperty("MAX_UPWARD_VELOCITY"));
-
-            System.out.println("Max Velocity: " + MAX_VELOCITY);
-            System.out.println("Max Walk Velocity: " + MAX_WALK_VELOCITY);
-            System.out.println("Max Upward Velocity: " + MAX_UPWARD_VELOCITY);
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

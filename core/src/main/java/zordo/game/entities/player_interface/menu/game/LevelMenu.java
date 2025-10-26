@@ -50,13 +50,6 @@ public class LevelMenu implements Screen {
         for(int i = 1; i <= levelCount; i++) {
             LevelComponent level = new LevelComponent();
             level.setName("Level " + i);
-            if( i % 3 == 0) {
-                level.setLevelSize(game.small);
-            } else if ( i % 2 == 0) {
-                level.setLevelSize(game.large);
-            } else {
-                level.setLevelSize(game.medium);
-            }
 
             levels.put(level.getName(), level);
             if(i < maxSelectable) {
