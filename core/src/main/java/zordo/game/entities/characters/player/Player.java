@@ -19,6 +19,7 @@ public class Player extends Character implements ContactListener {
     public Body characterBody;
     public PolygonShape characterShape;
     public PolygonShape colliderShape;
+    public int jumps;
 
     public FixtureDef characterFixtureDef;
 
@@ -29,6 +30,7 @@ public class Player extends Character implements ContactListener {
         colliderShape = new PolygonShape();
         FixtureDef collisionSensor = new FixtureDef();
         collisionSensor.isSensor = true;
+        jumps = 0;
 
         this.position = new Vector2();
 

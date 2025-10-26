@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
@@ -103,7 +102,7 @@ public class Level extends LevelComponent implements Screen {
             int i = 0;
             for(String value: record) {
                 if (value.equals("_") || value.equals("-")) {
-                    PlatformComponent platform = new PlatformComponent(this.world, 15f, 3f, (25f * i) + 15f,25 + platJ * 10);
+                    PlatformComponent platform = new PlatformComponent(this.world, 15f, 3f, (25f * i) + 15f, platJ * 10);
                     bodies.add(platform.getPlatformBody());
                 }
                 if (value.equals("TB")) {
@@ -134,6 +133,7 @@ public class Level extends LevelComponent implements Screen {
         camera.zoom = 0.045f;
         camera.position.set(player.getCharacterComponent().getPosition(), 0);
         camera.position.y += 10;
+        this.levelDimensions = new Vector2();
 
         LevelSize levelSize = new LevelSize(floorWidth, leftWallHeight);
         this.setLevelSize(levelSize);

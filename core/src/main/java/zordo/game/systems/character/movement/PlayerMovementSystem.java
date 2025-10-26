@@ -19,20 +19,25 @@ public class PlayerMovementSystem {
                 character.getCharacterComponent().setIsStepping(false);
                 character.getCharacterComponent().setIsRunning(false);
                 character.getCharacterComponent().setIsJumping(false);
+                character.jumps = 0;
                 AnimationSystem.standRender(character);
             } else {
                 AnimationSystem.jumpRender(character);
             }
             handleLeftRight(character, level);
-            if (ControllerComponent.A_BUTTON.isPressed() || Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (ControllerComponent.A_BUTTON.isPressed() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 character.getCharacterComponent().setIsStanding(false);
                 character.getCharacterComponent().setIsStepping(false);
                 character.getCharacterComponent().setIsJumping(true);
                 character.getCharacterComponent().setIsAirborne(true);
                 character.getCharacterComponent().setIsRunning(false);
                 AnimationSystem.jumpRender(character);
-                character.characterBody.setLinearVelocity(character.characterBody.getLinearVelocity().x,0);
-                character.characterBody.applyForceToCenter(0, 10000f, true);
+                character.jumps++;
+
+                if(character.jumps < 2) {
+                    character.characterBody.applyForceToCenter(0, 10000f, true);
+                    character.characterBody.setLinearVelocity(character.characterBody.getLinearVelocity().x,10f);
+                }
             } else {
                 character.getCharacterComponent().setIsJumping(false);
                 if(character.getCharacterComponent().getIsAirborne()) {
