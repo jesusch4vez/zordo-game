@@ -1,4 +1,4 @@
-package io.github.zordo.lwjgl3;
+package zordo.lwjgl3;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
@@ -30,7 +30,7 @@ public class Lwjgl3Launcher {
 
 //        configuration.setWindowedMode(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 //        configuration.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-        configuration.setWindowedMode(1920, 1080);
+        configuration.setWindowedMode(1920/2, 1080/2);
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
         //// They can also be loaded from the root of assets/ .
         configuration.setWindowIcon("environment/triforce.png", "environment/triforce.png", "environment/triforce.png", "environment/triforce.png");
