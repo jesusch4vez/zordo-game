@@ -1,4 +1,4 @@
-# The Legend of Zordo
+# zordo-game
 
 Practice platformer game inspired by The Legend of Zelda and Super Mario World. Not for sale. For practice purposes only.
 
